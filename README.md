@@ -1,16 +1,55 @@
 # CommunityFrontendWeb
 
-Next.js frontend scaffold for the community platform.
+Frontend project for a community platform built with Next.js.
+
+## Developer
+
+- Bikash Santra
+- Kolkata
+- santrabikash921@gmail.com
+- https://www.linkedin.com/in/bikash-santra-886901217
 
 ## Stack
 
 - Next.js App Router
 - React + TypeScript
-- Tailwind CSS
-- TanStack Query
+- Tailwind CSS v4
 - Axios
+- TanStack Query
 - React Hook Form + Zod
-- shadcn/ui-ready structure
+- Husky + lint-staged
+- Commitlint
+
+## Setup
+
+### 1. Install dependencies
+
+```bash
+pnpm install
+```
+
+### 2. Create environment file
+
+Create `.env.local` and copy from `.env.example`.
+
+```env
+NEXT_PUBLIC_API_BASE_URL=http://localhost:4000/api
+```
+
+### 3. Run development server
+
+```bash
+pnpm dev
+```
+
+App runs on `http://localhost:3000`.
+
+### 4. Build production app
+
+```bash
+pnpm build
+pnpm start
+```
 
 ## Scripts
 
@@ -18,55 +57,32 @@ Next.js frontend scaffold for the community platform.
 - `pnpm build`
 - `pnpm start`
 - `pnpm lint`
+- `pnpm lint:fix`
 - `pnpm typecheck`
 - `pnpm format`
-- `pnpm lint-staged`
-- `pnpm commitlint`
+- `pnpm format:check`
 
 ## Project Structure
 
 ```text
 src
 ├─ app
-│  ├─ (public)
-│  ├─ favicon.ico
-│  ├─ globals.css
-│  └─ layout.tsx
 ├─ components
-│  ├─ layout
-│  ├─ shared
-│  └─ ui
 ├─ config
 ├─ constants
 ├─ features
-│  ├─ auth
-│  ├─ community
-│  └─ home
 ├─ hooks
 ├─ lib
 ├─ providers
 ├─ services
-│  └─ http
 ├─ styles
 └─ types
+public
+├─ icons
+└─ images
 ```
 
-## Notes
+## Assets
 
-- `src/components/ui` is reserved for design-system and shadcn-based primitives.
-- `src/features/*` is where domain-specific components, schemas, and API logic should live.
-- `src/services/http` contains low-level API client utilities shared across features.
-- `src/config` is for environment and site-level configuration.
-
-## Git Workflow
-
-- Pre-commit runs `lint-staged` on staged files only.
-- JavaScript and TypeScript files run `eslint --fix` and `prettier --write`.
-- Markdown, JSON, CSS, HTML, and YAML files run `prettier --write`.
-- Commit messages must follow conventional commit format.
-
-Examples:
-
-- `feat(auth): add register form shell`
-- `fix(ui): correct mobile header spacing`
-- `docs: update setup instructions`
+- `public/images` for images and illustrations
+- `public/icons` for custom icons and logos
