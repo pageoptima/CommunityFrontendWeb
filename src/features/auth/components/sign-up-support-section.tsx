@@ -52,7 +52,7 @@ function SupportCardItem({ card }: Readonly<{ card: SupportCard }>) {
     <article className="flex h-full flex-col rounded-[28px] border-2 border-[#E8E5DE] bg-[#FAF9F9] px-6 py-7 text-center shadow-[0_18px_42px_-34px_rgba(28,45,38,0.2)] sm:px-7 sm:py-8">
       <div
         className={cn(
-          "mx-auto flex size-16 items-center justify-center rounded-[18px] shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] sm:size-[4.5rem]",
+          "mx-auto flex size-16 items-center justify-center rounded-[18px] shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] sm:size-18",
           card.iconBgClassName,
         )}
       >
@@ -85,7 +85,7 @@ function SupportCardItem({ card }: Readonly<{ card: SupportCard }>) {
 
       {card.kind === "chat" ? (
         <Button
-          className="mx-auto mt-8 min-w-44 rounded-full !bg-[linear-gradient(135deg,#2F7E94_0%,#1F667C_100%)] !text-white !shadow-[0_18px_40px_-18px_rgba(25,96,118,0.58)] hover:!brightness-105"
+          className="mx-auto mt-8 min-w-44 rounded-full bg-[linear-gradient(135deg,#2F7E94_0%,#1F667C_100%)]! text-white! shadow-[0_18px_40px_-18px_rgba(25,96,118,0.58)]! hover:brightness-105!"
           size="xl"
           type="button"
         >
