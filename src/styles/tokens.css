@@ -7,6 +7,11 @@
   --muted-foreground: #567075;
   --primary: #1f8ca5;
   --primary-foreground: #f8fbfb;
+  --secondary: #dff2e7;
+  --secondary-foreground: #143f3a;
+  --accent: #143f3a;
+  --accent-foreground: #f8fbfb;
+  --ring: #1f8ca5;
   --font-sans-base: "Plus Jakarta Sans", "Segoe UI", sans-serif;
 }
 
@@ -19,5 +24,10 @@
   --color-muted-foreground: var(--muted-foreground);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-ring: var(--ring);
   --font-sans: var(--font-sans-base);
 }
