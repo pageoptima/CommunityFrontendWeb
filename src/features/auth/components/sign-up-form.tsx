@@ -91,7 +91,7 @@ export function SignUpForm() {
 
   return (
     <form
-      className="mx-auto flex w-full max-w-[43rem] flex-col justify-center"
+      className="mx-auto flex w-full max-w-172 flex-col justify-center"
       onSubmit={handleSubmit(onSubmit)}
       noValidate
     >
