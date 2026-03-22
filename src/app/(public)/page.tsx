@@ -1,5 +1,5 @@
-import { HomePageShell } from "@/features/home/components/home-page-shell";
+import { HomePageContent } from "@/features/home/components/home-page-content";
 
 export default function HomePage() {
-  return <HomePageShell />;
+  return <HomePageContent />;
 }

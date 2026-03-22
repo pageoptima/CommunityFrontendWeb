@@ -1,0 +1,10 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="taino-icon-gradient" x1="10" y1="8" x2="54" y2="56" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#35D6C1" />
+      <stop offset="1" stop-color="#2B74D8" />
+    </linearGradient>
+  </defs>
+  <circle cx="32" cy="32" r="30" fill="url(#taino-icon-gradient)" />
+  <path d="M32 14L47 40H17L32 14Z" fill="white" />
+</svg>

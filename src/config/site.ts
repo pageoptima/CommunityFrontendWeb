@@ -1,5 +1,5 @@
 export const siteConfig = {
-  name: "Community Frontend Web",
+  name: "Taíno Nation",
   description:
     "Frontend platform for community enrollment, identity tracking, and local service discovery.",
   url: "",
