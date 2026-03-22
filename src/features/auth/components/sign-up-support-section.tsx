@@ -1,20 +1,8 @@
-import { Montserrat, Poppins } from "next/font/google";
 import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
+import { montserrat, poppins } from "@/styles/fonts";
 import { cn } from "@/lib/utils";
-
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["400", "600"],
-  display: "swap",
-});
-
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  weight: ["600"],
-  display: "swap",
-});
 
 type SupportCardKind = "phone" | "email" | "chat";
 
@@ -97,7 +85,7 @@ function SupportCardItem({ card }: Readonly<{ card: SupportCard }>) {
 
       {card.kind === "chat" ? (
         <Button
-          className="mx-auto mt-8 min-w-[11rem] rounded-full !bg-[linear-gradient(135deg,#2F7E94_0%,#1F667C_100%)] !px-8 !text-[1.02rem] !font-semibold !text-white !shadow-[0_18px_40px_-18px_rgba(25,96,118,0.58)] hover:!brightness-105"
+          className="mx-auto mt-8 min-w-44 rounded-full !bg-[linear-gradient(135deg,#2F7E94_0%,#1F667C_100%)] !text-white !shadow-[0_18px_40px_-18px_rgba(25,96,118,0.58)] hover:!brightness-105"
           size="xl"
           type="button"
         >
