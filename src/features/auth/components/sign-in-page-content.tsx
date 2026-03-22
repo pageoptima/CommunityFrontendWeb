@@ -28,7 +28,7 @@ export function SignInPageContent() {
     <main className="bg-[#f8f1dc] px-4 pt-6 pb-16 sm:px-6 lg:px-8 lg:pt-10 lg:pb-20">
       <div className="mx-auto max-w-7xl">
         <section className="grid gap-4 lg:grid-cols-[minmax(0,0.97fr)_minmax(0,1.03fr)]">
-          <div className="relative overflow-hidden rounded-[30px] bg-[linear-gradient(135deg,#26A8C0_0%,#2F98B4_100%)] px-6 py-6 text-white shadow-[0_28px_60px_-34px_rgba(18,93,109,0.42)] sm:px-8 sm:py-8 lg:min-h-190 lg:px-9 lg:py-10">
+          <div className="relative order-2 overflow-hidden rounded-[30px] bg-[linear-gradient(135deg,#26A8C0_0%,#2F98B4_100%)] px-6 py-6 text-white shadow-[0_28px_60px_-34px_rgba(18,93,109,0.42)] sm:px-8 sm:py-8 lg:order-1 lg:min-h-190 lg:px-9 lg:py-10">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.24),transparent_32%),radial-gradient(circle_at_bottom_left,rgba(0,70,88,0.16),transparent_28%)] opacity-80" />
 
             <div className="relative flex h-full flex-col">
@@ -66,7 +66,7 @@ export function SignInPageContent() {
             </div>
           </div>
 
-          <div className="overflow-hidden rounded-[30px] border border-black/10 bg-[linear-gradient(180deg,#f7f7f7_0%,#ececec_100%)] shadow-[0_28px_60px_-40px_rgba(16,24,40,0.34)] lg:min-h-190">
+          <div className="order-1 overflow-hidden rounded-[30px] border border-black/10 bg-[#FAF9F9] shadow-[0_28px_60px_-40px_rgba(16,24,40,0.34)] lg:order-2 lg:min-h-190">
             <div className="flex h-full items-center px-5 py-8 sm:px-8 lg:px-10 lg:py-12">
               <SignInForm />
             </div>

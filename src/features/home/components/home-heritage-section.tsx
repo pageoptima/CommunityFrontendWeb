@@ -39,7 +39,7 @@ const missionItems = [
 export function HomeHeritageSection() {
   return (
     <motion.section
-      className="overflow-hidden bg-white"
+      className="overflow-hidden"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.14 }}

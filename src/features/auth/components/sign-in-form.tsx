@@ -1,26 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import type { HTMLInputTypeAttribute } from "react";
+import Link from "next/link";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, type UseFormRegister } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-
-type AuthFieldProps = Readonly<{
-  name: SignInFieldName;
-  label: string;
-  type: HTMLInputTypeAttribute;
-  placeholder: string;
-  autoComplete?: string;
-  errorMessage?: string;
-  register: UseFormRegister<SignInFormValues>;
-}>;
-
-type SignInFieldName = "email" | "password";
+import { AuthField } from "@/features/auth/components/auth-field";
 
 const signInSchema = z.object({
   email: z
@@ -32,47 +20,6 @@ const signInSchema = z.object({
 });
 
 type SignInFormValues = z.infer<typeof signInSchema>;
-
-function AuthField({
-  name,
-  label,
-  type,
-  placeholder,
-  autoComplete,
-  errorMessage,
-  register,
-}: AuthFieldProps) {
-  const fieldErrorId = `${name}-error`;
-
-  return (
-    <label className="block" htmlFor={name}>
-      <span className="mb-2 block text-sm font-medium text-slate-700">
-        {label} <span className="text-red-500">*</span>
-      </span>
-
-      <input
-        autoComplete={autoComplete}
-        className={cn(
-          "text-foreground flex h-12 w-full rounded-xl border border-black/5 bg-white/65 px-4 text-[15px] shadow-[inset_0_1px_0_rgba(255,255,255,0.8)] transition-colors outline-none placeholder:text-slate-400 focus:border-[#2b74d8]/40 focus:ring-2 focus:ring-[#2b74d8]/15",
-          errorMessage &&
-            "border-red-300 focus:border-red-400/50 focus:ring-red-200/50",
-        )}
-        id={name}
-        placeholder={placeholder}
-        type={type}
-        aria-describedby={errorMessage ? fieldErrorId : undefined}
-        aria-invalid={errorMessage ? "true" : "false"}
-        {...register(name)}
-      />
-
-      {errorMessage ? (
-        <p className="mt-2 text-sm font-medium text-red-600" id={fieldErrorId}>
-          {errorMessage}
-        </p>
-      ) : null}
-    </label>
-  );
-}
 
 export function SignInForm() {
   const {
@@ -161,12 +108,12 @@ export function SignInForm() {
 
       <p className="mt-4 text-center text-sm text-slate-600">
         Don&apos;t have an account?{" "}
-        <button
-          className="cursor-pointer font-semibold text-[#2b74d8] transition-colors hover:text-[#1f8ca5]"
-          type="button"
+        <Link
+          className="font-semibold text-[#2b74d8] transition-colors hover:text-[#1f8ca5]"
+          href="/sign-up"
         >
           Sign up
-        </button>
+        </Link>
       </p>
 
       <div className="mt-8 text-center">
