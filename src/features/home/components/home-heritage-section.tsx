@@ -42,7 +42,7 @@ export function HomeHeritageSection() {
       className="overflow-hidden bg-white"
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.22 }}
+      viewport={{ once: true, amount: 0.14 }}
       variants={fadeInUpContainer}
     >
       <div className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24">

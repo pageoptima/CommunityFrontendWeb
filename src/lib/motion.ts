@@ -9,8 +9,8 @@ export const fadeInUpContainer: Variants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.22,
-      delayChildren: 0.16,
+      staggerChildren: 0.14,
+      delayChildren: 0.06,
     },
   },
 };
@@ -24,7 +24,7 @@ export const fadeInUpItem: Variants = {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.95,
+      duration: 0.72,
       ease: smoothEase,
     },
   },
@@ -41,7 +41,7 @@ export const fadeInScaleItem: Variants = {
     y: 0,
     scale: 1,
     transition: {
-      duration: 0.76,
+      duration: 0.6,
       ease: smoothEase,
     },
   },
@@ -58,10 +58,10 @@ export const mobileMenuVariants: Variants = {
     y: 0,
     scale: 1,
     transition: {
-      duration: 0.5,
+      duration: 0.42,
       ease: smoothEase,
       when: "beforeChildren",
-      staggerChildren: 0.12,
+      staggerChildren: 0.08,
     },
   },
   exit: {
@@ -69,7 +69,7 @@ export const mobileMenuVariants: Variants = {
     y: -8,
     scale: 0.98,
     transition: {
-      duration: 0.28,
+      duration: 0.24,
       ease: smoothEase,
     },
   },

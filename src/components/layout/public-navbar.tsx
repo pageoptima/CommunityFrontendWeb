@@ -14,9 +14,18 @@ import { cn } from "@/lib/utils";
 
 import { BrandMark } from "@/components/shared/brand-mark";
 
+function isActivePath(pathname: string, href: string) {
+  if (href === "/") {
+    return pathname === "/";
+  }
+
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
+
 export function PublicNavbar() {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const isSignInPage = isActivePath(pathname, "/sign-in");
 
   return (
     <motion.header
@@ -33,16 +42,17 @@ export function PublicNavbar() {
 
           <nav className="hidden items-center gap-1 lg:flex">
             {publicNavigation.map((item) => {
-              const isActive = item.href === pathname;
+              const isActive = isActivePath(pathname, item.href);
 
               return (
                 <Link
                   key={item.href}
                   href={item.href}
+                  aria-current={isActive ? "page" : undefined}
                   className={cn(
                     "rounded-full px-4 py-2 text-sm font-medium transition-colors",
                     isActive
-                      ? "text-foreground"
+                      ? "text-[#3D3DA0]!"
                       : "text-muted-foreground hover:text-foreground",
                   )}
                 >
@@ -54,7 +64,12 @@ export function PublicNavbar() {
 
           <div className="hidden items-center gap-2 lg:flex">
             <Button variant="ghost" size="sm" asChild>
-              <Link href="/sign-in">Sign In</Link>
+              <Link
+                className={cn(isSignInPage && "text-[#3D3DA0]!")}
+                href="/sign-in"
+              >
+                Sign In
+              </Link>
             </Button>
             <Button size="sm" asChild>
               <Link href="/enrollment">Apply Now</Link>
@@ -85,17 +100,18 @@ export function PublicNavbar() {
             >
               <nav className="grid gap-1">
                 {publicNavigation.map((item) => {
-                  const isActive = item.href === pathname;
+                  const isActive = isActivePath(pathname, item.href);
 
                   return (
                     <Link
                       key={item.href}
                       href={item.href}
+                      aria-current={isActive ? "page" : undefined}
                       onClick={() => setIsMobileMenuOpen(false)}
                       className={cn(
                         "rounded-2xl px-4 py-3 text-sm font-medium transition-colors",
                         isActive
-                          ? "bg-surface-muted text-foreground"
+                          ? "bg-surface-muted text-[#3D3DA0]!"
                           : "text-muted-foreground hover:bg-surface-muted hover:text-foreground",
                       )}
                     >
@@ -108,6 +124,7 @@ export function PublicNavbar() {
               <div className="mt-4 grid gap-3 sm:grid-cols-2">
                 <Button variant="outline" asChild>
                   <Link
+                    className={cn(isSignInPage && "text-[#3D3DA0]!")}
                     href="/sign-in"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >

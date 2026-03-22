@@ -56,7 +56,7 @@ export function HomePlatformFeaturesSection() {
       className="overflow-hidden bg-[linear-gradient(180deg,#004D43_0%,#0080B3_100%)] text-white"
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.15 }}
+      viewport={{ once: true, amount: 0.1 }}
       variants={fadeInUpContainer}
     >
       <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 lg:py-28">
