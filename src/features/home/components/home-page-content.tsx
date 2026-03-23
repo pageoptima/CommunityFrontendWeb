@@ -7,6 +7,7 @@ export function HomePageContent() {
     <main className="bg-background">
       <HomeHero />
       <HomeHeritageSection />
+      {/* <HomeEnrollmentProcessSection /> */}
       <HomePlatformFeaturesSection />
     </main>
   );
