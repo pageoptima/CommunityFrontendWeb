@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import type { ReactNode } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -10,6 +11,12 @@ import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import { AuthField } from "@/features/auth/components/auth-field";
+import { submitAuthRequest } from "@/features/auth/lib/auth-submit";
+import {
+  appendNextQuery,
+  getSafeRedirectPath,
+  normalizeNamePart,
+} from "@/lib/auth";
 
 const signUpSchema = z
   .object({
@@ -36,6 +43,11 @@ const signUpSchema = z
   });
 
 type SignUpFormValues = z.infer<typeof signUpSchema>;
+type SignUpRequestBody = {
+  name: string;
+  email: string;
+  password: string;
+};
 
 function ConsentLine({
   name,
@@ -66,9 +78,13 @@ function ConsentLine({
 }
 
 export function SignUpForm() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const {
     register,
     handleSubmit,
+    clearErrors,
+    setError,
     formState: { errors, isSubmitting },
   } = useForm<SignUpFormValues>({
     resolver: zodResolver(signUpSchema),
@@ -85,8 +101,40 @@ export function SignUpForm() {
     mode: "onTouched",
   });
 
-  const onSubmit = () => {
-    // UI only for now. Backend integration comes later.
+  const onSubmit = async (values: SignUpFormValues) => {
+    clearErrors("root");
+
+    const firstName = normalizeNamePart(values.firstName);
+    const lastName = normalizeNamePart(values.lastName);
+    const name = [firstName, lastName].filter(Boolean).join(" ");
+
+    if (!name) {
+      setError("root", {
+        type: "server",
+        message: "Please enter a valid first and last name.",
+      });
+      return;
+    }
+
+    const payload: SignUpRequestBody = {
+      name,
+      email: values.email.trim().toLowerCase(),
+      password: values.password,
+    };
+
+    await submitAuthRequest({
+      endpoint: "/api/auth/register",
+      payload,
+      redirectTo: getSafeRedirectPath(searchParams.get("next")),
+      router,
+      onError: (message) =>
+        setError("root", {
+          type: "server",
+          message,
+        }),
+      fallbackMessage:
+        "Unable to reach the registration service. Please try again in a moment.",
+    });
   };
 
   return (
@@ -106,6 +154,12 @@ export function SignUpForm() {
       </div>
 
       <div className="mt-8 grid gap-5 sm:grid-cols-2">
+        {errors.root?.message ? (
+          <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm leading-6 text-red-700 sm:col-span-2">
+            {errors.root.message}
+          </div>
+        ) : null}
+
         <AuthField
           autoComplete="given-name"
           name="firstName"
@@ -221,7 +275,7 @@ export function SignUpForm() {
         Already have an account?{" "}
         <Link
           className="font-semibold text-[#2b74d8] transition-colors hover:text-[#1f8ca5]"
-          href="/sign-in"
+          href={appendNextQuery("/sign-in", searchParams.get("next"))}
         >
           Sign In
         </Link>

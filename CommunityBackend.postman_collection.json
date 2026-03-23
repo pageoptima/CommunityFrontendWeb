@@ -1,0 +1,223 @@
+{
+  "info": {
+    "_postman_id": "e7a8a2f1-8f7f-4b1e-a6b8-5f4a1b8cb001",
+    "name": "CommunityBackend",
+    "description": "Postman collection for the implemented CommunityBackend API routes.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/register"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Frontend Tester\",\n  \"email\": \"tester@example.com\",\n  \"password\": \"password123\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const json = pm.response.json();",
+                  "if (json.accessToken) {",
+                  "  pm.environment.set('accessToken', json.accessToken);",
+                  "}",
+                  "if (json.user && json.user.id) {",
+                  "  pm.environment.set('userId', json.user.id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/login"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"admin123\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const json = pm.response.json();",
+                  "if (json.accessToken) {",
+                  "  pm.environment.set('accessToken', json.accessToken);",
+                  "}",
+                  "if (json.user && json.user.id) {",
+                  "  pm.environment.set('userId', json.user.id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Consent",
+      "item": [
+        {
+          "name": "Get Active Consents",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/consent/active"
+            }
+          }
+        },
+        {
+          "name": "Accept Consent",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/consent/accept"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"acceptRequired\": true\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Enrollment",
+      "item": [
+        {
+          "name": "Start Enrollment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/enrollment/start"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const json = pm.response.json();",
+                  "if (json.enrollment && json.enrollment.id) {",
+                  "  pm.environment.set('enrollmentId', json.enrollment.id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Step 1 - Personal Info",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/enrollment/step1"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"legalName\": {\n    \"firstName\": \"Bikash\",\n    \"middleName\": \"Kumar\",\n    \"lastName\": \"Santra\",\n    \"maternalLastName\": \"Das\",\n    \"preferredName\": \"Bikash\"\n  },\n  \"birthInfo\": {\n    \"dateOfBirth\": \"2002-05-10\",\n    \"cityOfBirth\": \"Kolkata\",\n    \"municipalityOfBirth\": \"Kolkata Municipal Corporation\",\n    \"countryOfBirth\": \"India\"\n  },\n  \"gender\": {\n    \"gender\": \"MALE\",\n    \"pronouns\": \"he/him\"\n  },\n  \"contact\": {\n    \"email\": \"tester@example.com\",\n    \"phoneNumber\": \"9876543210\",\n    \"phoneType\": \"MOBILE\",\n    \"allowSMS\": true\n  },\n  \"currentAddress\": {\n    \"street\": \"123 Main Street\",\n    \"apartment\": \"12B\",\n    \"city\": \"Kolkata\",\n    \"state\": \"West Bengal\",\n    \"zipCode\": \"700001\",\n    \"country\": \"India\",\n    \"yearsLived\": \"5\"\n  },\n  \"mailingAddress\": {\n    \"street\": \"123 Main Street\",\n    \"apartment\": \"12B\",\n    \"city\": \"Kolkata\",\n    \"state\": \"West Bengal\",\n    \"zipCode\": \"700001\",\n    \"country\": \"India\",\n    \"yearsLived\": \"5\"\n  },\n  \"emergencyContact\": {\n    \"fullName\": \"Test Contact\",\n    \"relationship\": \"Brother\",\n    \"phoneNumber\": \"9999999999\"\n  },\n  \"additionalInfo\": {\n    \"maritalStatus\": \"SINGLE\",\n    \"occupation\": \"Developer\",\n    \"educationLevel\": \"Graduate\",\n    \"languagesSpoken\": [\"English\", \"Hindi\"],\n    \"specialSkills\": \"Frontend development\"\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "Step 2 - Maternal Lineage",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/enrollment/step2"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"maternalLineages\": [\n    {\n      \"relation\": \"MOTHER\",\n      \"fullName\": \"Sample Mother\",\n      \"maidenName\": \"Sample Maiden\",\n      \"dateOfBirth\": \"1975-01-15\",\n      \"placeOfBirth\": \"Kolkata\",\n      \"livingStatus\": \"LIVING\",\n      \"approximateBirthYear\": 1975,\n      \"regionOfOrigin\": \"West Bengal\",\n      \"familyOccupation\": \"Teacher\",\n      \"additionalNotes\": \"Sample note\"\n    }\n  ]\n}"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "accessToken",
+      "value": ""
+    },
+    {
+      "key": "baseUrl",
+      "value": "https://communitybackend-0tci.onrender.com"
+    },
+    {
+      "key": "userId",
+      "value": ""
+    },
+    {
+      "key": "enrollmentId",
+      "value": ""
+    }
+  ]
+}

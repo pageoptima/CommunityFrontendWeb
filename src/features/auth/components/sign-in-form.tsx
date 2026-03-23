@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -9,6 +10,8 @@ import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import { AuthField } from "@/features/auth/components/auth-field";
+import { submitAuthRequest } from "@/features/auth/lib/auth-submit";
+import { appendNextQuery, getSafeRedirectPath } from "@/lib/auth";
 
 const signInSchema = z.object({
   email: z
@@ -22,9 +25,13 @@ const signInSchema = z.object({
 type SignInFormValues = z.infer<typeof signInSchema>;
 
 export function SignInForm() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const {
     register,
     handleSubmit,
+    clearErrors,
+    setError,
     formState: { errors, isSubmitting },
   } = useForm<SignInFormValues>({
     resolver: zodResolver(signInSchema),
@@ -36,8 +43,22 @@ export function SignInForm() {
     mode: "onTouched",
   });
 
-  const onSubmit = () => {
-    // UI only for now. Backend integration comes later.
+  const onSubmit = async (values: SignInFormValues) => {
+    clearErrors("root");
+
+    await submitAuthRequest({
+      endpoint: "/api/auth/login",
+      payload: values,
+      redirectTo: getSafeRedirectPath(searchParams.get("next")),
+      router,
+      onError: (message) =>
+        setError("root", {
+          type: "server",
+          message,
+        }),
+      fallbackMessage:
+        "Unable to reach the sign-in service. Please try again in a moment.",
+    });
   };
 
   return (
@@ -57,6 +78,12 @@ export function SignInForm() {
       </div>
 
       <div className="mt-8 space-y-5">
+        {errors.root?.message ? (
+          <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm leading-6 text-red-700">
+            {errors.root.message}
+          </div>
+        ) : null}
+
         <AuthField
           autoComplete="email"
           name="email"
@@ -100,17 +127,18 @@ export function SignInForm() {
         className="mt-6 h-12 rounded-xl text-base shadow-[0_16px_34px_-20px_rgba(36,172,195,0.75)]"
         fullWidth
         size="lg"
-        disabled={isSubmitting}
+        loading={isSubmitting}
+        loadingText="Logging in..."
         type="submit"
       >
-        {isSubmitting ? "Logging in..." : "Log in"}
+        Log in
       </Button>
 
       <p className="mt-4 text-center text-sm text-slate-600">
         Don&apos;t have an account?{" "}
         <Link
           className="font-semibold text-[#2b74d8] transition-colors hover:text-[#1f8ca5]"
-          href="/sign-up"
+          href={appendNextQuery("/sign-up", searchParams.get("next"))}
         >
           Sign up
         </Link>
