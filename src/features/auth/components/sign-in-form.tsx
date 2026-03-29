@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -9,9 +8,12 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
+import { AuthTrustNote } from "@/features/auth/components/auth-trust-note";
 import { AuthField } from "@/features/auth/components/auth-field";
 import { submitAuthRequest } from "@/features/auth/lib/auth-submit";
+import { cn } from "@/lib/utils";
 import { appendNextQuery, getSafeRedirectPath } from "@/lib/auth";
+import sharedStyles from "@/features/auth/styles/auth-shared.module.scss";
 
 const signInSchema = z.object({
   email: z
@@ -70,18 +72,13 @@ export function SignInForm() {
       <div className="text-center">
         <h1 className="text-foreground text-3xl font-semibold tracking-[-0.04em] sm:text-[2rem]">
           Login to{" "}
-          <span className="bg-[linear-gradient(135deg,#24acc3_0%,#2b74d8_100%)] bg-clip-text text-transparent">
-            Taíno Nation
-          </span>
-          ?
+          <span className={sharedStyles.gradientText}>Taíno Nation</span>?
         </h1>
       </div>
 
       <div className="mt-8 space-y-5">
         {errors.root?.message ? (
-          <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm leading-6 text-red-700">
-            {errors.root.message}
-          </div>
+          <div className={sharedStyles.formError}>{errors.root.message}</div>
         ) : null}
 
         <AuthField
@@ -116,7 +113,10 @@ export function SignInForm() {
         </label>
 
         <button
-          className="cursor-pointer text-sm font-medium text-[#2b74d8] transition-colors hover:text-[#1f8ca5]"
+          className={cn(
+            sharedStyles.linkAccent,
+            "cursor-pointer text-sm font-medium",
+          )}
           type="button"
         >
           Forgot Password?
@@ -124,7 +124,10 @@ export function SignInForm() {
       </div>
 
       <Button
-        className="mt-6 h-12 rounded-xl text-base shadow-[0_16px_34px_-20px_rgba(36,172,195,0.75)]"
+        className={cn(
+          sharedStyles.submitButtonShadow,
+          "mt-6 h-12 rounded-xl text-base",
+        )}
         fullWidth
         size="lg"
         loading={isSubmitting}
@@ -137,27 +140,14 @@ export function SignInForm() {
       <p className="mt-4 text-center text-sm text-slate-600">
         Don&apos;t have an account?{" "}
         <Link
-          className="font-semibold text-[#2b74d8] transition-colors hover:text-[#1f8ca5]"
+          className={cn(sharedStyles.linkAccent, "font-semibold")}
           href={appendNextQuery("/sign-up", searchParams.get("next"))}
         >
           Sign up
         </Link>
       </p>
 
-      <div className="mt-8 text-center">
-        <Image
-          alt=""
-          aria-hidden="true"
-          className="mx-auto size-7 object-contain"
-          height={28}
-          src="/icons/auth/shield.svg"
-          width={28}
-        />
-        <p className="mt-2 text-sm leading-[1.48] font-medium text-black">
-          Your data is protected with bank-level encryption and stored on
-          sovereign, community-owned servers.
-        </p>
-      </div>
+      <AuthTrustNote />
     </form>
   );
 }

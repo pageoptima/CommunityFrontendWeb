@@ -9,6 +9,7 @@ import { montserrat, poppins } from "@/styles/fonts";
 import { HomeEnrollmentCta } from "@/features/home/components/home-enrollment-cta";
 import { HomeEnrollmentResourcesSection } from "@/features/home/components/home-enrollment-resources-section";
 import { HomeEnrollmentStepCard } from "@/features/home/components/home-enrollment-step-card";
+import sharedStyles from "../styles/home-shared.module.scss";
 
 const enrollmentSteps = [
   {
@@ -92,12 +93,15 @@ export function HomeEnrollmentProcessSection() {
       viewport={{ once: true, amount: 0.12 }}
       variants={fadeInUpContainer}
     >
-      <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-24 lg:px-8 lg:py-28">
+      <div
+        className={cn(sharedStyles.sectionContainer, "py-20 sm:py-24 lg:py-28")}
+      >
         <div className="mx-auto max-w-5xl text-center">
           <motion.span
             className={cn(
+              sharedStyles.sectionBadge,
               poppins.className,
-              "inline-flex items-center rounded-full bg-[#D7EFD3] px-8 py-3 text-[1rem] font-semibold tracking-[-0.02em] text-[#1B5B4F] shadow-[inset_0_1px_0_rgba(255,255,255,0.45)]",
+              "bg-[#D7EFD3] px-8 py-3 text-[1rem] tracking-[-0.02em] text-[#1B5B4F] shadow-[inset_0_1px_0_rgba(255,255,255,0.45)]",
             )}
             variants={fadeInUpItem}
           >

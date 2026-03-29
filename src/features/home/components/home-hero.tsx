@@ -6,7 +6,10 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { fadeInScaleItem, fadeInUpContainer, fadeInUpItem } from "@/lib/motion";
+
+import sharedStyles from "../styles/home-shared.module.scss";
 
 const memberAvatars = [
   { src: "/images/member1.png", alt: "Community member portrait 1" },
@@ -24,16 +27,19 @@ export function HomeHero() {
     >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(47,207,195,0.18),transparent_35%),radial-gradient(circle_at_80%_20%,rgba(43,116,216,0.12),transparent_28%)]" />
 
-      <div className="relative mx-auto max-w-7xl px-4 pt-16 pb-16 sm:px-6 sm:pb-20 lg:px-8 lg:pt-24 lg:pb-24">
+      <div
+        className={cn(
+          sharedStyles.sectionContainer,
+          "relative pt-16 pb-16 sm:pb-20 lg:pt-24 lg:pb-24",
+        )}
+      >
         <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
           <motion.h1
             className="text-foreground max-w-4xl text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl"
             variants={fadeInUpItem}
           >
             Welcome to the{" "}
-            <span className="bg-[linear-gradient(135deg,#2fcfc3_0%,#2b74d8_100%)] bg-clip-text text-transparent">
-              Taíno Nation
-            </span>{" "}
+            <span className={sharedStyles.gradientText}>Taíno Nation</span>{" "}
             Digital Platform
           </motion.h1>
 

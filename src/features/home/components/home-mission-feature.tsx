@@ -4,6 +4,9 @@ import { motion } from "framer-motion";
 import { CircleCheckBig } from "lucide-react";
 
 import { fadeInUpItem } from "@/lib/motion";
+import { cn } from "@/lib/utils";
+
+import sharedStyles from "../styles/home-shared.module.scss";
 
 type HomeMissionFeatureProps = {
   label: string;
@@ -12,7 +15,10 @@ type HomeMissionFeatureProps = {
 export function HomeMissionFeature({ label }: HomeMissionFeatureProps) {
   return (
     <motion.div
-      className="flex items-center gap-4 rounded-3xl bg-white/12 px-6 py-6 backdrop-blur-[2px]"
+      className={cn(
+        sharedStyles.glassPanel,
+        "flex items-center gap-4 rounded-3xl px-6 py-6",
+      )}
       variants={fadeInUpItem}
     >
       <CircleCheckBig className="size-6 shrink-0 text-white" />

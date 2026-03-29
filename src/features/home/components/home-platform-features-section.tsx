@@ -4,6 +4,9 @@ import { motion } from "framer-motion";
 
 import { HomePlatformFeatureCard } from "@/features/home/components/home-platform-feature-card";
 import { fadeInUpContainer, fadeInUpItem } from "@/lib/motion";
+import { cn } from "@/lib/utils";
+
+import sharedStyles from "../styles/home-shared.module.scss";
 
 const platformFeatureIcons = {
   identification: "/icons/home/platform-features/id-card.svg",
@@ -59,10 +62,13 @@ export function HomePlatformFeaturesSection() {
       viewport={{ once: true, amount: 0.1 }}
       variants={fadeInUpContainer}
     >
-      <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 lg:py-28">
+      <div className={cn(sharedStyles.sectionContainer, "py-24 lg:py-28")}>
         <div className="mx-auto max-w-5xl text-center">
           <motion.span
-            className="inline-flex items-center rounded-full border border-white/20 bg-white/5 px-6 py-3 text-sm font-semibold text-white/95 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]"
+            className={cn(
+              sharedStyles.sectionBadge,
+              "border border-white/20 bg-white/5 px-6 py-3 text-white/95 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]",
+            )}
             variants={fadeInUpItem}
           >
             Platform Features

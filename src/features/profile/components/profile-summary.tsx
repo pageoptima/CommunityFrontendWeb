@@ -15,6 +15,9 @@ export function ProfileSummary({
   memberSince,
   memberStatus,
 }: ProfileSummaryProps) {
+  const profileActionButtonClass =
+    "h-[38px] w-[38px] shrink-0 rounded-[10px] bg-[#2b6674] text-white shadow-[0_12px_24px_-20px_rgba(16,47,52,0.4)] hover:bg-[#245c68] sm:h-[40px] sm:w-[40px] lg:h-[38px] lg:w-[38px]";
+
   return (
     <div className="max-w-[33rem] min-w-0 flex-1 text-left">
       <div className="flex flex-wrap items-center justify-start gap-x-2 gap-y-2 lg:flex-nowrap">
@@ -69,13 +72,13 @@ export function ProfileSummary({
         </Button>
 
         <ProfileActionButton
-          className="h-[38px] w-[38px] shrink-0 rounded-[10px] bg-[#2b6674] text-white shadow-[0_12px_24px_-20px_rgba(16,47,52,0.4)] hover:bg-[#245c68] sm:h-[40px] sm:w-[40px] lg:h-[38px] lg:w-[38px]"
+          className={profileActionButtonClass}
           iconSrc="/icons/profile/download.svg"
           label="Download profile"
         />
 
         <ProfileActionButton
-          className="h-[38px] w-[38px] shrink-0 rounded-[10px] bg-[#2b6674] text-white shadow-[0_12px_24px_-20px_rgba(16,47,52,0.4)] hover:bg-[#245c68] sm:h-[40px] sm:w-[40px] lg:h-[38px] lg:w-[38px]"
+          className={profileActionButtonClass}
           iconSrc="/icons/profile/share.svg"
           label="Share profile"
         />

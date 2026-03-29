@@ -84,10 +84,7 @@ export function ProfileLineageTabs({
               }}
             >
               <SvgIcon
-                className={cn(
-                  "shrink-0",
-                  isActive ? "opacity-100" : "opacity-80",
-                )}
+                className={cn("shrink-0", !isActive && "opacity-80")}
                 sizeClassName="size-4"
                 toneColor={isActive ? "#1B4C54" : undefined}
                 src={tab.iconSrc}

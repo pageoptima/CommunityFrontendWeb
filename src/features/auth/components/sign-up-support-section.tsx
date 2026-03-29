@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { montserrat, poppins } from "@/styles/fonts";
 import { cn } from "@/lib/utils";
+import sharedStyles from "@/features/auth/styles/auth-shared.module.scss";
 
 type SupportCardKind = "phone" | "email" | "chat";
 
@@ -119,8 +120,8 @@ function SupportCardItem({ card }: Readonly<{ card: SupportCard }>) {
 
 export function SignUpSupportSection() {
   return (
-    <section className="bg-[#FFFDEC] px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
-      <div className="mx-auto max-w-7xl">
+    <section className="bg-[#FFFDEC] py-16 sm:py-20 lg:py-24">
+      <div className={sharedStyles.pageFrame}>
         <div className="mx-auto max-w-6xl text-center">
           <div className="inline-flex rounded-full border border-[#DCEBD6] bg-[#D7EFD3] px-10 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.45)]">
             <p

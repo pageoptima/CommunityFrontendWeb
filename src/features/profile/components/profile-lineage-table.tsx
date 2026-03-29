@@ -1,3 +1,4 @@
+import styles from "../styles/profile-lineage-table.module.scss";
 import { ProfileLineageEntryCard } from "./profile-lineage-entry-card";
 import { profileConfig } from "../config/profile-config";
 
@@ -12,10 +13,7 @@ export function ProfileLineageTable() {
           >
             <div className="relative flex items-start justify-center pt-2">
               {index < profileConfig.lineageEntries.length - 1 ? (
-                <div
-                  aria-hidden="true"
-                  className="pointer-events-none absolute top-[2.1rem] bottom-[-0.9rem] left-1/2 w-[2px] -translate-x-1/2 bg-[repeating-linear-gradient(to_bottom,#215A64_0_7px,transparent_7px_15px)] sm:top-[2.25rem] sm:bottom-[-1rem] lg:top-[2.55rem] lg:bottom-[-1.1rem]"
-                />
+                <div aria-hidden="true" className={styles.stem} />
               ) : null}
 
               <span className="relative z-10 inline-flex bg-[#fbf7e8] px-1 text-[2.7rem] leading-[0.9] font-semibold tracking-[-0.08em] text-black sm:text-[3.1rem] lg:text-[3.75rem]">

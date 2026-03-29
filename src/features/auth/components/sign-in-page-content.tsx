@@ -1,7 +1,9 @@
 import Image from "next/image";
 
+import { cn } from "@/lib/utils";
 import { SignInBenefitCard } from "@/features/auth/components/sign-in-benefit-card";
 import { SignInForm } from "@/features/auth/components/sign-in-form";
+import sharedStyles from "@/features/auth/styles/auth-shared.module.scss";
 
 const benefitCards = [
   {
@@ -25,11 +27,16 @@ const benefitCards = [
 
 export function SignInPageContent() {
   return (
-    <main className="bg-[#f8f1dc] px-4 pt-6 pb-16 sm:px-6 lg:px-8 lg:pt-10 lg:pb-20">
-      <div className="mx-auto max-w-7xl">
+    <main className="bg-[#f8f1dc] pt-6 pb-16 lg:pt-10 lg:pb-20">
+      <div className={sharedStyles.pageFrame}>
         <section className="grid gap-4 lg:grid-cols-[minmax(0,0.97fr)_minmax(0,1.03fr)]">
-          <div className="relative order-2 overflow-hidden rounded-[30px] bg-[linear-gradient(135deg,#26A8C0_0%,#2F98B4_100%)] px-6 py-6 text-white shadow-[0_28px_60px_-34px_rgba(18,93,109,0.42)] sm:px-8 sm:py-8 lg:order-1 lg:min-h-190 lg:px-9 lg:py-10">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.24),transparent_32%),radial-gradient(circle_at_bottom_left,rgba(0,70,88,0.16),transparent_28%)] opacity-80" />
+          <div
+            className={cn(
+              sharedStyles.featurePanel,
+              "order-2 px-6 py-6 sm:px-8 sm:py-8 lg:order-1 lg:min-h-190 lg:px-9 lg:py-10",
+            )}
+          >
+            <div className={sharedStyles.featurePanelOverlay} />
 
             <div className="relative flex h-full flex-col">
               <div className="flex size-14 items-center justify-center rounded-2xl border border-white/20 bg-white/12 text-white shadow-[0_16px_28px_-18px_rgba(0,0,0,0.2)]">
@@ -66,7 +73,12 @@ export function SignInPageContent() {
             </div>
           </div>
 
-          <div className="order-1 overflow-hidden rounded-[30px] border border-black/10 bg-[#FAF9F9] shadow-[0_28px_60px_-40px_rgba(16,24,40,0.34)] lg:order-2 lg:min-h-190">
+          <div
+            className={cn(
+              sharedStyles.surfacePanel,
+              "order-1 lg:order-2 lg:min-h-190",
+            )}
+          >
             <div className="flex h-full items-center px-5 py-8 sm:px-8 lg:px-10 lg:py-12">
               <SignInForm />
             </div>

@@ -5,6 +5,9 @@ import { motion } from "framer-motion";
 import { HomeHeritageCard } from "@/features/home/components/home-heritage-card";
 import { HomeMissionFeature } from "@/features/home/components/home-mission-feature";
 import { fadeInUpContainer, fadeInUpItem } from "@/lib/motion";
+import { cn } from "@/lib/utils";
+
+import sharedStyles from "../styles/home-shared.module.scss";
 
 const heritageCards = [
   {
@@ -45,10 +48,15 @@ export function HomeHeritageSection() {
       viewport={{ once: true, amount: 0.14 }}
       variants={fadeInUpContainer}
     >
-      <div className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
+      <div
+        className={cn(sharedStyles.sectionContainer, "relative py-20 lg:py-24")}
+      >
         <div className="mx-auto max-w-4xl text-center">
           <motion.span
-            className="inline-flex items-center rounded-full bg-[#e8f8f3] px-5 py-2 text-sm font-semibold text-[#2c7d6f]"
+            className={cn(
+              sharedStyles.sectionBadge,
+              "bg-[#e8f8f3] px-5 py-2 text-[#2c7d6f]",
+            )}
             variants={fadeInUpItem}
           >
             About Our Platform
@@ -59,10 +67,8 @@ export function HomeHeritageSection() {
             variants={fadeInUpItem}
           >
             Preserving{" "}
-            <span className="bg-[linear-gradient(135deg,#2fcfc3_0%,#2b74d8_100%)] bg-clip-text text-transparent">
-              Heritage
-            </span>{" "}
-            Through Technology
+            <span className={sharedStyles.gradientText}>Heritage</span> Through
+            Technology
           </motion.h2>
 
           <motion.p

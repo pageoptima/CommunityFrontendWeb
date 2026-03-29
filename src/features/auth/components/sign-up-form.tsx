@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import type { ReactNode } from "react";
@@ -10,6 +9,7 @@ import { useForm, type UseFormRegister } from "react-hook-form";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
+import { AuthTrustNote } from "@/features/auth/components/auth-trust-note";
 import { AuthField } from "@/features/auth/components/auth-field";
 import { submitAuthRequest } from "@/features/auth/lib/auth-submit";
 import {
@@ -17,6 +17,8 @@ import {
   getSafeRedirectPath,
   normalizeNamePart,
 } from "@/lib/auth";
+import { cn } from "@/lib/utils";
+import sharedStyles from "@/features/auth/styles/auth-shared.module.scss";
 
 const signUpSchema = z
   .object({
@@ -145,17 +147,14 @@ export function SignUpForm() {
     >
       <div className="text-center">
         <h1 className="text-foreground text-3xl font-semibold tracking-[-0.04em] sm:text-[2rem]">
-          New to{" "}
-          <span className="bg-[linear-gradient(135deg,#24acc3_0%,#2b74d8_100%)] bg-clip-text text-transparent">
-            Taíno Nation
-          </span>
+          New to <span className={sharedStyles.gradientText}>Taíno Nation</span>
           ?
         </h1>
       </div>
 
       <div className="mt-8 grid gap-5 sm:grid-cols-2">
         {errors.root?.message ? (
-          <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm leading-6 text-red-700 sm:col-span-2">
+          <div className={cn(sharedStyles.formError, "sm:col-span-2")}>
             {errors.root.message}
           </div>
         ) : null}
@@ -228,14 +227,20 @@ export function SignUpForm() {
           <ConsentLine name="agreeToTerms" register={register}>
             I agree to the{" "}
             <Link
-              className="text-[#2b74d8] underline-offset-2 transition-colors hover:text-[#1f8ca5] hover:underline"
+              className={cn(
+                sharedStyles.linkAccent,
+                "underline-offset-2 hover:underline",
+              )}
               href="/terms-of-service"
             >
               Terms of Service
             </Link>{" "}
             and{" "}
             <Link
-              className="text-[#2b74d8] underline-offset-2 transition-colors hover:text-[#1f8ca5] hover:underline"
+              className={cn(
+                sharedStyles.linkAccent,
+                "underline-offset-2 hover:underline",
+              )}
               href="/privacy-policy"
             >
               Privacy Policy
@@ -260,7 +265,10 @@ export function SignUpForm() {
       </div>
 
       <Button
-        className="mt-8 h-14 rounded-xl text-base shadow-[0_16px_34px_-20px_rgba(36,172,195,0.75)]"
+        className={cn(
+          sharedStyles.submitButtonShadow,
+          "mt-8 h-14 rounded-xl text-base",
+        )}
         fullWidth
         size="lg"
         disabled={isSubmitting}
@@ -274,27 +282,14 @@ export function SignUpForm() {
       <p className="mt-4 text-center text-sm text-slate-600">
         Already have an account?{" "}
         <Link
-          className="font-semibold text-[#2b74d8] transition-colors hover:text-[#1f8ca5]"
+          className={cn(sharedStyles.linkAccent, "font-semibold")}
           href={appendNextQuery("/sign-in", searchParams.get("next"))}
         >
           Sign In
         </Link>
       </p>
 
-      <div className="mt-8 text-center">
-        <Image
-          alt=""
-          aria-hidden="true"
-          className="mx-auto size-7 object-contain"
-          height={28}
-          src="/icons/auth/shield.svg"
-          width={28}
-        />
-        <p className="mt-2 text-sm leading-[1.48] font-medium text-black">
-          Your data is protected with bank-level encryption and stored on
-          sovereign, community-owned servers.
-        </p>
-      </div>
+      <AuthTrustNote />
     </form>
   );
 }

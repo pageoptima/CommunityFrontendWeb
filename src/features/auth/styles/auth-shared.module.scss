@@ -1,0 +1,76 @@
+@use "../../../styles/scss" as *;
+
+.pageFrame {
+  margin-inline: auto;
+  max-width: 80rem;
+  padding-inline: 1rem;
+
+  @include up(sm) {
+    padding-inline: 1.5rem;
+  }
+
+  @include up(lg) {
+    padding-inline: 2rem;
+  }
+}
+
+.surfacePanel {
+  overflow: hidden;
+  border: 1px solid rgb(0 0 0 / 0.1);
+  border-radius: 30px;
+  background: #faf9f9;
+  box-shadow: 0 28px 60px -40px rgb(16 24 40 / 0.34);
+}
+
+.featurePanel {
+  position: relative;
+  overflow: hidden;
+  border-radius: 30px;
+  background: linear-gradient(135deg, #26a8c0 0%, #2f98b4 100%);
+  color: #fff;
+  box-shadow: 0 28px 60px -34px rgb(18 93 109 / 0.42);
+}
+
+.featurePanelOverlay {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      circle at top right,
+      rgb(255 255 255 / 0.24),
+      transparent 32%
+    ),
+    radial-gradient(circle at bottom left, rgb(0 70 88 / 0.16), transparent 28%);
+  opacity: 0.8;
+}
+
+.gradientText {
+  background: linear-gradient(135deg, #24acc3 0%, #2b74d8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.linkAccent {
+  color: #2b74d8;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: #1f8ca5;
+  }
+}
+
+.formError {
+  border: 1px solid #fecaca;
+  border-radius: 1rem;
+  background: #fef2f2;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  line-height: 1.5rem;
+  color: #b91c1c;
+}
+
+.submitButtonShadow {
+  box-shadow: 0 16px 34px -20px rgb(36 172 195 / 0.75);
+}

@@ -4,7 +4,9 @@ import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { SvgIcon } from "@/components/shared/svg-icon";
+import { cn } from "@/lib/utils";
 
+import sharedStyles from "../styles/profile-shared.module.scss";
 import { ProfileRegionalMemberCard } from "./profile-regional-member-card";
 import { filterRegionalMembers } from "./profile-regional-members-utils";
 import { profileConfig } from "../config/profile-config";
@@ -71,11 +73,11 @@ export function ProfileRegionalMembersSection() {
       </div>
 
       {filteredMembers.length === 0 ? (
-        <div className="mt-6 rounded-[18px] border border-dashed border-[#245f6d]/30 bg-white/70 px-4 py-8 text-center">
-          <p className="text-[16px] font-semibold tracking-[-0.03em] text-[#245f6d]">
+        <div className={cn(sharedStyles.emptyStatePlain, "mt-6 px-4 py-8")}>
+          <p className={cn(sharedStyles.emptyTitle, "text-[16px]")}>
             No members found
           </p>
-          <p className="mt-2 text-[13px] leading-5 text-[#5f7174]">
+          <p className={cn(sharedStyles.emptyDescription, "mt-2 text-[13px]")}>
             Try a different name or member ID.
           </p>
         </div>

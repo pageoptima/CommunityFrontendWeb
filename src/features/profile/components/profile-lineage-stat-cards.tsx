@@ -19,7 +19,7 @@ function ProfileLineageStatCard({
         {label}
       </p>
 
-      <p className="mt-1.5 max-w-[14rem] text-[12px] leading-4.5 font-semibold text-white/80 sm:text-[13px] lg:text-[12px] xl:max-w-none">
+      <p className="mt-1.5 max-w-[14rem] text-[12px] leading-[1.1rem] font-semibold text-white/80 sm:text-[13px] lg:text-[12px] xl:max-w-none">
         {description}
       </p>
     </article>

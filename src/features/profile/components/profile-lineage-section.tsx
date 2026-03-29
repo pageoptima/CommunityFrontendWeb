@@ -2,6 +2,9 @@
 
 import { useId, useState } from "react";
 
+import { cn } from "@/lib/utils";
+
+import sharedStyles from "../styles/profile-shared.module.scss";
 import { ProfileLineageStatCards } from "./profile-lineage-stat-cards";
 import { ProfileLineageTabs } from "./profile-lineage-tabs";
 import { ProfileLineageTable } from "./profile-lineage-table";
@@ -71,14 +74,24 @@ export function ProfileLineageSection() {
         ) : (
           <div
             aria-labelledby={`${tabPanelBaseId}-${activeTab}-tab`}
-            className="rounded-[18px] border border-dashed border-[#245f6d]/30 bg-white/60 px-4 py-8 text-center shadow-[0_16px_34px_-26px_rgba(36,95,109,0.16)]"
+            className={cn(sharedStyles.emptyStateRaised, "px-4 py-8")}
             id={`${tabPanelBaseId}-${activeTab}-panel`}
             role="tabpanel"
           >
-            <p className="text-[16px] font-semibold tracking-[-0.03em] text-[#245f6d] sm:text-[17px]">
+            <p
+              className={cn(
+                sharedStyles.emptyTitle,
+                "text-[16px] sm:text-[17px]",
+              )}
+            >
               {profileLineageTabLabels[activeTab]}
             </p>
-            <p className="mt-2 text-[13px] leading-5 text-[#5f7174] sm:text-[14px]">
+            <p
+              className={cn(
+                sharedStyles.emptyDescription,
+                "mt-2 text-[13px] sm:text-[14px]",
+              )}
+            >
               This section is not implemented yet. The lineage tab remains the
               active production section for now.
             </p>
