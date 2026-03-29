@@ -23,7 +23,7 @@ export function ProfileRegionalMembersSection() {
     >
       <div className="flex flex-col gap-6 xl:flex-row xl:items-center xl:justify-between">
         <div className="max-w-3xl">
-          <h2 className="text-[2rem] leading-[1.05] font-semibold tracking-[-0.05em] whitespace-nowrap text-[#245f6d] sm:text-[2.4rem] lg:text-[2.5rem] xl:text-[2.4rem]">
+          <h2 className="max-w-[12ch] text-[2rem] leading-[1.05] font-semibold tracking-[-0.05em] text-[#245f6d] sm:max-w-none sm:text-[2.4rem] lg:text-[2.5rem] xl:text-[2.4rem]">
             Regional Community Members
           </h2>
         </div>
@@ -35,17 +35,17 @@ export function ProfileRegionalMembersSection() {
 
           <input
             id="regional-members-search"
-            className="h-[56px] w-full rounded-[16px] border border-[#c8d7dc] bg-white px-6 text-center text-[18px] tracking-[-0.02em] text-[#384347] transition outline-none focus:border-[#215A64] focus:ring-2 focus:ring-[#215A64]/15 sm:flex-1 sm:text-[19px] lg:h-[48px] lg:max-w-[18rem] lg:px-4 lg:text-[14px] xl:h-[56px] xl:w-[28rem] xl:max-w-[28rem] xl:px-6 xl:text-[18px]"
+            className="h-[56px] w-full rounded-[16px] border border-[#c8d7dc] bg-white px-6 text-center text-[16px] tracking-[-0.02em] text-[#384347] transition outline-none focus:border-[#215A64] focus:ring-2 focus:ring-[#215A64]/15 sm:flex-1 sm:text-[18px] lg:h-[48px] lg:max-w-[18rem] lg:px-4 lg:text-[14px] xl:h-[56px] xl:w-[28rem] xl:max-w-[28rem] xl:px-6 xl:text-[18px]"
             placeholder="Search Members"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
           />
 
           <Button
-            className="h-[56px] w-full rounded-[16px] border-2 border-[#215A64] bg-white px-5 text-[20px] font-semibold tracking-[-0.02em] text-[#215A64] shadow-none hover:bg-[#f4fbfc] hover:text-[#215A64] sm:w-[240px] sm:px-6 lg:h-[48px] lg:w-[132px] lg:px-4 lg:text-[15px] xl:h-[56px] xl:w-[180px] xl:px-4 xl:text-[18px]"
+            className="h-[56px] w-full rounded-[16px] border-2 border-[#215A64] bg-white px-5 text-[16px] font-semibold tracking-[-0.02em] text-[#215A64] shadow-none hover:bg-[#f4fbfc] hover:text-[#215A64] sm:w-[240px] sm:px-6 sm:text-[18px] lg:h-[48px] lg:w-[132px] lg:px-4 lg:text-[15px] xl:h-[56px] xl:w-[180px] xl:px-4 xl:text-[18px]"
             leftIcon={
               <SvgIcon
-                sizeClassName="size-7 lg:size-5 xl:size-6"
+                sizeClassName="size-6 lg:size-5 xl:size-6"
                 src="/icons/profile/filter.svg"
                 toneColor="#215A64"
               />
