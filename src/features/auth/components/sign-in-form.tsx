@@ -38,7 +38,7 @@ export function SignInForm() {
     defaultValues: {
       email: "",
       password: "",
-      rememberMe: false,
+      rememberMe: true,
     },
     mode: "onTouched",
   });

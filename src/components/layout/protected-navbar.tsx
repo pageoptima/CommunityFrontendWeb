@@ -83,7 +83,7 @@ export function ProtectedNavbar({ user }: Readonly<{ user: AuthUser }>) {
                   href={item.href}
                   aria-current={isActive ? "page" : undefined}
                   className={cn(
-                    "rounded-full px-4 py-2 text-sm font-medium transition-colors",
+                    "shrink-0 rounded-full px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors",
                     isActive
                       ? "bg-surface-muted text-[#3D3DA0]!"
                       : "text-muted-foreground hover:text-foreground",
@@ -187,7 +187,7 @@ export function ProtectedNavbar({ user }: Readonly<{ user: AuthUser }>) {
                     aria-current={isActive ? "page" : undefined}
                     onClick={() => setIsMobileMenuOpen(false)}
                     className={cn(
-                      "rounded-2xl px-4 py-3 text-sm font-medium transition-colors",
+                      "rounded-2xl px-4 py-3 text-sm font-medium whitespace-nowrap transition-colors",
                       isActive
                         ? "bg-surface-muted text-[#3D3DA0]!"
                         : "text-muted-foreground hover:bg-surface-muted hover:text-foreground",
