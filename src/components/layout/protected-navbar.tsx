@@ -200,7 +200,7 @@ export function ProtectedNavbar({ user }: Readonly<{ user: AuthUser }>) {
             </nav>
 
             <Button
-              className="mt-4"
+              className="mt-4 w-full items-center justify-center gap-2 whitespace-nowrap [&>span]:leading-none [&>span]:whitespace-nowrap"
               fullWidth
               variant="outline"
               onClick={handleLogout}
