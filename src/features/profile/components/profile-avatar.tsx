@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import { ProfileSvgIcon } from "./profile-svg-icon";
+import { SvgIcon } from "@/components/shared/svg-icon";
 
 export function ProfileAvatar({
   name,
@@ -22,7 +22,7 @@ export function ProfileAvatar({
         />
       </div>
 
-      <ProfileSvgIcon
+      <SvgIcon
         className="absolute right-2.5 bottom-2.5 sm:right-2.5 sm:bottom-2.5 lg:right-2 lg:bottom-2 xl:right-3 xl:bottom-3"
         sizeClassName="size-[48px] sm:size-[60px] lg:size-[50px] xl:size-[80px]"
         src="/icons/profile/verified.svg"

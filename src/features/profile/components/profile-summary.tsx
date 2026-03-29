@@ -1,9 +1,8 @@
 import { Button } from "@/components/ui/button";
+import { SvgIcon } from "@/components/shared/svg-icon";
 
 import { ProfileActionButton } from "./profile-action-button";
-import { ProfileDetailItem } from "./profile-detail-item";
-import { ProfileSvgIcon } from "./profile-svg-icon";
-import { profileDetails } from "./profile-page-data";
+import { profileConfig } from "../config/profile-config";
 
 type ProfileSummaryProps = Readonly<{
   name: string;
@@ -24,7 +23,7 @@ export function ProfileSummary({
         </h1>
 
         <div className="inline-flex h-10.5 shrink-0 items-center gap-2 rounded-full border border-[#1f8ca5] bg-[#e5f5fa] px-4 text-[14px] font-semibold text-[#0f4f5f] shadow-[0_10px_26px_-18px_rgba(31,140,165,0.6)] sm:text-[15px] lg:w-40 lg:justify-center lg:px-0 lg:text-[13px] xl:w-44 xl:text-[14px]">
-          <ProfileSvgIcon
+          <SvgIcon
             sizeClassName="size-4 lg:size-3.5 xl:size-4"
             src="/icons/profile/verified.svg"
           />
@@ -37,12 +36,16 @@ export function ProfileSummary({
       </p>
 
       <div className="mt-7 grid justify-items-start gap-4 sm:grid-cols-2 sm:justify-items-start sm:gap-x-8 sm:gap-y-5 lg:flex lg:flex-wrap lg:items-center lg:gap-x-8 xl:gap-x-10">
-        {profileDetails.map((detail) => (
-          <ProfileDetailItem
+        {profileConfig.details.map((detail) => (
+          <div
             key={detail.value}
-            iconSrc={detail.iconSrc}
-            value={detail.value}
-          />
+            className="flex items-center gap-3 whitespace-normal sm:whitespace-nowrap"
+          >
+            <SvgIcon sizeClassName="size-6 sm:size-7" src={detail.iconSrc} />
+            <span className="text-[15px] font-semibold tracking-[-0.02em] text-[#174451] sm:text-[18px] sm:leading-none lg:text-[19px]">
+              {detail.value}
+            </span>
+          </div>
         ))}
       </div>
 
@@ -51,7 +54,7 @@ export function ProfileSummary({
           variant="ghost"
           className="h-[60px] w-full rounded-[14px] bg-[#215A64] px-6 text-[18px] font-medium tracking-[-0.02em] text-white shadow-[0_16px_30px_-22px_rgba(16,47,52,0.45)] hover:bg-[#1b4a52] hover:text-white sm:h-[70px] sm:w-[260px] sm:min-w-[260px] sm:px-8 sm:text-[20px] lg:h-[52px] lg:w-[170px] lg:px-4 lg:text-[14px] xl:h-[70px] xl:w-[258px] xl:px-8 xl:text-[21px]"
           leftIcon={
-            <ProfileSvgIcon
+            <SvgIcon
               sizeClassName="size-7 sm:size-8 lg:size-4 xl:size-8"
               src="/icons/profile/edit.svg"
             />

@@ -1,6 +1,5 @@
+import { SvgIcon } from "@/components/shared/svg-icon";
 import { cn } from "@/lib/utils";
-
-import { ProfileSvgIcon } from "./profile-svg-icon";
 
 export function ProfileActionButton({
   className,
@@ -20,7 +19,7 @@ export function ProfileActionButton({
       )}
       type="button"
     >
-      <ProfileSvgIcon sizeClassName="size-[38px]" src={iconSrc} />
+      <SvgIcon sizeClassName="size-[38px]" src={iconSrc} />
     </button>
   );
 }
