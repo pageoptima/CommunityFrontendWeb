@@ -69,7 +69,7 @@ export function ProtectedNavbar({ user }: Readonly<{ user: AuthUser }>) {
     <header className="sticky top-0 z-50">
       <div className="mx-auto max-w-7xl px-4 pt-4 sm:px-6 lg:px-8">
         <div className="border-border/80 bg-surface/95 supports-backdrop-filter:bg-surface/85 flex items-center justify-between gap-4 rounded-full border px-4 py-3 shadow-[0_24px_60px_-38px_rgba(16,47,52,0.26)] backdrop-blur-xl">
-          <Link href="/my-profile" className="shrink-0">
+          <Link href="/" className="shrink-0">
             <BrandMark compact />
           </Link>
 

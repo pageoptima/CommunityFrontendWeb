@@ -57,9 +57,12 @@ export function PublicFooter() {
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
         <div className="grid gap-14 lg:grid-cols-[1.45fr_0.8fr_0.8fr_0.9fr]">
           <div>
-            <div className="inline-flex rounded-2xl bg-white px-6 py-5 shadow-[0_18px_40px_-28px_rgba(0,0,0,0.45)]">
+            <Link
+              className="inline-flex rounded-2xl bg-white px-6 py-5 shadow-[0_18px_40px_-28px_rgba(0,0,0,0.45)] transition-transform hover:scale-[1.01]"
+              href="/"
+            >
               <BrandMark compact />
-            </div>
+            </Link>
 
             <p className="mt-8 max-w-xl text-[18px] leading-10 text-white/95 sm:text-[20px]">
               Preserving our Indigenous heritage through sovereign technology
