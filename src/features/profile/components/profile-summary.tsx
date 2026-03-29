@@ -23,7 +23,7 @@ export function ProfileSummary({
           {name}
         </h1>
 
-        <div className="hidden h-10.5 shrink-0 items-center gap-2 rounded-full border border-[#1f8ca5] bg-[#e5f5fa] px-4 text-[14px] font-semibold text-[#0f4f5f] shadow-[0_10px_26px_-18px_rgba(31,140,165,0.6)] sm:inline-flex sm:text-[15px] lg:w-40 lg:justify-center lg:px-0 lg:text-[13px] xl:w-44 xl:text-[14px]">
+        <div className="inline-flex h-10.5 shrink-0 items-center gap-2 rounded-full border border-[#1f8ca5] bg-[#e5f5fa] px-4 text-[14px] font-semibold text-[#0f4f5f] shadow-[0_10px_26px_-18px_rgba(31,140,165,0.6)] sm:text-[15px] lg:w-40 lg:justify-center lg:px-0 lg:text-[13px] xl:w-44 xl:text-[14px]">
           <ProfileSvgIcon
             sizeClassName="size-4 lg:size-3.5 xl:size-4"
             src="/icons/profile/verified.svg"
@@ -36,7 +36,7 @@ export function ProfileSummary({
         {memberSince}
       </p>
 
-      <div className="mt-7 grid gap-4 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-5 lg:flex lg:flex-wrap lg:items-center lg:gap-x-8 xl:gap-x-10">
+      <div className="mt-7 grid justify-items-start gap-4 sm:grid-cols-2 sm:justify-items-start sm:gap-x-8 sm:gap-y-5 lg:flex lg:flex-wrap lg:items-center lg:gap-x-8 xl:gap-x-10">
         {profileDetails.map((detail) => (
           <ProfileDetailItem
             key={detail.value}
