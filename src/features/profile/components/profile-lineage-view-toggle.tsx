@@ -12,11 +12,11 @@ export function ProfileLineageViewToggle({
   const isTable = value === "table";
 
   return (
-    <div className="inline-flex w-full max-w-[20rem] rounded-[12px] bg-[#285e68] p-2 shadow-[0_18px_34px_-24px_rgba(16,47,52,0.45)] sm:w-auto sm:max-w-none">
+    <div className="inline-flex w-full max-w-[14.5rem] rounded-[10px] bg-[#285e68] p-1 shadow-[0_16px_30px_-24px_rgba(16,47,52,0.42)] sm:w-auto sm:max-w-none">
       <button
         aria-pressed={isTable}
         className={cn(
-          "min-w-0 flex-1 cursor-pointer rounded-[9px] px-4 py-2.5 text-[16px] font-medium transition-colors sm:min-w-28 sm:px-6 sm:py-3 sm:text-[20px]",
+          "min-w-0 flex-1 cursor-pointer rounded-[8px] px-3.5 py-1.5 text-[13px] font-medium transition-colors sm:min-w-20 sm:px-4 sm:text-[14px]",
           isTable
             ? "bg-[#e7f7fb] text-[#245c67]"
             : "text-white hover:bg-white/8",
@@ -29,7 +29,7 @@ export function ProfileLineageViewToggle({
       <button
         aria-pressed={!isTable}
         className={cn(
-          "min-w-0 flex-1 cursor-pointer rounded-[9px] px-4 py-2.5 text-[16px] font-medium transition-colors sm:min-w-28 sm:px-6 sm:py-3 sm:text-[20px]",
+          "min-w-0 flex-1 cursor-pointer rounded-[8px] px-3.5 py-1.5 text-[13px] font-medium transition-colors sm:min-w-20 sm:px-4 sm:text-[14px]",
           !isTable
             ? "bg-[#e7f7fb] text-[#245c67]"
             : "text-white hover:bg-white/8",

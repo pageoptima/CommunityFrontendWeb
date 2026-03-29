@@ -14,12 +14,12 @@ export function ProfileActionButton({
     <button
       aria-label={label}
       className={cn(
-        "inline-flex h-17.5 w-20 cursor-pointer items-center justify-center rounded-[14px] transition-colors focus-visible:ring-2 focus-visible:ring-[#1f8ca5] focus-visible:ring-offset-2 focus-visible:ring-offset-white focus-visible:outline-none sm:w-20.5",
+        "inline-flex cursor-pointer items-center justify-center transition-colors focus-visible:ring-2 focus-visible:ring-[#1f8ca5] focus-visible:ring-offset-2 focus-visible:ring-offset-white focus-visible:outline-none",
         className,
       )}
       type="button"
     >
-      <SvgIcon sizeClassName="size-[38px]" src={iconSrc} />
+      <SvgIcon sizeClassName="size-[0.95rem] sm:size-[1rem]" src={iconSrc} />
     </button>
   );
 }

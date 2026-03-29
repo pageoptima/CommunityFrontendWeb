@@ -16,46 +16,49 @@ export function ProfileSummary({
   memberStatus,
 }: ProfileSummaryProps) {
   return (
-    <div className="min-w-0 flex-1 text-left">
+    <div className="max-w-[33rem] min-w-0 flex-1 text-left">
       <div className="flex flex-wrap items-center justify-start gap-x-2 gap-y-2 lg:flex-nowrap">
-        <h1 className="max-w-[12ch] text-[clamp(2.6rem,9vw,4.1rem)] leading-[0.95] font-semibold tracking-[-0.065em] text-[#135e71] sm:max-w-none sm:text-[clamp(3rem,4vw,4.3rem)] lg:w-95 lg:text-[58px] lg:leading-none xl:h-19.25 xl:w-118.75 xl:text-[77px] xl:leading-19.25">
+        <h1 className="max-w-[13ch] text-[clamp(1.6rem,6vw,2.35rem)] leading-[0.96] font-semibold tracking-[-0.05em] text-[#135e71] sm:max-w-none sm:text-[clamp(1.85rem,4vw,2.7rem)] lg:text-[clamp(2.1rem,3vw,3rem)] lg:leading-none">
           {name}
         </h1>
 
-        <div className="inline-flex h-10.5 shrink-0 items-center gap-2 rounded-full border border-[#1f8ca5] bg-[#e5f5fa] px-4 text-[14px] font-semibold text-[#0f4f5f] shadow-[0_10px_26px_-18px_rgba(31,140,165,0.6)] sm:text-[15px] lg:w-40 lg:justify-center lg:px-0 lg:text-[13px] xl:w-44 xl:text-[14px]">
+        <div className="inline-flex h-[30px] shrink-0 items-center gap-1 rounded-full border border-[#1f8ca5] bg-[#e5f5fa] px-2.5 text-[11px] font-semibold text-[#0f4f5f] shadow-[0_10px_24px_-18px_rgba(31,140,165,0.55)] sm:h-8 sm:px-3 sm:text-[12px] lg:h-[30px] lg:px-2.5">
           <SvgIcon
-            sizeClassName="size-4 lg:size-3.5 xl:size-4"
+            sizeClassName="size-2.5 sm:size-3"
             src="/icons/profile/verified.svg"
           />
           {memberStatus}
         </div>
       </div>
 
-      <p className="mt-4 text-[19px] font-semibold tracking-[-0.04em] text-[#2f3336] sm:mt-5 sm:text-[26px] lg:text-[24px] xl:text-[30px]">
+      <p className="mt-2 text-[14px] font-semibold tracking-[-0.03em] text-[#2f3336] sm:mt-2.5 sm:text-[16px] lg:text-[17px]">
         {memberSince}
       </p>
 
-      <div className="mt-7 grid justify-items-start gap-4 sm:grid-cols-2 sm:justify-items-start sm:gap-x-8 sm:gap-y-5 lg:flex lg:flex-wrap lg:items-center lg:gap-x-8 xl:gap-x-10">
+      <div className="mt-4 grid justify-items-start gap-2.5 sm:grid-cols-2 sm:justify-items-start sm:gap-x-4 sm:gap-y-2.5 lg:flex lg:flex-wrap lg:items-center lg:gap-x-4 lg:gap-y-2">
         {profileConfig.details.map((detail) => (
           <div
             key={detail.value}
-            className="flex items-center gap-3 whitespace-normal sm:whitespace-nowrap"
+            className="flex items-center gap-1.5 whitespace-normal sm:whitespace-nowrap"
           >
-            <SvgIcon sizeClassName="size-6 sm:size-7" src={detail.iconSrc} />
-            <span className="text-[15px] font-semibold tracking-[-0.02em] text-[#174451] sm:text-[18px] sm:leading-none lg:text-[19px]">
+            <SvgIcon
+              sizeClassName="size-4 sm:size-[1.125rem]"
+              src={detail.iconSrc}
+            />
+            <span className="text-[12px] font-semibold tracking-[-0.02em] text-[#174451] sm:text-[13px] sm:leading-none lg:text-[14px]">
               {detail.value}
             </span>
           </div>
         ))}
       </div>
 
-      <div className="mt-8 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
+      <div className="mt-5 flex max-w-full items-center gap-2 sm:mt-6 sm:gap-2.5">
         <Button
           variant="ghost"
-          className="h-[60px] w-full rounded-[14px] bg-[#215A64] px-6 text-[18px] font-medium tracking-[-0.02em] text-white shadow-[0_16px_30px_-22px_rgba(16,47,52,0.45)] hover:bg-[#1b4a52] hover:text-white sm:h-[70px] sm:w-[260px] sm:min-w-[260px] sm:px-8 sm:text-[20px] lg:h-[52px] lg:w-[170px] lg:px-4 lg:text-[14px] xl:h-[70px] xl:w-[258px] xl:px-8 xl:text-[21px]"
+          className="h-[38px] shrink-0 rounded-[10px] bg-[#215A64] px-3 text-[12px] font-medium tracking-[-0.02em] whitespace-nowrap text-white shadow-[0_12px_24px_-20px_rgba(16,47,52,0.4)] hover:bg-[#1b4a52] hover:text-white sm:h-[40px] sm:px-3.5 sm:text-[13px] lg:h-[38px] lg:px-3"
           leftIcon={
             <SvgIcon
-              sizeClassName="size-7 sm:size-8 lg:size-4 xl:size-8"
+              sizeClassName="size-[0.95rem] sm:size-4"
               src="/icons/profile/edit.svg"
             />
           }
@@ -65,19 +68,17 @@ export function ProfileSummary({
           Edit Profile
         </Button>
 
-        <div className="grid grid-cols-2 gap-3 sm:flex sm:gap-4">
-          <ProfileActionButton
-            className="h-[60px] w-full bg-[#2b6674] text-white shadow-[0_16px_30px_-22px_rgba(16,47,52,0.45)] hover:bg-[#245c68] sm:h-[70px] sm:w-[80px] lg:h-[52px] lg:w-[52px] xl:h-[70px] xl:w-[80px]"
-            iconSrc="/icons/profile/download.svg"
-            label="Download profile"
-          />
+        <ProfileActionButton
+          className="h-[38px] w-[38px] shrink-0 rounded-[10px] bg-[#2b6674] text-white shadow-[0_12px_24px_-20px_rgba(16,47,52,0.4)] hover:bg-[#245c68] sm:h-[40px] sm:w-[40px] lg:h-[38px] lg:w-[38px]"
+          iconSrc="/icons/profile/download.svg"
+          label="Download profile"
+        />
 
-          <ProfileActionButton
-            className="h-[60px] w-full bg-[#95b1bc] text-white shadow-[0_16px_30px_-22px_rgba(16,47,52,0.2)] hover:bg-[#86a3af] sm:h-[70px] sm:w-[80px] lg:h-[52px] lg:w-[52px] xl:h-[70px] xl:w-[80px]"
-            iconSrc="/icons/profile/share.svg"
-            label="Share profile"
-          />
-        </div>
+        <ProfileActionButton
+          className="h-[38px] w-[38px] shrink-0 rounded-[10px] bg-[#2b6674] text-white shadow-[0_12px_24px_-20px_rgba(16,47,52,0.4)] hover:bg-[#245c68] sm:h-[40px] sm:w-[40px] lg:h-[38px] lg:w-[38px]"
+          iconSrc="/icons/profile/share.svg"
+          label="Share profile"
+        />
       </div>
     </div>
   );

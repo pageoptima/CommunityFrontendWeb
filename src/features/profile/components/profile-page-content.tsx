@@ -10,10 +10,10 @@ export function ProfilePageContent({ user }: Readonly<{ user: AuthUser }>) {
   return (
     <section
       aria-label={`Profile summary for ${profileConfig.copy.name}`}
-      className="mx-auto w-full max-w-6xl pt-8 sm:pt-10 lg:pt-12 xl:pt-16"
+      className="mx-auto w-full max-w-5xl pt-0 sm:pt-1 lg:pt-2 xl:pt-3"
       data-auth-user-id={user.id}
     >
-      <div className="flex flex-col items-center gap-8 text-center lg:flex-row lg:items-center lg:gap-8 lg:text-left xl:gap-12">
+      <div className="mr-auto flex max-w-[48rem] flex-col items-start gap-4 text-left lg:flex-row lg:items-center lg:gap-4 xl:max-w-[52rem] xl:gap-5">
         <ProfileAvatar
           name={profileConfig.copy.name}
           portraitSrc={profileConfig.copy.portraitSrc}

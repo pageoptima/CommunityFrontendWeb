@@ -38,7 +38,7 @@ export function ProfileLineageTabs({
               aria-controls={`${idBase}-${tab.value}-panel`}
               aria-selected={isActive}
               className={cn(
-                "flex min-w-40 flex-1 cursor-pointer items-center justify-center gap-3 border-r border-[#d7d1c3] px-4 py-4 text-[16px] font-medium transition-colors sm:min-w-44 sm:px-5 sm:py-5 sm:text-[18px] lg:px-6",
+                "flex min-w-[7rem] flex-1 cursor-pointer items-center justify-center gap-2 border-r border-[#d7d1c3] px-3 py-2.5 text-[12px] font-medium transition-colors sm:min-w-[7.5rem] sm:px-4 sm:py-3 sm:text-[13px] lg:min-w-[8rem] lg:px-4 lg:text-[14px]",
                 isActive
                   ? "bg-[#f6f8f6] font-bold text-[#1B4C54]"
                   : "text-[#757575] hover:bg-[#f8f8f8]",
@@ -88,7 +88,7 @@ export function ProfileLineageTabs({
                   "shrink-0",
                   isActive ? "opacity-100" : "opacity-80",
                 )}
-                sizeClassName="size-6"
+                sizeClassName="size-4"
                 toneColor={isActive ? "#1B4C54" : undefined}
                 src={tab.iconSrc}
               />
