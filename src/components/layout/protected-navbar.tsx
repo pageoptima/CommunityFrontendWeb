@@ -4,7 +4,15 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
-import { Bell, ChevronDown, LogOut, Menu, ShieldCheck, X } from "lucide-react";
+import {
+  Bell,
+  ChevronDown,
+  Loader2,
+  LogOut,
+  Menu,
+  ShieldCheck,
+  X,
+} from "lucide-react";
 
 import { BrandMark } from "@/components/shared/brand-mark";
 import { Button } from "@/components/ui/button";
@@ -199,17 +207,23 @@ export function ProtectedNavbar({ user }: Readonly<{ user: AuthUser }>) {
               })}
             </nav>
 
-            <Button
-              className="mt-4 w-full items-center justify-center gap-2 whitespace-nowrap [&>span]:leading-none [&>span]:whitespace-nowrap"
-              fullWidth
-              variant="outline"
+            <button
+              className="border-border bg-surface text-foreground hover:bg-surface-muted focus-visible:ring-ring focus-visible:ring-offset-background mt-4 inline-flex w-full items-center justify-center gap-2 rounded-full border px-4 py-3 text-sm font-semibold whitespace-nowrap shadow-[0_14px_30px_-22px_rgba(16,47,52,0.45)] transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
               onClick={handleLogout}
-              loading={isLoggingOut}
-              loadingText="Signing out..."
+              type="button"
             >
-              <LogOut className="size-4" />
-              Sign out
-            </Button>
+              {isLoggingOut ? (
+                <Loader2
+                  className="size-4 shrink-0 animate-spin"
+                  aria-hidden="true"
+                />
+              ) : (
+                <LogOut className="size-4 shrink-0" aria-hidden="true" />
+              )}
+              <span className="leading-none whitespace-nowrap">
+                {isLoggingOut ? "Signing out..." : "Sign out"}
+              </span>
+            </button>
             {logoutError ? (
               <p className="mt-3 text-sm leading-6 text-red-600">
                 {logoutError}
