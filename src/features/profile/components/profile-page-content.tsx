@@ -1,169 +1,169 @@
-import {
-  BadgeInfo,
-  Mail,
-  ShieldCheck,
-  UserRound,
-  IdCard,
-  type LucideIcon,
-} from "lucide-react";
+import Image from "next/image";
 
-import { formatMemberId, type AuthUser } from "@/lib/auth";
+import { Button } from "@/components/ui/button";
+import type { AuthUser } from "@/lib/auth";
+import { cn } from "@/lib/utils";
 
-function InfoCard({
-  icon: Icon,
-  title,
-  value,
-  description,
+const profileDetails = [
+  {
+    iconSrc: "/icons/profile/member.svg",
+    value: "TN-2847-GUA",
+  },
+  {
+    iconSrc: "/icons/profile/location.svg",
+    value: "Yucayeke Guainía",
+  },
+  {
+    iconSrc: "/icons/profile/calendar.svg",
+    value: "Born: March 12, 1985",
+  },
+] as const;
+
+function SvgIcon({
+  className,
+  sizeClassName,
+  src,
 }: Readonly<{
-  icon: LucideIcon;
-  title: string;
-  value: string;
-  description: string;
+  className?: string;
+  sizeClassName: string;
+  src: string;
 }>) {
   return (
-    <div className="border-border bg-surface rounded-[28px] border p-5 shadow-[0_18px_34px_-26px_rgba(16,47,52,0.28)]">
-      <div className="flex items-start gap-4">
-        <div className="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-[linear-gradient(135deg,#e4f7f4_0%,#d7ebff_100%)] text-[#1f8ca5]">
-          <Icon className="size-5" />
-        </div>
+    <span className={cn("relative shrink-0", sizeClassName, className)}>
+      <Image alt="" fill className="object-contain" sizes="100px" src={src} />
+    </span>
+  );
+}
 
-        <div className="min-w-0">
-          <p className="text-foreground text-sm font-semibold">{title}</p>
-          <p className="text-foreground mt-1 text-lg font-semibold tracking-[-0.02em]">
-            {value}
-          </p>
-          <p className="text-muted-foreground mt-1 text-sm leading-6">
-            {description}
-          </p>
-        </div>
-      </div>
+function DetailItem({
+  iconSrc,
+  value,
+}: Readonly<{
+  iconSrc: string;
+  value: string;
+}>) {
+  return (
+    <div className="flex items-center gap-3 whitespace-normal sm:whitespace-nowrap">
+      <SvgIcon sizeClassName="size-6 sm:size-7" src={iconSrc} />
+      <span className="text-[15px] font-semibold tracking-[-0.02em] text-[#174451] sm:text-[18px] sm:leading-none lg:text-[19px]">
+        {value}
+      </span>
     </div>
   );
 }
 
-export function ProfilePageContent({ user }: Readonly<{ user: AuthUser }>) {
+function ActionButton({
+  className,
+  iconSrc,
+  label,
+}: Readonly<{
+  className: string;
+  iconSrc: string;
+  label: string;
+}>) {
   return (
-    <section className="mx-auto flex w-full max-w-6xl flex-col gap-6">
-      <div className="border-border bg-surface overflow-hidden rounded-[32px] border shadow-[0_28px_60px_-40px_rgba(16,47,52,0.28)]">
-        <div className="relative overflow-hidden px-6 py-8 sm:px-8 sm:py-10">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(47,207,195,0.14),transparent_34%),radial-gradient(circle_at_bottom_left,rgba(43,116,216,0.12),transparent_30%)]" />
+    <button
+      aria-label={label}
+      className={cn(
+        "inline-flex h-[70px] w-[80px] items-center justify-center rounded-[14px] transition-colors focus-visible:ring-2 focus-visible:ring-[#1f8ca5] focus-visible:ring-offset-2 focus-visible:ring-offset-white focus-visible:outline-none sm:w-[82px]",
+        className,
+      )}
+      type="button"
+    >
+      <SvgIcon sizeClassName="size-[38px]" src={iconSrc} />
+    </button>
+  );
+}
 
-          <div className="relative flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-            <div className="max-w-3xl">
-              <p className="text-sm font-semibold tracking-[0.28em] text-[#1f8ca5] uppercase">
-                Protected Area
-              </p>
-              <h1 className="mt-3 text-4xl font-semibold tracking-[-0.05em] sm:text-5xl">
-                My Profile
-              </h1>
-              <p className="mt-4 max-w-2xl text-[15px] leading-7 text-slate-600 sm:text-base">
-                This page will be implemented soon. You are logged in and your
-                session is active.
-              </p>
-            </div>
+export function ProfilePageContent({ user }: Readonly<{ user: AuthUser }>) {
+  const profileName = "Carmen María";
+  const memberSince = "Member since January 15, 2023";
+  const memberStatus = "Enrolled Member";
 
-            <div className="border-border flex items-center gap-4 rounded-[28px] border bg-white/80 p-4 shadow-[0_18px_34px_-26px_rgba(16,47,52,0.26)] backdrop-blur">
-              <div className="flex size-16 items-center justify-center rounded-3xl bg-[linear-gradient(135deg,#35d6c1_0%,#2b74d8_100%)] text-xl font-semibold text-white shadow-[0_14px_30px_-18px_rgba(43,116,216,0.8)]">
-                {user.name
-                  .split(/\s+/)
-                  .filter(Boolean)
-                  .slice(0, 2)
-                  .map((part) => part[0]?.toUpperCase() ?? "")
-                  .join("")}
-              </div>
-
-              <div className="min-w-0">
-                <p className="text-foreground truncate text-base font-semibold">
-                  {user.name}
-                </p>
-                <p className="text-muted-foreground truncate text-sm">
-                  {user.email}
-                </p>
-                <div className="mt-2 inline-flex items-center gap-2 rounded-full bg-[#e8f6fb] px-3 py-1 text-xs font-semibold text-[#1f8ca5]">
-                  <ShieldCheck className="size-3.5" />
-                  Verified member
-                </div>
-              </div>
-            </div>
+  return (
+    <section
+      aria-label={`Profile summary for ${profileName}`}
+      className="mx-auto w-full max-w-6xl pt-8 sm:pt-10 lg:pt-12 xl:pt-16"
+      data-auth-user-id={user.id}
+    >
+      <div className="flex flex-col items-center gap-8 text-center lg:flex-row lg:items-center lg:gap-8 lg:text-left xl:gap-12">
+        <div className="relative shrink-0">
+          <div className="relative size-[200px] overflow-hidden rounded-full border-[7px] border-[#17879d] bg-[#e9f1ef] shadow-[0_24px_48px_-28px_rgba(16,47,52,0.35)] sm:size-[240px] sm:border-[9px] lg:size-[260px] lg:border-[9px] xl:size-[300px] xl:border-[10px]">
+            <Image
+              fill
+              priority
+              alt={`${profileName} portrait`}
+              className="object-cover object-center"
+              sizes="(max-width: 640px) 200px, (max-width: 1280px) 260px, (max-width: 1536px) 300px, 300px"
+              src="/images/member1.png"
+            />
           </div>
+
+          <SvgIcon
+            className="absolute right-[10px] bottom-[10px] sm:right-[10px] sm:bottom-[10px] lg:right-[8px] lg:bottom-[8px] xl:right-[12px] xl:bottom-[12px]"
+            sizeClassName="size-[48px] sm:size-[60px] lg:size-[50px] xl:size-[80px]"
+            src="/icons/profile/verified.svg"
+          />
         </div>
-      </div>
 
-      <div className="grid gap-4 md:grid-cols-3">
-        <InfoCard
-          icon={UserRound}
-          title="Logged in as"
-          value={user.name}
-          description="Your authenticated account is loaded from a secure httpOnly cookie."
-        />
+        <div className="min-w-0 flex-1 text-left">
+          <div className="flex flex-wrap items-center justify-start gap-x-2 gap-y-2 lg:flex-nowrap">
+            <h1 className="max-w-[12ch] text-[clamp(2.6rem,9vw,4.1rem)] leading-[0.95] font-semibold tracking-[-0.065em] text-[#135e71] sm:max-w-none sm:text-[clamp(3rem,4vw,4.3rem)] lg:w-[380px] lg:text-[58px] lg:leading-[1] xl:h-[77px] xl:w-[475px] xl:text-[77px] xl:leading-[77px]">
+              {profileName}
+            </h1>
 
-        <InfoCard
-          icon={IdCard}
-          title="Member ID"
-          value={formatMemberId(user.id)}
-          description="This is a temporary member identifier for the dummy profile screen."
-        />
-
-        <InfoCard
-          icon={Mail}
-          title="Access"
-          value={user.role}
-          description="Role information is available for future authorization checks."
-        />
-      </div>
-
-      <div className="grid gap-4 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
-        <div className="border-border bg-surface rounded-[32px] border p-6 shadow-[0_18px_34px_-26px_rgba(16,47,52,0.24)] sm:p-8">
-          <div className="flex items-start gap-4">
-            <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-[linear-gradient(135deg,#e4f7f4_0%,#d7ebff_100%)] text-[#1f8ca5]">
-              <BadgeInfo className="size-5" />
-            </div>
-
-            <div>
-              <h2 className="text-foreground text-xl font-semibold tracking-[-0.03em]">
-                What you can expect here
-              </h2>
-              <p className="mt-2 text-[15px] leading-7 text-slate-600">
-                This area will eventually show your account details, enrollment
-                progress, lineage data, and community membership summary.
-              </p>
+            <div className="inline-flex h-[41px] shrink-0 items-center gap-2 rounded-full border border-[#1f8ca5] bg-[#e5f5fa] px-4 text-[14px] font-semibold text-[#0f4f5f] shadow-[0_10px_26px_-18px_rgba(31,140,165,0.6)] sm:text-[15px] lg:w-[160px] lg:justify-center lg:px-0 lg:text-[13px] xl:w-[176px] xl:text-[14px]">
+              <SvgIcon
+                sizeClassName="size-4 lg:size-[14px] xl:size-4"
+                src="/icons/profile/verified.svg"
+              />
+              {memberStatus}
             </div>
           </div>
 
-          <div className="mt-6 grid gap-3 sm:grid-cols-2">
-            {[
-              "Enrollment status",
-              "Family lineage records",
-              "Document uploads",
-              "Notifications and alerts",
-            ].map((item) => (
-              <div
-                key={item}
-                className="border-border bg-surface-muted text-foreground rounded-2xl border px-4 py-3 text-sm font-medium"
-              >
-                {item}
-              </div>
+          <p className="mt-4 text-[19px] font-semibold tracking-[-0.04em] text-[#2f3336] sm:mt-5 sm:text-[26px] lg:text-[24px] xl:text-[30px]">
+            {memberSince}
+          </p>
+
+          <div className="mt-7 grid gap-4 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-5 lg:flex lg:flex-wrap lg:items-center lg:gap-x-8 xl:gap-x-10">
+            {profileDetails.map((detail) => (
+              <DetailItem
+                key={detail.value}
+                iconSrc={detail.iconSrc}
+                value={detail.value}
+              />
             ))}
           </div>
-        </div>
 
-        <div className="border-border rounded-[32px] border bg-[linear-gradient(135deg,#143f3a_0%,#1f5f7a_100%)] p-6 text-white shadow-[0_22px_44px_-28px_rgba(16,47,52,0.45)] sm:p-8">
-          <p className="text-sm font-semibold tracking-[0.24em] text-white/75 uppercase">
-            Security note
-          </p>
-          <h2 className="mt-3 text-2xl font-semibold tracking-[-0.03em]">
-            Your session is protected
-          </h2>
-          <p className="mt-3 text-[15px] leading-7 text-white/88">
-            The access token stays in an httpOnly cookie, so browser scripts
-            cannot read it directly. That keeps the sign-in flow aligned with
-            production auth practices.
-          </p>
+          <div className="mt-8 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
+            <Button
+              variant="ghost"
+              className="h-[60px] w-full rounded-[14px] bg-[#215A64] px-6 text-[18px] font-medium tracking-[-0.02em] text-white shadow-[0_16px_30px_-22px_rgba(16,47,52,0.45)] hover:bg-[#1b4a52] hover:text-white sm:h-[70px] sm:w-[260px] sm:min-w-[260px] sm:px-8 sm:text-[20px] lg:h-[52px] lg:w-[170px] lg:px-4 lg:text-[14px] xl:h-[70px] xl:w-[258px] xl:px-8 xl:text-[21px]"
+              leftIcon={
+                <SvgIcon
+                  sizeClassName="size-7 sm:size-8 lg:size-4 xl:size-8"
+                  src="/icons/profile/edit.svg"
+                />
+              }
+              size="xl"
+              type="button"
+            >
+              Edit Profile
+            </Button>
 
-          <div className="mt-6 rounded-2xl border border-white/12 bg-white/8 p-4">
-            <p className="text-sm font-semibold text-white">Current user</p>
-            <p className="mt-2 text-sm text-white/88">{user.name}</p>
-            <p className="text-sm text-white/72">{user.email}</p>
+            <div className="grid grid-cols-2 gap-3 sm:flex sm:gap-4">
+              <ActionButton
+                className="h-[60px] w-full bg-[#2b6674] text-white shadow-[0_16px_30px_-22px_rgba(16,47,52,0.45)] hover:bg-[#245c68] sm:h-[70px] sm:w-[80px] lg:h-[52px] lg:w-[52px] xl:h-[70px] xl:w-[80px]"
+                iconSrc="/icons/profile/download.svg"
+                label="Download profile"
+              />
+
+              <ActionButton
+                className="h-[60px] w-full bg-[#95b1bc] text-white shadow-[0_16px_30px_-22px_rgba(16,47,52,0.2)] hover:bg-[#86a3af] sm:h-[70px] sm:w-[80px] lg:h-[52px] lg:w-[52px] xl:h-[70px] xl:w-[80px]"
+                iconSrc="/icons/profile/share.svg"
+                label="Share profile"
+              />
+            </div>
           </div>
         </div>
       </div>
