@@ -75,10 +75,13 @@ export function ProtectedNavbar({ user }: Readonly<{ user: AuthUser }>) {
 
   return (
     <header className="sticky top-0 z-50">
-      <div className="mx-auto max-w-7xl px-4 pt-4 sm:px-6 lg:px-8">
-        <div className="border-border/80 bg-surface/95 supports-backdrop-filter:bg-surface/85 flex items-center justify-between gap-4 rounded-full border px-4 py-3 shadow-[0_24px_60px_-38px_rgba(16,47,52,0.26)] backdrop-blur-xl">
+      <div className="mx-auto max-w-7xl px-4 pt-3 sm:px-6 sm:pt-4 lg:px-8">
+        <div className="border-border/80 bg-surface/95 supports-backdrop-filter:bg-surface/85 flex items-center justify-between gap-3 rounded-full border px-3.5 py-2.5 shadow-[0_24px_60px_-38px_rgba(16,47,52,0.26)] backdrop-blur-xl sm:gap-4 sm:px-4 sm:py-3">
           <Link href="/" className="shrink-0">
-            <BrandMark compact />
+            <BrandMark
+              className="[&_svg]:size-4 sm:[&_svg]:size-[18px] [&>div:first-child]:size-8 sm:[&>div:first-child]:size-9 [&>span]:text-[1.15rem] sm:[&>span]:text-[1.5rem]"
+              compact
+            />
           </Link>
 
           <nav className="hidden items-center gap-1 lg:flex">
@@ -155,7 +158,7 @@ export function ProtectedNavbar({ user }: Readonly<{ user: AuthUser }>) {
           <Button
             aria-expanded={isMobileMenuOpen}
             aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
-            className="lg:hidden"
+            className="size-10 lg:hidden"
             size="icon"
             variant="ghost"
             onClick={() => setIsMobileMenuOpen((value) => !value)}

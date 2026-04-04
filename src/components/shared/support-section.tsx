@@ -119,7 +119,12 @@ function SupportCardItem({ card }: Readonly<{ card: SupportCard }>) {
 
 export function SupportSection() {
   return (
-    <section className="relative left-1/2 w-screen -translate-x-1/2 bg-[#FFFDEC] py-12 sm:py-16 lg:py-20">
+    <section className="relative isolate overflow-x-clip py-12 sm:py-16 lg:py-20">
+      <div
+        aria-hidden="true"
+        className="absolute inset-y-0 left-1/2 -z-10 w-screen -translate-x-1/2 bg-[#FFFDEC]"
+      />
+
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-5xl text-center">
           <div className="inline-flex rounded-full border border-[#DCEBD6] bg-[#D7EFD3] px-6 py-2.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.45)] sm:px-8 sm:py-3">

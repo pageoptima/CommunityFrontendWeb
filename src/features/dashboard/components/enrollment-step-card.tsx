@@ -39,7 +39,7 @@ export function EnrollmentStepCard({
   return (
     <article
       className={cn(
-        "flex min-h-[18.5rem] flex-col rounded-[22px] border bg-white px-4 py-6 text-center shadow-[0_16px_34px_-28px_rgba(16,47,52,0.28)] transition-transform duration-200 sm:min-h-[21rem] sm:rounded-[26px] sm:px-6 sm:py-7",
+        "flex min-h-[16.5rem] flex-col rounded-[20px] border bg-white px-4 py-5 text-center shadow-[0_16px_34px_-28px_rgba(16,47,52,0.28)] transition-transform duration-200 sm:min-h-[21rem] sm:rounded-[26px] sm:px-6 sm:py-7",
         isEnabled
           ? "border-[#bfd4dc] shadow-[0_20px_44px_-32px_rgba(13,98,93,0.34)]"
           : "border-[#cfdbe0]",
@@ -47,7 +47,7 @@ export function EnrollmentStepCard({
     >
       <div
         className={cn(
-          "mx-auto flex size-[3rem] items-center justify-center rounded-full text-xl font-semibold sm:size-[3.25rem] sm:text-2xl",
+          "mx-auto flex size-[2.75rem] items-center justify-center rounded-full text-[1.35rem] font-semibold sm:size-[3.25rem] sm:text-2xl",
           isEnabled
             ? "bg-[linear-gradient(180deg,#1b9a96_0%,#0b625d_100%)] text-white"
             : "bg-[#8f969d] text-white",
@@ -58,17 +58,17 @@ export function EnrollmentStepCard({
 
       <div
         className={cn(
-          "mx-auto mt-4 flex size-8 items-center justify-center rounded-full sm:mt-5 sm:size-9",
+          "mx-auto mt-3.5 flex size-8 items-center justify-center rounded-full sm:mt-5 sm:size-9",
           isEnabled ? "bg-[#2e6d73] text-white" : "bg-[#707880] text-white",
         )}
       >
         <Icon className="size-4" aria-hidden="true" />
       </div>
 
-      <div className="mt-4 flex flex-1 flex-col sm:mt-5">
+      <div className="mt-3.5 flex flex-1 flex-col sm:mt-5">
         <h3
           className={cn(
-            "text-[1.05rem] leading-tight font-semibold tracking-[-0.03em] sm:text-lg",
+            "text-[1rem] leading-tight font-semibold tracking-[-0.03em] sm:text-lg",
             isEnabled ? "text-[#113d40]" : "text-[#5e6670]",
           )}
         >
@@ -77,14 +77,14 @@ export function EnrollmentStepCard({
 
         <p
           className={cn(
-            "mx-auto mt-2.5 max-w-[16rem] text-[0.8125rem] leading-5 sm:mt-3 sm:text-sm",
+            "mx-auto mt-2 max-w-[16rem] text-[0.8rem] leading-5 sm:mt-3 sm:text-sm",
             isEnabled ? "text-[#667579]" : "text-[#737d87]",
           )}
         >
           {description}
         </p>
 
-        <div className="mt-auto pt-5 sm:pt-6">
+        <div className="mt-auto pt-4 sm:pt-6">
           <div
             aria-hidden="true"
             className="h-1.5 rounded-full bg-[#d7d7d7] sm:h-2"
@@ -98,7 +98,7 @@ export function EnrollmentStepCard({
             />
           </div>
 
-          <div className="mt-5 flex justify-center sm:mt-6">
+          <div className="mt-4 flex justify-center sm:mt-6">
             {isEnabled && href ? (
               <Button
                 asChild
