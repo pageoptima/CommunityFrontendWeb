@@ -1,8 +1,5 @@
-import { ComingSoonPage } from "@/features/protected/components/coming-soon-page";
-import { getRequiredSessionUser } from "@/lib/auth-session";
+import { DashboardPageContent } from "@/features/dashboard/components/dashboard-page-content";
 
-export default async function DashboardPage() {
-  const user = await getRequiredSessionUser();
-
-  return <ComingSoonPage title="Dashboard" user={user} />;
+export default function DashboardPage() {
+  return <DashboardPageContent />;
 }

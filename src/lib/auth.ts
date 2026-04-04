@@ -2,7 +2,7 @@ export const AUTH_COOKIE_NAME = "community_auth_token";
 export const AUTH_PROFILE_COOKIE_NAME = "community_auth_profile";
 export const SIGN_IN_PATH = "/sign-in";
 export const SIGN_UP_PATH = "/sign-up";
-export const DEFAULT_POST_LOGIN_PATH = "/my-profile";
+export const DEFAULT_POST_LOGIN_PATH = "/dashboard";
 
 export type AuthUser = {
   id: string;

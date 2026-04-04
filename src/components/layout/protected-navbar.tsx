@@ -21,7 +21,7 @@ import { cn } from "@/lib/utils";
 
 const navItems = [
   { label: "Dashboard", href: "/dashboard" },
-  { label: "My Profile", href: "/my-profile" },
+  { label: "My Profile", href: "/profile" },
   { label: "Yucayeke", href: "/yucayeke" },
   { label: "Community", href: "/community" },
   { label: "Services", href: "/services" },

@@ -1,8 +1,8 @@
 import Image from "next/image";
 
+import { SupportSection } from "@/components/shared/support-section";
 import { AuthInfoCard } from "@/features/auth/components/auth-info-card";
 import { SignUpForm } from "@/features/auth/components/sign-up-form";
-import { SignUpSupportSection } from "@/features/auth/components/sign-up-support-section";
 import { cn } from "@/lib/utils";
 import sharedStyles from "@/features/auth/styles/auth-shared.module.scss";
 
@@ -105,7 +105,7 @@ export function SignUpPageContent() {
       </div>
 
       <div className="mt-16 sm:mt-20 lg:mt-24">
-        <SignUpSupportSection />
+        <SupportSection />
       </div>
     </main>
   );
