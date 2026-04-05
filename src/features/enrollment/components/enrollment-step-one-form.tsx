@@ -1,5 +1,6 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useRef } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQueryClient } from "@tanstack/react-query";
@@ -90,10 +91,10 @@ function formatDateInputValue(date: Date) {
 }
 
 export function EnrollmentStepOneForm() {
+  const router = useRouter();
   const queryClient = useQueryClient();
   const accountInfoQuery = useAccountInfoQuery();
   const upsertMutation = useEnrollmentStepOneUpsertMutation();
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const lastHydratedDefaultsRef = useRef<string | null>(null);
   const maxBirthDate = formatDateInputValue(new Date());
 
@@ -185,7 +186,6 @@ export function EnrollmentStepOneForm() {
 
   const onSubmit = async (values: EnrollmentStepOneFormValues) => {
     clearErrors("root");
-    setSuccessMessage(null);
 
     try {
       await upsertMutation.mutateAsync(
@@ -195,9 +195,7 @@ export function EnrollmentStepOneForm() {
       await queryClient.invalidateQueries({
         queryKey: accountQueryKeys.info,
       });
-      setSuccessMessage(
-        "Step 1 information saved successfully. You can continue refining it anytime before moving forward.",
-      );
+      router.push("/enrollment/step-2");
     } catch (error) {
       setError("root", {
         type: "server",
@@ -228,12 +226,6 @@ export function EnrollmentStepOneForm() {
           {errors.root?.message ? (
             <div className="rounded-[22px] border border-[#e7c6c2] bg-[#fff3f1] px-4 py-3 text-sm font-medium text-[#9e493f] sm:px-5">
               {errors.root.message}
-            </div>
-          ) : null}
-
-          {successMessage ? (
-            <div className="rounded-[22px] border border-[#cfe4da] bg-[#eefaf4] px-4 py-3 text-sm font-medium text-[#0b625d] sm:px-5">
-              {successMessage}
             </div>
           ) : null}
 
