@@ -35,7 +35,7 @@ export const footerSocialLinks = [
   },
   {
     label: "Instagram",
-    href: "https://www.instagram.com/pageoptima",
+    href: "https://www.instagram.com",
     iconSrc: "/icons/instagram.svg",
   },
   {

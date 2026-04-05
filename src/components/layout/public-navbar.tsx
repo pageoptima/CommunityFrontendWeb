@@ -29,7 +29,7 @@ export function PublicNavbar() {
 
   return (
     <motion.header
-      className="fixed inset-x-0 top-0 z-50"
+      className="width-before-scroll-bar fixed inset-x-0 top-0 z-50"
       initial={{ opacity: 0, y: -12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.84, ease: [0.22, 1, 0.36, 1] }}

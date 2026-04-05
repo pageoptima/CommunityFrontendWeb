@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import { X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -131,6 +133,17 @@ export function DashboardConsentDialog({
               );
             })}
           </div>
+
+          <p className="mt-4 text-[0.88rem] leading-6 text-slate-600 sm:text-[0.9rem]">
+            Read all the{" "}
+            <Link
+              className="font-medium underline-offset-2 hover:underline"
+              href="/privacy-policy"
+              style={{ color: "#20A3B9" }}
+            >
+              terms and conditions.
+            </Link>
+          </p>
         </div>
 
         <DialogFooter className="border-t border-[#dbe5df] bg-white/88 px-4 py-4 sm:px-5 sm:py-4">

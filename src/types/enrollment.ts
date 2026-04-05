@@ -57,15 +57,39 @@ export type EnrollmentPersonalInfoSummary = Readonly<{
   specialSkills: string | null;
 }>;
 
+export type EnrollmentContactSummary = Readonly<{
+  email: string | null;
+  phoneNumber: string | null;
+  phoneType: string | null;
+  allowSMS: boolean | null;
+}>;
+
+export type EnrollmentAddressSummary = Readonly<{
+  type?: string | null;
+  street: string | null;
+  apartment: string | null;
+  city: string | null;
+  state: string | null;
+  zipCode: string | null;
+  country: string | null;
+  yearsLived: string | null;
+}>;
+
+export type EnrollmentEmergencyContactSummary = Readonly<{
+  fullName: string | null;
+  relationship: string | null;
+  phoneNumber: string | null;
+}>;
+
 export type AccountEnrollmentInfo = Readonly<{
   id: string;
   status: string;
   consentAccepted: boolean;
   user: AccountInfoUser;
   personalInfo: EnrollmentPersonalInfoSummary | null;
-  contact: unknown | null;
-  addresses: unknown[];
-  emergencyContact: unknown | null;
+  contact: EnrollmentContactSummary | null;
+  addresses: EnrollmentAddressSummary[];
+  emergencyContact: EnrollmentEmergencyContactSummary | null;
   maternalLineages: unknown[];
   culturalConnections: unknown[];
   consent: AccountEnrollmentConsent[];
@@ -79,4 +103,70 @@ export type AccountInfoResponse = Readonly<{
   enrollmentStep?: EnrollmentStepState;
   enrollmentStatus?: string | null;
   hasEnrollment: boolean;
+}>;
+
+export type EnrollmentStepOneLegalName = Readonly<{
+  firstName: string;
+  middleName: string;
+  lastName: string;
+  maternalLastName: string;
+  preferredName: string;
+}>;
+
+export type EnrollmentStepOneBirthInfo = Readonly<{
+  dateOfBirth: string;
+  cityOfBirth: string;
+  municipalityOfBirth: string;
+  countryOfBirth: string;
+}>;
+
+export type EnrollmentStepOneGenderInfo = Readonly<{
+  gender: string;
+  pronouns: string;
+}>;
+
+export type EnrollmentStepOneContactInfo = Readonly<{
+  email: string;
+  phoneNumber: string;
+  phoneType: string;
+  allowSMS: boolean;
+}>;
+
+export type EnrollmentStepOneAddressInfo = Readonly<{
+  street: string;
+  apartment: string;
+  city: string;
+  state: string;
+  zipCode: string;
+  country: string;
+  yearsLived: string;
+}>;
+
+export type EnrollmentStepOneEmergencyContact = Readonly<{
+  fullName: string;
+  relationship: string;
+  phoneNumber: string;
+}>;
+
+export type EnrollmentStepOneAdditionalInfo = Readonly<{
+  maritalStatus: string;
+  occupation: string;
+  educationLevel: string;
+  languagesSpoken: string[];
+  specialSkills: string;
+}>;
+
+export type EnrollmentStepOneUpsertRequest = Readonly<{
+  legalName: EnrollmentStepOneLegalName;
+  birthInfo: EnrollmentStepOneBirthInfo;
+  gender: EnrollmentStepOneGenderInfo;
+  contact: EnrollmentStepOneContactInfo;
+  currentAddress: EnrollmentStepOneAddressInfo;
+  mailingAddress: EnrollmentStepOneAddressInfo;
+  emergencyContact: EnrollmentStepOneEmergencyContact;
+  additionalInfo: EnrollmentStepOneAdditionalInfo;
+}>;
+
+export type EnrollmentStepOneUpsertResponse = Readonly<{
+  success: boolean;
 }>;
