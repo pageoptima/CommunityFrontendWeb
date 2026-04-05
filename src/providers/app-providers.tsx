@@ -16,6 +16,9 @@ export function AppProviders({ children }: AppProvidersProps) {
             refetchOnWindowFocus: false,
             retry: 1,
           },
+          mutations: {
+            retry: 0,
+          },
         },
       }),
   );

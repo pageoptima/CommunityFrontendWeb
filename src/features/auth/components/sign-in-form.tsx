@@ -10,7 +10,7 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { AuthTrustNote } from "@/features/auth/components/auth-trust-note";
 import { AuthField } from "@/features/auth/components/auth-field";
-import { submitAuthRequest } from "@/features/auth/lib/auth-submit";
+import { useSignInMutation } from "@/features/auth/lib/auth-mutations";
 import { cn } from "@/lib/utils";
 import { appendNextQuery, getSafeRedirectPath } from "@/lib/auth";
 import sharedStyles from "@/features/auth/styles/auth-shared.module.scss";
@@ -29,12 +29,13 @@ type SignInFormValues = z.infer<typeof signInSchema>;
 export function SignInForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const signInMutation = useSignInMutation();
   const {
     register,
     handleSubmit,
     clearErrors,
     setError,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<SignInFormValues>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
@@ -48,20 +49,22 @@ export function SignInForm() {
   const onSubmit = async (values: SignInFormValues) => {
     clearErrors("root");
 
-    await submitAuthRequest({
-      endpoint: "/api/auth/login",
-      payload: values,
-      redirectTo: getSafeRedirectPath(searchParams.get("next")),
-      router,
-      onError: (message) =>
-        setError("root", {
-          type: "server",
-          message,
-        }),
-      fallbackMessage:
-        "Unable to reach the sign-in service. Please try again in a moment.",
-    });
+    try {
+      await signInMutation.mutateAsync(values);
+      router.replace(getSafeRedirectPath(searchParams.get("next")));
+      router.refresh();
+    } catch (error) {
+      setError("root", {
+        type: "server",
+        message:
+          error instanceof Error
+            ? error.message
+            : "Unable to reach the sign-in service. Please try again in a moment.",
+      });
+    }
   };
+
+  const isSubmitting = signInMutation.isPending;
 
   return (
     <form

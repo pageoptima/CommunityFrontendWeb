@@ -11,7 +11,10 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { AuthTrustNote } from "@/features/auth/components/auth-trust-note";
 import { AuthField } from "@/features/auth/components/auth-field";
-import { submitAuthRequest } from "@/features/auth/lib/auth-submit";
+import {
+  type AuthRegisterPayload,
+  useSignUpMutation,
+} from "@/features/auth/lib/auth-mutations";
 import {
   appendNextQuery,
   getSafeRedirectPath,
@@ -45,11 +48,6 @@ const signUpSchema = z
   });
 
 type SignUpFormValues = z.infer<typeof signUpSchema>;
-type SignUpRequestBody = {
-  name: string;
-  email: string;
-  password: string;
-};
 
 function ConsentLine({
   name,
@@ -82,12 +80,13 @@ function ConsentLine({
 export function SignUpForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const signUpMutation = useSignUpMutation();
   const {
     register,
     handleSubmit,
     clearErrors,
     setError,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<SignUpFormValues>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
@@ -118,26 +117,28 @@ export function SignUpForm() {
       return;
     }
 
-    const payload: SignUpRequestBody = {
+    const payload: AuthRegisterPayload = {
       name,
       email: values.email.trim().toLowerCase(),
       password: values.password,
     };
 
-    await submitAuthRequest({
-      endpoint: "/api/auth/register",
-      payload,
-      redirectTo: getSafeRedirectPath(searchParams.get("next")),
-      router,
-      onError: (message) =>
-        setError("root", {
-          type: "server",
-          message,
-        }),
-      fallbackMessage:
-        "Unable to reach the registration service. Please try again in a moment.",
-    });
+    try {
+      await signUpMutation.mutateAsync(payload);
+      router.replace(getSafeRedirectPath(searchParams.get("next")));
+      router.refresh();
+    } catch (error) {
+      setError("root", {
+        type: "server",
+        message:
+          error instanceof Error
+            ? error.message
+            : "Unable to reach the registration service. Please try again in a moment.",
+      });
+    }
   };
+
+  const isSubmitting = signUpMutation.isPending;
 
   return (
     <form

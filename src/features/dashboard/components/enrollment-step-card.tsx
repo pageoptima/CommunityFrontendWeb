@@ -14,6 +14,8 @@ type EnrollmentStepCardProps = Readonly<{
   icon: LucideIcon;
   progress: number;
   isEnabled: boolean;
+  isLoading?: boolean;
+  onAction?: () => void;
 }>;
 
 export function EnrollmentStepCard({
@@ -25,6 +27,8 @@ export function EnrollmentStepCard({
   icon: Icon,
   progress,
   isEnabled,
+  isLoading = false,
+  onAction,
 }: EnrollmentStepCardProps) {
   const progressWidth = `${Math.max(0, Math.min(progress, 1)) * 100}%`;
   const buttonClassName =
@@ -99,7 +103,19 @@ export function EnrollmentStepCard({
           </div>
 
           <div className="mt-4 flex justify-center sm:mt-6">
-            {isEnabled && href ? (
+            {isEnabled && onAction ? (
+              <Button
+                className={buttonStateClassName}
+                loading={isLoading}
+                loadingText="Preparing..."
+                size="sm"
+                type="button"
+                variant="ghost"
+                onClick={onAction}
+              >
+                {ctaLabel}
+              </Button>
+            ) : isEnabled && href ? (
               <Button
                 asChild
                 className={buttonStateClassName}

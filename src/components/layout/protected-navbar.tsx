@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
+import { useQueryClient } from "@tanstack/react-query";
 import {
   Bell,
   ChevronDown,
@@ -16,6 +17,7 @@ import {
 
 import { BrandMark } from "@/components/shared/brand-mark";
 import { Button } from "@/components/ui/button";
+import { useLogoutMutation } from "@/features/auth/lib/auth-mutations";
 import { formatMemberId, type AuthUser } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 
@@ -47,31 +49,27 @@ function getInitials(name: string) {
 export function ProtectedNavbar({ user }: Readonly<{ user: AuthUser }>) {
   const pathname = usePathname();
   const router = useRouter();
+  const queryClient = useQueryClient();
+  const logoutMutation = useLogoutMutation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isLoggingOut, setIsLoggingOut] = useState(false);
-  const [logoutError, setLogoutError] = useState<string | null>(null);
 
   const handleLogout = async () => {
-    setLogoutError(null);
-    setIsLoggingOut(true);
+    logoutMutation.reset();
 
     try {
-      const response = await fetch("/api/auth/logout", {
-        method: "POST",
-      });
-
-      if (!response.ok) {
-        throw new Error("Logout failed.");
-      }
-
+      await logoutMutation.mutateAsync();
+      queryClient.clear();
+      setIsMobileMenuOpen(false);
       router.replace("/sign-in");
       router.refresh();
     } catch {
-      setLogoutError("Unable to sign out right now. Please try again.");
-    } finally {
-      setIsLoggingOut(false);
+      return;
     }
   };
+
+  const isLoggingOut = logoutMutation.isPending;
+  const logoutError =
+    logoutMutation.error instanceof Error ? logoutMutation.error.message : null;
 
   return (
     <header className="sticky top-0 z-50">

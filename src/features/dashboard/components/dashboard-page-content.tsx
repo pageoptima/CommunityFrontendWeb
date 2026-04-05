@@ -14,7 +14,12 @@ export function DashboardPageContent() {
       className="mx-auto flex w-full max-w-7xl flex-col gap-6 pt-0.5 sm:gap-9 sm:pt-2 lg:gap-12 lg:pt-4"
     >
       <DashboardHeroSection description={hero.description} title={hero.title} />
-      <DashboardEnrollmentSection {...enrollment} />
+      <DashboardEnrollmentSection
+        applicationStatusLabel={enrollment.applicationStatusLabel}
+        description={enrollment.description}
+        eyebrow={enrollment.eyebrow}
+        sectionTitle={enrollment.sectionTitle}
+      />
       <DashboardExpectationsSection {...expectations} />
       <SupportSection />
     </section>
