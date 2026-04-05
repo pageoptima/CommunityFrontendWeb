@@ -16,7 +16,6 @@ import { cn } from "@/lib/utils";
 import type { ActiveConsent } from "@/types/enrollment";
 
 type DashboardConsentDialogProps = Readonly<{
-  acceptedRequiredCount: number;
   activeConsents: readonly ActiveConsent[];
   errorMessage: string | null;
   isOpen: boolean;
@@ -28,7 +27,6 @@ type DashboardConsentDialogProps = Readonly<{
 }>;
 
 export function DashboardConsentDialog({
-  acceptedRequiredCount,
   activeConsents,
   errorMessage,
   isOpen,
@@ -38,10 +36,9 @@ export function DashboardConsentDialog({
   onToggleConsent,
   selectedConsentIds,
 }: DashboardConsentDialogProps) {
-  const requiredConsentCount = activeConsents.filter(
-    (consent) => consent.required,
-  ).length;
-  const hasAcceptedAllRequired = requiredConsentCount === acceptedRequiredCount;
+  const hasAcceptedAllRequired = activeConsents.every(
+    (consent) => !consent.required || selectedConsentIds.includes(consent.id),
+  );
 
   return (
     <Dialog
@@ -53,7 +50,7 @@ export function DashboardConsentDialog({
       }}
     >
       <DialogContent
-        className="max-h-[calc(100vh-2rem)] gap-0 overflow-hidden p-0 sm:max-h-[calc(100vh-3rem)]"
+        className="max-h-[calc(100dvh-0.75rem)] w-[calc(100vw-0.75rem)] max-w-[44rem] gap-0 overflow-hidden rounded-[22px] p-0 sm:max-h-[calc(100dvh-2.5rem)] sm:w-[calc(100vw-3rem)] sm:rounded-[24px] lg:max-w-[46rem]"
         onEscapeKeyDown={(event) => {
           if (isSubmitting) {
             event.preventDefault();
@@ -65,49 +62,37 @@ export function DashboardConsentDialog({
           }
         }}
       >
-        <div className="flex items-start justify-between gap-4 border-b border-[#dbe5df] px-5 py-5 sm:px-8 sm:py-6">
-          <DialogHeader>
-            <p className="text-xs font-semibold tracking-[0.18em] text-[#1f8ca5] uppercase">
-              Enrollment Consent
-            </p>
-            <DialogTitle className="mt-2">
-              Review and accept the active consents
+        <div className="flex items-start justify-between gap-3 border-b border-[#dbe5df] px-4 py-3.5 sm:px-5 sm:py-3.5">
+          <DialogHeader className="min-w-0 flex-1 gap-1">
+            <DialogTitle className="text-[1.15rem] leading-none font-semibold tracking-[-0.03em] text-[#12393d] sm:text-[1.2rem] lg:text-[1.25rem]">
+              Consents
             </DialogTitle>
-            <DialogDescription className="mt-2">
-              Required consents must be accepted before the member can continue
-              to Step 1 of enrollment.
+            <DialogDescription className="text-sm leading-6 text-slate-600 sm:text-[0.92rem]">
+              Please accept the required consents to continue.
             </DialogDescription>
           </DialogHeader>
 
           <button
             aria-label="Close consent dialog"
-            className="inline-flex size-10 cursor-pointer items-center justify-center rounded-full border border-[#d5e1da] bg-white text-slate-500 transition-colors hover:bg-[#f4faf8] hover:text-[#12393d] disabled:cursor-not-allowed disabled:opacity-60"
+            className="inline-flex size-9 shrink-0 cursor-pointer items-center justify-center rounded-full border border-[#d5e1da] bg-white text-slate-500 transition-colors hover:bg-[#f4faf8] hover:text-[#12393d] disabled:cursor-not-allowed disabled:opacity-60"
             disabled={isSubmitting}
             type="button"
             onClick={onClose}
           >
-            <X className="size-4" />
+            <X className="size-4 sm:size-[18px]" />
           </button>
         </div>
 
-        <div className="min-h-0 flex-1 overflow-y-auto px-5 py-5 sm:px-8 sm:py-6">
-          <div className="rounded-[22px] border border-[#d5e1da] bg-white/85 px-4 py-4 sm:px-5">
-            <p className="text-sm font-semibold tracking-[-0.02em] text-[#12393d]">
-              Required accepted: {acceptedRequiredCount}/{requiredConsentCount}
-            </p>
-            <p className="mt-1 text-sm leading-6 text-slate-600">
-              Optional items can be selected or skipped. Only required items are
-              enforced before continuing.
-            </p>
-          </div>
-
+        <div className="min-h-0 flex-1 overflow-y-auto px-4 py-4 sm:px-5 sm:py-4">
           {errorMessage ? (
-            <div className="mt-4 rounded-[20px] border border-[#e7c6c2] bg-[#fff3f1] px-4 py-3 text-sm font-medium text-[#9e493f]">
+            <div className="rounded-[18px] border border-[#e7c6c2] bg-[#fff3f1] px-4 py-3 text-sm font-medium text-[#9e493f]">
               {errorMessage}
             </div>
           ) : null}
 
-          <div className="mt-5 space-y-4">
+          <div
+            className={cn("space-y-3 sm:space-y-3", errorMessage && "mt-3.5")}
+          >
             {activeConsents.map((consent) => {
               const isSelected = selectedConsentIds.includes(consent.id);
 
@@ -115,7 +100,7 @@ export function DashboardConsentDialog({
                 <label
                   key={consent.id}
                   className={cn(
-                    "flex cursor-pointer gap-4 rounded-[24px] border px-4 py-4 transition-colors sm:px-5 sm:py-5",
+                    "grid cursor-pointer grid-cols-[auto_1fr] gap-x-3 gap-y-2 rounded-[18px] border px-3.5 py-3.5 transition-colors sm:gap-x-3.5 sm:px-3.5 sm:py-3.5",
                     isSelected
                       ? "border-[#0b625d] bg-[#edf7f4]"
                       : "border-[#d5e1da] bg-white",
@@ -123,29 +108,22 @@ export function DashboardConsentDialog({
                 >
                   <Checkbox
                     checked={isSelected}
-                    className="mt-1"
+                    className="mt-0.5 size-[18px]"
                     disabled={isSubmitting}
                     onCheckedChange={() => onToggleConsent(consent.id)}
                   />
 
-                  <div className="min-w-0 flex-1">
+                  <div className="min-w-0">
                     <div className="flex flex-wrap items-center gap-2">
-                      <p className="text-base font-semibold tracking-[-0.03em] text-[#12393d]">
+                      <p className="text-[1.05rem] font-semibold tracking-[-0.03em] text-[#12393d] sm:text-[1rem] lg:text-[1.05rem]">
                         {consent.title}
+                        {consent.required ? (
+                          <span className="ml-1 text-sm text-[#c63d3d]">*</span>
+                        ) : null}
                       </p>
-                      <span
-                        className={cn(
-                          "rounded-full px-2.5 py-1 text-[11px] font-semibold tracking-[0.08em] uppercase",
-                          consent.required
-                            ? "bg-[#ffe8c8] text-[#9c5d08]"
-                            : "bg-[#e6f1ff] text-[#3167a3]",
-                        )}
-                      >
-                        {consent.required ? "Required" : "Optional"}
-                      </span>
                     </div>
 
-                    <p className="mt-3 text-sm leading-6 text-slate-600 sm:text-[15px]">
+                    <p className="mt-1.5 text-[0.95rem] leading-6 text-slate-600 sm:mt-2 sm:text-[0.92rem] sm:leading-6 lg:text-[0.95rem]">
                       {consent.content}
                     </p>
                   </div>
@@ -155,11 +133,10 @@ export function DashboardConsentDialog({
           </div>
         </div>
 
-        <DialogFooter className="border-t border-[#dbe5df] bg-white/88 px-5 py-5 sm:px-8 sm:py-6">
+        <DialogFooter className="border-t border-[#dbe5df] bg-white/88 px-4 py-4 sm:px-5 sm:py-4">
           <Button
-            className="h-11 rounded-xl border-[#d5e1da] px-5 shadow-none"
+            className="h-10 rounded-xl border-[#d5e1da] px-4 text-sm shadow-none"
             disabled={isSubmitting}
-            size="lg"
             type="button"
             variant="outline"
             onClick={onClose}
@@ -168,11 +145,10 @@ export function DashboardConsentDialog({
           </Button>
 
           <Button
-            className="h-11 rounded-xl bg-[#0b625d]! px-5 text-white! shadow-[0_18px_38px_-22px_rgba(11,98,93,0.85)] hover:bg-[#0b625d]! hover:text-white!"
+            className="h-10 rounded-xl !bg-[#0b625d] !bg-none px-4 text-sm !text-white shadow-[0_18px_38px_-22px_rgba(11,98,93,0.85)] hover:!bg-[#095450]"
             disabled={!hasAcceptedAllRequired}
             loading={isSubmitting}
             loadingText="Saving consent..."
-            size="lg"
             type="button"
             onClick={onSubmit}
           >

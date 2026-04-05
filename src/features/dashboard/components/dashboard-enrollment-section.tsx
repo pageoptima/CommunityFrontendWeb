@@ -71,9 +71,6 @@ export function DashboardEnrollmentSection({
             accountInfoQuery.data?.enrollment?.status,
           accountInfoQuery.data?.hasEnrollment,
         );
-  const acceptedRequiredCount = activeConsents.filter(
-    (consent) => consent.required && selectedConsentIds.includes(consent.id),
-  ).length;
   const hasAcceptedAllRequiredConsents = activeConsents.every(
     (consent) => !consent.required || selectedConsentIds.includes(consent.id),
   );
@@ -234,7 +231,6 @@ export function DashboardEnrollmentSection({
       </section>
 
       <DashboardConsentDialog
-        acceptedRequiredCount={acceptedRequiredCount}
         activeConsents={activeConsents}
         errorMessage={dialogErrorMessage}
         isOpen={isConsentDialogOpen}
