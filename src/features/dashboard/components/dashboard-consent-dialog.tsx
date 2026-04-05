@@ -64,8 +64,8 @@ export function DashboardConsentDialog({
       >
         <div className="flex items-start justify-between gap-3 border-b border-[#dbe5df] px-4 py-3.5 sm:px-5 sm:py-3.5">
           <DialogHeader className="min-w-0 flex-1 gap-1">
-            <DialogTitle className="text-[1.15rem] leading-none font-semibold tracking-[-0.03em] text-[#12393d] sm:text-[1.2rem] lg:text-[1.25rem]">
-              Consents
+            <DialogTitle className="text-[0.72rem] font-semibold tracking-[0.2em] text-[#1f8ca5] uppercase sm:text-xs">
+              ENROLLMENT CONSENT
             </DialogTitle>
             <DialogDescription className="text-sm leading-6 text-slate-600 sm:text-[0.92rem]">
               Please accept the required consents to continue.

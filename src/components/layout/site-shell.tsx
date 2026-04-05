@@ -14,7 +14,7 @@ type SiteShellProps = Readonly<{
 
 export function SiteShell({ children, className, user }: SiteShellProps) {
   return (
-    <div className={cn("flex min-h-screen flex-col", className)}>
+    <div className={cn("relative flex min-h-screen flex-col", className)}>
       {user ? <ProtectedNavbar user={user} /> : <PublicNavbar />}
       <div className="flex-1">{children}</div>
       <PublicFooter />

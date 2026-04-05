@@ -11,7 +11,7 @@ export function DashboardPageContent() {
   return (
     <section
       aria-label="Enrollment application dashboard"
-      className="mx-auto flex w-full max-w-7xl flex-col gap-6 pt-0.5 sm:gap-9 sm:pt-2 lg:gap-12 lg:pt-4"
+      className="mx-auto flex w-full max-w-7xl flex-col gap-6 pt-24 sm:gap-9 sm:pt-28 lg:gap-12 lg:pt-32"
     >
       <DashboardHeroSection description={hero.description} title={hero.title} />
       <DashboardEnrollmentSection

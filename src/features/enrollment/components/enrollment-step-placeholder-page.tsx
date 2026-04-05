@@ -13,7 +13,7 @@ export function EnrollmentStepPlaceholderPage({
   user,
 }: EnrollmentStepPlaceholderPageProps) {
   return (
-    <section className="mx-auto flex w-full max-w-5xl flex-col gap-6">
+    <section className="mx-auto flex w-full max-w-5xl flex-col gap-6 pt-24 sm:pt-28 lg:pt-32">
       <div className="overflow-hidden rounded-[32px] border border-[#d5e1da] bg-[#fffdec] shadow-[0_28px_60px_-40px_rgba(16,47,52,0.28)]">
         <div className="relative overflow-hidden px-6 py-8 sm:px-8 sm:py-10">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(47,207,195,0.12),transparent_34%),radial-gradient(circle_at_bottom_left,rgba(11,98,93,0.14),transparent_30%)]" />

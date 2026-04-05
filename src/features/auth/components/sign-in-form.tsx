@@ -68,18 +68,18 @@ export function SignInForm() {
 
   return (
     <form
-      className="mx-auto flex w-full max-w-135 flex-col justify-center"
+      className="mx-auto flex w-full max-w-[31rem] flex-col justify-center"
       onSubmit={handleSubmit(onSubmit)}
       noValidate
     >
       <div className="text-center">
-        <h1 className="text-foreground text-3xl font-semibold tracking-[-0.04em] sm:text-[2rem]">
+        <h1 className="text-foreground text-[2.1rem] font-semibold tracking-[-0.04em] sm:text-[2.3rem]">
           Login to{" "}
           <span className={sharedStyles.gradientText}>Taíno Nation</span>?
         </h1>
       </div>
 
-      <div className="mt-8 space-y-5">
+      <div className="mt-6 space-y-4">
         {errors.root?.message ? (
           <div className={sharedStyles.formError}>{errors.root.message}</div>
         ) : null}
@@ -105,7 +105,7 @@ export function SignInForm() {
         />
       </div>
 
-      <div className="mt-4 flex items-center justify-between gap-4">
+      <div className="mt-3.5 flex items-center justify-between gap-4">
         <label className="flex cursor-pointer items-center gap-2 text-sm text-slate-700">
           <input
             {...register("rememberMe")}
@@ -129,7 +129,7 @@ export function SignInForm() {
       <Button
         className={cn(
           sharedStyles.submitButtonShadow,
-          "mt-6 h-12 rounded-xl text-base",
+          "mt-5 h-11 rounded-xl text-[0.98rem]",
         )}
         fullWidth
         size="lg"
@@ -140,7 +140,7 @@ export function SignInForm() {
         Log in
       </Button>
 
-      <p className="mt-4 text-center text-sm text-slate-600">
+      <p className="mt-3.5 text-center text-sm text-slate-600">
         Don&apos;t have an account?{" "}
         <Link
           className={cn(sharedStyles.linkAccent, "font-semibold")}

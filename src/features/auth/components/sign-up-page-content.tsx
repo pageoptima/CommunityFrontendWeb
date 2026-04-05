@@ -40,11 +40,11 @@ const authInfoCards = [
 
 export function SignUpPageContent() {
   return (
-    <main className="pt-6 sm:pt-8 lg:pt-10">
+    <main className="pt-20 pb-10 sm:pt-24 sm:pb-12 lg:pt-28 lg:pb-14">
       <div className={sharedStyles.pageFrame}>
-        <section className="grid gap-4 lg:grid-cols-[minmax(0,1.02fr)_minmax(0,0.98fr)]">
+        <section className="grid gap-3 lg:grid-cols-[minmax(0,1.02fr)_minmax(0,0.98fr)]">
           <div className={sharedStyles.surfacePanel}>
-            <div className="px-5 py-6 sm:px-8 sm:py-8 lg:px-10 lg:py-10">
+            <div className="px-5 py-5 sm:px-7 sm:py-7 lg:px-8 lg:py-8">
               <SignUpForm />
             </div>
           </div>
@@ -53,7 +53,7 @@ export function SignUpPageContent() {
             <div
               className={cn(
                 sharedStyles.featurePanel,
-                "px-6 py-6 sm:px-8 sm:py-8 lg:px-10 lg:py-10",
+                "px-5 py-5 sm:px-7 sm:py-7 lg:px-8 lg:py-8",
               )}
             >
               <div className={sharedStyles.featurePanelOverlay} />
@@ -62,25 +62,25 @@ export function SignUpPageContent() {
                 <Image
                   alt=""
                   aria-hidden="true"
-                  className="h-14 w-14 object-contain sm:h-16 sm:w-16"
+                  className="h-12 w-12 object-contain sm:h-14 sm:w-14"
                   height={64}
                   src="/icons/auth/lightbulb.svg"
                   width={64}
                 />
 
-                <div className="mt-6 max-w-md">
-                  <h2 className="text-3xl font-semibold tracking-[-0.04em] sm:text-[2.1rem]">
+                <div className="mt-5 max-w-md">
+                  <h2 className="text-[2rem] font-semibold tracking-[-0.04em] sm:text-[2.15rem]">
                     What Happens Next?
                   </h2>
                 </div>
 
-                <ol className="mt-10 space-y-5 sm:space-y-6">
+                <ol className="mt-7 space-y-4 sm:space-y-5">
                   {nextSteps.map((step, index) => (
                     <li key={step} className="flex items-start gap-4">
                       <div className="flex size-8 shrink-0 items-center justify-center rounded-full border border-white/80 text-sm font-semibold text-white">
                         {index + 1}
                       </div>
-                      <p className="pt-0.5 text-[15px] leading-6 text-white/95 sm:text-base">
+                      <p className="pt-0.5 text-[0.95rem] leading-6 text-white/95 sm:text-[1rem]">
                         {step}
                       </p>
                     </li>
@@ -89,7 +89,7 @@ export function SignUpPageContent() {
               </div>
             </div>
 
-            <div className="space-y-4 sm:space-y-6">
+            <div className="space-y-3 sm:space-y-4">
               {authInfoCards.map((card) => (
                 <AuthInfoCard
                   key={card.title}
@@ -104,7 +104,7 @@ export function SignUpPageContent() {
         </section>
       </div>
 
-      <div className="mt-16 sm:mt-20 lg:mt-24">
+      <div className="mt-12 sm:mt-16 lg:mt-20">
         <SupportSection />
       </div>
     </main>

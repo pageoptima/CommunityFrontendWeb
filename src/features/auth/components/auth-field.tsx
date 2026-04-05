@@ -29,14 +29,14 @@ export function AuthField<TFieldValues extends FieldValues>({
 
   return (
     <label className="block" htmlFor={String(name)}>
-      <span className="mb-2 block text-sm font-medium text-slate-700">
+      <span className="mb-1.5 block text-sm font-medium text-slate-700">
         {label} <span className="text-red-500">*</span>
       </span>
 
       <input
         autoComplete={autoComplete}
         className={cn(
-          "text-foreground flex h-12 w-full rounded-xl border border-black/5 bg-[#F2F2F2] px-4 text-[15px] shadow-[inset_0_1px_0_rgba(255,255,255,0.8)] transition-colors outline-none placeholder:text-slate-400 focus:border-[#2b74d8]/40 focus:ring-2 focus:ring-[#2b74d8]/15",
+          "text-foreground flex h-11 w-full rounded-xl border border-black/5 bg-[#F2F2F2] px-4 text-[15px] shadow-[inset_0_1px_0_rgba(255,255,255,0.8)] transition-colors outline-none placeholder:text-slate-400 focus:border-[#2b74d8]/40 focus:ring-2 focus:ring-[#2b74d8]/15 sm:h-12",
           errorMessage &&
             "border-red-300 focus:border-red-400/50 focus:ring-red-200/50",
         )}
@@ -49,7 +49,10 @@ export function AuthField<TFieldValues extends FieldValues>({
       />
 
       {errorMessage ? (
-        <p className="mt-2 text-sm font-medium text-red-600" id={fieldErrorId}>
+        <p
+          className="mt-1.5 text-sm font-medium text-red-600"
+          id={fieldErrorId}
+        >
           {errorMessage}
         </p>
       ) : null}

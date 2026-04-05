@@ -142,18 +142,18 @@ export function SignUpForm() {
 
   return (
     <form
-      className="mx-auto flex w-full max-w-172 flex-col justify-center"
+      className="mx-auto flex w-full max-w-[40rem] flex-col justify-center"
       onSubmit={handleSubmit(onSubmit)}
       noValidate
     >
       <div className="text-center">
-        <h1 className="text-foreground text-3xl font-semibold tracking-[-0.04em] sm:text-[2rem]">
+        <h1 className="text-foreground text-[2.05rem] font-semibold tracking-[-0.04em] sm:text-[2.2rem]">
           New to <span className={sharedStyles.gradientText}>Taíno Nation</span>
           ?
         </h1>
       </div>
 
-      <div className="mt-8 grid gap-5 sm:grid-cols-2">
+      <div className="mt-6 grid gap-4 sm:grid-cols-2">
         {errors.root?.message ? (
           <div className={cn(sharedStyles.formError, "sm:col-span-2")}>
             {errors.root.message}
@@ -181,7 +181,7 @@ export function SignUpForm() {
         />
       </div>
 
-      <div className="mt-5 space-y-5">
+      <div className="mt-4 space-y-4">
         <AuthField
           autoComplete="email"
           name="email"
@@ -223,7 +223,7 @@ export function SignUpForm() {
         />
       </div>
 
-      <div className="mt-6 space-y-5">
+      <div className="mt-5 space-y-4">
         <div>
           <ConsentLine name="agreeToTerms" register={register}>
             I agree to the{" "}
@@ -268,7 +268,7 @@ export function SignUpForm() {
       <Button
         className={cn(
           sharedStyles.submitButtonShadow,
-          "mt-8 h-14 rounded-xl text-base",
+          "mt-6 h-11 rounded-xl text-[0.98rem]",
         )}
         fullWidth
         size="lg"
@@ -280,7 +280,7 @@ export function SignUpForm() {
         Join Now
       </Button>
 
-      <p className="mt-4 text-center text-sm text-slate-600">
+      <p className="mt-3.5 text-center text-sm text-slate-600">
         Already have an account?{" "}
         <Link
           className={cn(sharedStyles.linkAccent, "font-semibold")}

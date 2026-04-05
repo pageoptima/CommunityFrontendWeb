@@ -72,7 +72,7 @@ export function ProtectedNavbar({ user }: Readonly<{ user: AuthUser }>) {
     logoutMutation.error instanceof Error ? logoutMutation.error.message : null;
 
   return (
-    <header className="sticky top-0 z-50">
+    <header className="fixed inset-x-0 top-0 z-50">
       <div className="mx-auto max-w-7xl px-4 pt-3 sm:px-6 sm:pt-4 lg:px-8">
         <div className="border-border/80 bg-surface/95 supports-backdrop-filter:bg-surface/85 flex items-center justify-between gap-3 rounded-full border px-3.5 py-2.5 shadow-[0_24px_60px_-38px_rgba(16,47,52,0.26)] backdrop-blur-xl sm:gap-4 sm:px-4 sm:py-3">
           <Link href="/" className="shrink-0">

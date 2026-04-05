@@ -30,7 +30,7 @@ export function HomeHero() {
       <div
         className={cn(
           sharedStyles.sectionContainer,
-          "relative pt-16 pb-16 sm:pb-20 lg:pt-24 lg:pb-24",
+          "relative pt-24 pb-16 sm:pt-28 sm:pb-20 lg:pt-32 lg:pb-24",
         )}
       >
         <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
