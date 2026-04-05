@@ -1,4 +1,5 @@
 import { EnrollmentStepHero } from "@/features/enrollment/components/enrollment-step-hero";
+import { EnrollmentProgressSection } from "@/features/enrollment/components/enrollment-progress-section";
 
 const stepOneHeroContent = {
   step: 1,
@@ -10,9 +11,15 @@ const stepOneHeroContent = {
 
 export default function EnrollmentStep1Page() {
   return (
-    <EnrollmentStepHero
-      {...stepOneHeroContent}
-      className="-mx-4 sm:-mx-6 lg:-mx-8"
-    />
+    <>
+      <EnrollmentStepHero
+        {...stepOneHeroContent}
+        className="-mx-4 sm:-mx-6 lg:-mx-8"
+      />
+      <EnrollmentProgressSection
+        className="-mx-4 sm:-mx-6 lg:-mx-8"
+        currentStage={stepOneHeroContent.step}
+      />
+    </>
   );
 }

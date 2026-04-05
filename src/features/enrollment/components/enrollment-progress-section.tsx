@@ -1,0 +1,86 @@
+import { Check } from "lucide-react";
+
+import {
+  enrollmentProgressStages,
+  type EnrollmentProgressStage,
+} from "@/features/enrollment/config/enrollment-steps";
+import { cn } from "@/lib/utils";
+
+type EnrollmentProgressSectionProps = Readonly<{
+  className?: string;
+  currentStage: number;
+  stages?: readonly EnrollmentProgressStage[];
+}>;
+
+export function EnrollmentProgressSection({
+  className,
+  currentStage,
+  stages = enrollmentProgressStages,
+}: EnrollmentProgressSectionProps) {
+  const resolvedCurrentStage = stages.some(
+    (stage) => stage.step === currentStage,
+  )
+    ? currentStage
+    : (stages[0]?.step ?? 1);
+
+  return (
+    <section
+      aria-label="Enrollment progress"
+      className={cn("border-t border-[#e6eeeb] bg-white", className)}
+    >
+      <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-7 lg:px-8 lg:py-8">
+        <div className="-mx-4 overflow-x-auto px-4 [-ms-overflow-style:none] [scrollbar-width:none] sm:-mx-6 sm:px-6 lg:mx-0 lg:px-0 [&::-webkit-scrollbar]:hidden">
+          <ol className="flex min-w-max items-start gap-5 sm:gap-6 lg:min-w-0 lg:justify-between lg:gap-5 xl:gap-8">
+            {stages.map((stage) => {
+              const isActive = stage.step === resolvedCurrentStage;
+
+              return (
+                <li
+                  key={stage.step}
+                  aria-current={isActive ? "step" : undefined}
+                  className="min-w-[15.5rem] shrink-0 lg:min-w-0 lg:flex-1"
+                >
+                  <div className="flex items-start gap-3.5 sm:gap-4">
+                    <div
+                      className={cn(
+                        "flex size-14 shrink-0 items-center justify-center rounded-full text-[1.75rem] font-semibold tracking-[-0.05em] text-white sm:size-16 sm:text-[2rem]",
+                        isActive
+                          ? "bg-[linear-gradient(180deg,#11a9a2_0%,#0a7469_100%)] shadow-[0_18px_34px_-20px_rgba(10,116,105,0.48)]"
+                          : "bg-[#b7b7b7]",
+                      )}
+                    >
+                      {isActive ? (
+                        <Check className="size-7 stroke-[3] sm:size-8" />
+                      ) : (
+                        stage.step
+                      )}
+                    </div>
+
+                    <div className="pt-1">
+                      <p
+                        className={cn(
+                          "text-[1.05rem] leading-tight font-medium tracking-[-0.04em] sm:text-[1.2rem]",
+                          isActive ? "text-[#173f4c]" : "text-[#9fa2a1]",
+                        )}
+                      >
+                        {stage.title}
+                      </p>
+                      <p
+                        className={cn(
+                          "mt-2 max-w-[13rem] text-[0.76rem] leading-[1.05rem] sm:max-w-[13.5rem] sm:text-[0.8rem] sm:leading-[1.08rem]",
+                          isActive ? "text-[#7a8480]" : "text-[#c0c4c2]",
+                        )}
+                      >
+                        {stage.description}
+                      </p>
+                    </div>
+                  </div>
+                </li>
+              );
+            })}
+          </ol>
+        </div>
+      </div>
+    </section>
+  );
+}

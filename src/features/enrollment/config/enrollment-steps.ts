@@ -11,6 +11,8 @@ export type EnrollmentStepDefinition = Readonly<{
   step: number;
   title: string;
   description: string;
+  progressTitle: string;
+  progressDescription: string;
   ctaLabel: string;
   href: string;
   icon: LucideIcon;
@@ -19,11 +21,19 @@ export type EnrollmentStepDefinition = Readonly<{
   placeholderDescription: string;
 }>;
 
+export type EnrollmentProgressStage = Readonly<{
+  step: number;
+  title: string;
+  description: string;
+}>;
+
 export const enrollmentStepDefinitions = [
   {
     step: 1,
     title: "Personal Information",
     description: "Provide your basic details and contact information.",
+    progressTitle: "Personal Information",
+    progressDescription: "Provide your basic details and contact information",
     ctaLabel: "Start Step 1",
     href: "/enrollment/step-1",
     icon: UserRound,
@@ -36,6 +46,8 @@ export const enrollmentStepDefinitions = [
     step: 2,
     title: "Maternal Lineage",
     description: "Document your maternal ancestry and family history.",
+    progressTitle: "Maternal Lineage",
+    progressDescription: "Document your ancestral maternal line",
     ctaLabel: "Start Step 2",
     href: "/enrollment/step-2",
     icon: TreePine,
@@ -49,6 +61,8 @@ export const enrollmentStepDefinitions = [
     title: "Cultural Connection",
     description:
       "Share your cultural ties, traditions, and community connection.",
+    progressTitle: "Document Upload",
+    progressDescription: "Submit supporting lineage documents",
     ctaLabel: "Start Step 3",
     href: "/enrollment/step-3",
     icon: FileCheck2,
@@ -62,6 +76,8 @@ export const enrollmentStepDefinitions = [
     title: "Document Upload",
     description:
       "Upload the supporting records required for enrollment review.",
+    progressTitle: "Review & Submit",
+    progressDescription: "Final review and application submission",
     ctaLabel: "Start Step 4",
     href: "/enrollment/step-4",
     icon: FileUp,
@@ -71,6 +87,14 @@ export const enrollmentStepDefinitions = [
       "This placeholder route will host the document-upload experience after the earlier enrollment forms are completed.",
   },
 ] as const satisfies readonly EnrollmentStepDefinition[];
+
+export const enrollmentProgressStages = enrollmentStepDefinitions.map(
+  ({ step, progressTitle, progressDescription }) => ({
+    step,
+    title: progressTitle,
+    description: progressDescription,
+  }),
+) satisfies readonly EnrollmentProgressStage[];
 
 export function getEnrollmentStepDefinition(stepNumber: number) {
   return (
