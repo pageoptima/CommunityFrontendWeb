@@ -86,3 +86,5 @@ export function useEnrollmentStepOneUpsertMutation() {
       }),
   });
 }
+
+export type { EnrollmentStepOneUpsertResponse };
