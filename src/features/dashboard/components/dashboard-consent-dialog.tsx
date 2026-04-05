@@ -1,10 +1,17 @@
 "use client";
 
-import { useEffect, useId, useRef } from "react";
-
 import { X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import type { ActiveConsent } from "@/types/enrollment";
 
@@ -20,18 +27,6 @@ type DashboardConsentDialogProps = Readonly<{
   selectedConsentIds: readonly string[];
 }>;
 
-function getFocusableElements(container: HTMLElement | null) {
-  if (!container) {
-    return [];
-  }
-
-  return Array.from(
-    container.querySelectorAll<HTMLElement>(
-      'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
-    ),
-  ).filter((element) => !element.hasAttribute("hidden"));
-}
-
 export function DashboardConsentDialog({
   acceptedRequiredCount,
   activeConsents,
@@ -43,123 +38,51 @@ export function DashboardConsentDialog({
   onToggleConsent,
   selectedConsentIds,
 }: DashboardConsentDialogProps) {
-  const dialogId = useId();
-  const descriptionId = useId();
-  const closeButtonRef = useRef<HTMLButtonElement>(null);
-  const dialogRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!isOpen) {
-      return undefined;
-    }
-
-    const originalOverflow = document.body.style.overflow;
-    const previouslyFocusedElement =
-      document.activeElement instanceof HTMLElement
-        ? document.activeElement
-        : null;
-
-    document.body.style.overflow = "hidden";
-    closeButtonRef.current?.focus();
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        if (!isSubmitting) {
-          event.preventDefault();
-          onClose();
-        }
-
-        return;
-      }
-
-      if (event.key !== "Tab") {
-        return;
-      }
-
-      const focusableElements = getFocusableElements(dialogRef.current);
-
-      if (focusableElements.length === 0) {
-        event.preventDefault();
-        dialogRef.current?.focus();
-        return;
-      }
-
-      const firstFocusableElement = focusableElements[0];
-      const lastFocusableElement = focusableElements.at(-1);
-
-      if (!lastFocusableElement) {
-        return;
-      }
-
-      if (event.shiftKey && document.activeElement === firstFocusableElement) {
-        event.preventDefault();
-        lastFocusableElement.focus();
-      }
-
-      if (!event.shiftKey && document.activeElement === lastFocusableElement) {
-        event.preventDefault();
-        firstFocusableElement.focus();
-      }
-    };
-
-    document.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = originalOverflow;
-      previouslyFocusedElement?.focus();
-    };
-  }, [isOpen, isSubmitting, onClose]);
-
-  if (!isOpen) {
-    return null;
-  }
-
   const requiredConsentCount = activeConsents.filter(
     (consent) => consent.required,
   ).length;
   const hasAcceptedAllRequired = requiredConsentCount === acceptedRequiredCount;
 
   return (
-    <div
-      aria-describedby={descriptionId}
-      aria-labelledby={dialogId}
-      aria-modal="true"
-      className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-[#08211f]/65 px-4 py-4 backdrop-blur-[2px] sm:py-6"
-      role="dialog"
-      onClick={isSubmitting ? undefined : onClose}
+    <Dialog
+      open={isOpen}
+      onOpenChange={(open) => {
+        if (!open && !isSubmitting) {
+          onClose();
+        }
+      }}
     >
-      <div
-        ref={dialogRef}
-        className="my-auto flex max-h-[calc(100vh-2rem)] w-full max-w-4xl flex-col overflow-hidden rounded-[28px] border border-[#d5e1da] bg-[#fffdec] shadow-[0_32px_70px_-42px_rgba(8,33,31,0.6)] sm:max-h-[calc(100vh-3rem)]"
-        tabIndex={-1}
-        onClick={(event) => event.stopPropagation()}
+      <DialogContent
+        className="max-h-[calc(100vh-2rem)] gap-0 overflow-hidden p-0 sm:max-h-[calc(100vh-3rem)]"
+        onEscapeKeyDown={(event) => {
+          if (isSubmitting) {
+            event.preventDefault();
+          }
+        }}
+        onInteractOutside={(event) => {
+          if (isSubmitting) {
+            event.preventDefault();
+          }
+        }}
       >
         <div className="flex items-start justify-between gap-4 border-b border-[#dbe5df] px-5 py-5 sm:px-8 sm:py-6">
-          <div>
+          <DialogHeader>
             <p className="text-xs font-semibold tracking-[0.18em] text-[#1f8ca5] uppercase">
               Enrollment Consent
             </p>
-            <h2
-              className="mt-2 text-2xl font-semibold tracking-[-0.04em] text-[#12393d] sm:text-[2rem]"
-              id={dialogId}
-            >
+            <DialogTitle className="mt-2">
               Review and accept the active consents
-            </h2>
-            <p
-              className="mt-2 max-w-2xl text-sm leading-6 text-slate-600 sm:text-[15px]"
-              id={descriptionId}
-            >
+            </DialogTitle>
+            <DialogDescription className="mt-2">
               Required consents must be accepted before the member can continue
               to Step 1 of enrollment.
-            </p>
-          </div>
+            </DialogDescription>
+          </DialogHeader>
 
           <button
             aria-label="Close consent dialog"
-            className="inline-flex size-10 items-center justify-center rounded-full border border-[#d5e1da] bg-white text-slate-500 transition-colors hover:bg-[#f4faf8] hover:text-[#12393d] disabled:cursor-not-allowed disabled:opacity-60"
+            className="inline-flex size-10 cursor-pointer items-center justify-center rounded-full border border-[#d5e1da] bg-white text-slate-500 transition-colors hover:bg-[#f4faf8] hover:text-[#12393d] disabled:cursor-not-allowed disabled:opacity-60"
             disabled={isSubmitting}
-            ref={closeButtonRef}
             type="button"
             onClick={onClose}
           >
@@ -198,12 +121,11 @@ export function DashboardConsentDialog({
                       : "border-[#d5e1da] bg-white",
                   )}
                 >
-                  <input
+                  <Checkbox
                     checked={isSelected}
-                    className="mt-1 size-4 rounded border-[#8aa7a4] accent-[#0b625d]"
+                    className="mt-1"
                     disabled={isSubmitting}
-                    type="checkbox"
-                    onChange={() => onToggleConsent(consent.id)}
+                    onCheckedChange={() => onToggleConsent(consent.id)}
                   />
 
                   <div className="min-w-0 flex-1">
@@ -233,7 +155,7 @@ export function DashboardConsentDialog({
           </div>
         </div>
 
-        <div className="flex flex-col-reverse gap-3 border-t border-[#dbe5df] bg-white/88 px-5 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-8 sm:py-6">
+        <DialogFooter className="border-t border-[#dbe5df] bg-white/88 px-5 py-5 sm:px-8 sm:py-6">
           <Button
             className="h-11 rounded-xl border-[#d5e1da] px-5 shadow-none"
             disabled={isSubmitting}
@@ -256,8 +178,8 @@ export function DashboardConsentDialog({
           >
             Accept and Continue
           </Button>
-        </div>
-      </div>
-    </div>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }
