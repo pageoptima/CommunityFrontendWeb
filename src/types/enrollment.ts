@@ -81,6 +81,29 @@ export type EnrollmentEmergencyContactSummary = Readonly<{
   phoneNumber: string | null;
 }>;
 
+export type EnrollmentMaternalLineageRelationValue =
+  | "MOTHER"
+  | "GRANDMOTHER"
+  | "GREAT_GRANDMOTHER"
+  | "GREAT_GREAT_GRANDMOTHER"
+  | "GREAT_GREAT_GREAT_GRANDMOTHER";
+
+export type EnrollmentMaternalLineageLivingStatusValue = "LIVING" | "DECEASED";
+
+export type EnrollmentMaternalLineageSummary = Readonly<{
+  id?: string | null;
+  relation: EnrollmentMaternalLineageRelationValue | null;
+  fullName: string | null;
+  maidenName: string | null;
+  dateOfBirth: string | null;
+  placeOfBirth: string | null;
+  livingStatus: EnrollmentMaternalLineageLivingStatusValue | null;
+  approximateBirthYear: number | null;
+  regionOfOrigin: string | null;
+  familyOccupation: string | null;
+  additionalNotes: string | null;
+}>;
+
 export type AccountEnrollmentInfo = Readonly<{
   id: string;
   status: string;
@@ -90,7 +113,7 @@ export type AccountEnrollmentInfo = Readonly<{
   contact: EnrollmentContactSummary | null;
   addresses: EnrollmentAddressSummary[];
   emergencyContact: EnrollmentEmergencyContactSummary | null;
-  maternalLineages: unknown[];
+  maternalLineages: EnrollmentMaternalLineageSummary[];
   culturalConnections: unknown[];
   consent: AccountEnrollmentConsent[];
   documents: EnrollmentDocumentBucket[];
@@ -183,5 +206,26 @@ export type EnrollmentStepOneUpsertRequest = Readonly<{
 }>;
 
 export type EnrollmentStepOneUpsertResponse = Readonly<{
+  success: boolean;
+}>;
+
+export type EnrollmentStepTwoMaternalLineage = Readonly<{
+  relation: EnrollmentMaternalLineageRelationValue;
+  fullName: string;
+  maidenName?: string;
+  dateOfBirth?: string;
+  placeOfBirth?: string;
+  livingStatus: EnrollmentMaternalLineageLivingStatusValue;
+  approximateBirthYear: number;
+  regionOfOrigin: string;
+  familyOccupation?: string;
+  additionalNotes?: string;
+}>;
+
+export type EnrollmentStepTwoUpsertRequest = Readonly<{
+  maternalLineages: EnrollmentStepTwoMaternalLineage[];
+}>;
+
+export type EnrollmentStepTwoUpsertResponse = Readonly<{
   success: boolean;
 }>;

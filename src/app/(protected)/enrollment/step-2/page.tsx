@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 
 import { EnrollmentProgressSection } from "@/features/enrollment/components/enrollment-progress-section";
 import { EnrollmentStepHero } from "@/features/enrollment/components/enrollment-step-hero";
+import { EnrollmentStepTwoForm } from "@/features/enrollment/components/enrollment-step-two-form";
 import { getEnrollmentStepDefinition } from "@/features/enrollment/config/enrollment-steps";
 
 const totalSteps = 4;
@@ -26,6 +27,11 @@ export default function EnrollmentStep2Page() {
         className="-mx-4 sm:-mx-6 lg:-mx-8"
         currentStage={step.step}
       />
+      <section className="-mx-4 bg-[#FFFDEC] sm:-mx-6 lg:-mx-8">
+        <div className="px-4 sm:px-6 lg:px-8">
+          <EnrollmentStepTwoForm />
+        </div>
+      </section>
     </>
   );
 }

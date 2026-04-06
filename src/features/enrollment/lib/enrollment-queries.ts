@@ -9,6 +9,8 @@ import type {
   ConsentAcceptRequest,
   EnrollmentStepOneUpsertRequest,
   EnrollmentStepOneUpsertResponse,
+  EnrollmentStepTwoUpsertRequest,
+  EnrollmentStepTwoUpsertResponse,
 } from "@/types/enrollment";
 
 export const accountQueryKeys = {
@@ -87,4 +89,22 @@ export function useEnrollmentStepOneUpsertMutation() {
   });
 }
 
-export type { EnrollmentStepOneUpsertResponse };
+export function useEnrollmentStepTwoUpsertMutation() {
+  return useMutation({
+    mutationFn: (payload: EnrollmentStepTwoUpsertRequest) =>
+      requestJson<
+        EnrollmentStepTwoUpsertResponse,
+        EnrollmentStepTwoUpsertRequest
+      >("/api/enrollment/step2/upsert", {
+        method: "POST",
+        body: payload,
+        fallbackMessage:
+          "Unable to save your step 2 maternal lineage information right now.",
+      }),
+  });
+}
+
+export type {
+  EnrollmentStepOneUpsertResponse,
+  EnrollmentStepTwoUpsertResponse,
+};
