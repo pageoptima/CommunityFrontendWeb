@@ -107,10 +107,10 @@ export type AccountInfoResponse = Readonly<{
 
 export type EnrollmentStepOneLegalName = Readonly<{
   firstName: string;
-  middleName: string;
+  middleName?: string;
   lastName: string;
-  maternalLastName: string;
-  preferredName: string;
+  maternalLastName?: string;
+  preferredName?: string;
 }>;
 
 export type EnrollmentStepOneBirthInfo = Readonly<{
@@ -120,26 +120,35 @@ export type EnrollmentStepOneBirthInfo = Readonly<{
   countryOfBirth: string;
 }>;
 
+export type EnrollmentStepOneGenderValue =
+  | "MALE"
+  | "FEMALE"
+  | "NON_BINARY"
+  | "TWO_SPIRIT"
+  | "SELF_DESCRIBE"
+  | "PREFER_NOT_TO_SAY"
+  | "OTHER";
+
 export type EnrollmentStepOneGenderInfo = Readonly<{
-  gender: string;
-  pronouns: string;
+  gender: EnrollmentStepOneGenderValue;
+  pronouns?: string;
 }>;
+
+export type EnrollmentStepOnePhoneTypeValue = "MOBILE" | "HOME" | "WORK";
 
 export type EnrollmentStepOneContactInfo = Readonly<{
   email: string;
   phoneNumber: string;
-  phoneType: string;
-  allowSMS: boolean;
+  phoneType: EnrollmentStepOnePhoneTypeValue;
+  allowSMS?: boolean;
 }>;
 
 export type EnrollmentStepOneAddressInfo = Readonly<{
   street: string;
-  apartment: string;
   city: string;
   state: string;
   zipCode: string;
   country: string;
-  yearsLived: string;
 }>;
 
 export type EnrollmentStepOneEmergencyContact = Readonly<{
@@ -148,12 +157,18 @@ export type EnrollmentStepOneEmergencyContact = Readonly<{
   phoneNumber: string;
 }>;
 
+export type EnrollmentStepOneMaritalStatusValue =
+  | "SINGLE"
+  | "MARRIED"
+  | "DIVORCED"
+  | "WIDOWED";
+
 export type EnrollmentStepOneAdditionalInfo = Readonly<{
-  maritalStatus: string;
-  occupation: string;
-  educationLevel: string;
-  languagesSpoken: string[];
-  specialSkills: string;
+  maritalStatus?: EnrollmentStepOneMaritalStatusValue;
+  occupation?: string;
+  educationLevel?: string;
+  languagesSpoken?: string[];
+  specialSkills?: string;
 }>;
 
 export type EnrollmentStepOneUpsertRequest = Readonly<{

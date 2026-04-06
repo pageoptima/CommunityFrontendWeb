@@ -25,52 +25,13 @@ import {
 } from "@/features/enrollment/lib/enrollment-queries";
 import {
   enrollmentStepOneSchema,
+  enrollmentStepOneGenderOptions,
+  enrollmentStepOneMaritalStatusOptions,
+  enrollmentStepOnePhoneTypeOptions,
   getEnrollmentStepOneDefaultValues,
   mapEnrollmentStepOneFormToPayload,
   type EnrollmentStepOneFormValues,
 } from "@/features/enrollment/lib/enrollment-step-one-form";
-
-const genderOptions = [
-  { label: "Male", value: "male" },
-  { label: "Female", value: "female" },
-  { label: "Non-binary", value: "non-binary" },
-  { label: "Prefer to self-describe", value: "self-describe" },
-  { label: "Prefer not to say", value: "prefer-not-to-say" },
-] as const;
-
-const pronounOptions = [
-  { label: "He / Him", value: "he/him" },
-  { label: "She / Her", value: "she/her" },
-  { label: "They / Them", value: "they/them" },
-  { label: "Prefer to self-describe", value: "self-describe" },
-  { label: "Prefer not to say", value: "prefer-not-to-say" },
-] as const;
-
-const phoneTypeOptions = [
-  { label: "Mobile", value: "mobile" },
-  { label: "Home", value: "home" },
-  { label: "Work", value: "work" },
-  { label: "Other", value: "other" },
-] as const;
-
-const maritalStatusOptions = [
-  { label: "Single", value: "single" },
-  { label: "Married", value: "married" },
-  { label: "Divorced", value: "divorced" },
-  { label: "Widowed", value: "widowed" },
-  { label: "Separated", value: "separated" },
-  { label: "Prefer not to say", value: "prefer-not-to-say" },
-] as const;
-
-const educationLevelOptions = [
-  { label: "High School", value: "High School" },
-  { label: "Associate Degree", value: "Associate Degree" },
-  { label: "Bachelor's", value: "Bachelor's" },
-  { label: "Master's", value: "Master's" },
-  { label: "Doctorate", value: "Doctorate" },
-  { label: "Trade School", value: "Trade School" },
-  { label: "Other", value: "Other" },
-] as const;
 
 const enrollmentSectionIcons = {
   basic: "/icons/enrollment/basic-info.svg",
@@ -151,23 +112,19 @@ export function EnrollmentStepOneForm() {
 
     const nextMailingAddress = currentAddress ?? {
       street: "",
-      apartment: "",
       city: "",
       state: "",
       zipCode: "",
       country: "",
-      yearsLived: "",
     };
     const currentMailingAddress = mailingAddress ?? nextMailingAddress;
 
     if (
       nextMailingAddress.street === currentMailingAddress.street &&
-      nextMailingAddress.apartment === currentMailingAddress.apartment &&
       nextMailingAddress.city === currentMailingAddress.city &&
       nextMailingAddress.state === currentMailingAddress.state &&
       nextMailingAddress.zipCode === currentMailingAddress.zipCode &&
-      nextMailingAddress.country === currentMailingAddress.country &&
-      nextMailingAddress.yearsLived === currentMailingAddress.yearsLived
+      nextMailingAddress.country === currentMailingAddress.country
     ) {
       return;
     }
@@ -304,6 +261,7 @@ export function EnrollmentStepOneForm() {
               label="Municipality / Area"
               name="birthInfo.municipalityOfBirth"
               placeholder="Enter municipality or landmark"
+              required
             />
           </EnrollmentFormSection>
 
@@ -318,15 +276,14 @@ export function EnrollmentStepOneForm() {
               control={control}
               label="How do you identify?"
               name="gender.gender"
-              options={genderOptions}
+              options={enrollmentStepOneGenderOptions}
               required
             />
-            <EnrollmentSelectField
+            <EnrollmentInputField
               control={control}
               label="Pronouns"
               name="gender.pronouns"
-              options={pronounOptions}
-              placeholder="Select pronouns"
+              placeholder="he/him, she/her, they/them"
             />
           </EnrollmentFormSection>
 
@@ -360,7 +317,7 @@ export function EnrollmentStepOneForm() {
               control={control}
               label="Phone Type"
               name="contact.phoneType"
-              options={phoneTypeOptions}
+              options={enrollmentStepOnePhoneTypeOptions}
               placeholder="Select phone type"
               required
             />
@@ -375,7 +332,7 @@ export function EnrollmentStepOneForm() {
 
           <EnrollmentFormSection
             description="Where do you currently reside? This helps us provide location-specific services and events."
-            fieldsPerRow={[2, 2, 2, 1]}
+            fieldsPerRow={[2, 2, 1]}
             iconSrc={enrollmentSectionIcons.address}
             iconWrapperClassName="bg-[#FFBDBD] shadow-[0_14px_28px_-22px_rgba(255,189,189,0.42)]"
             title="Current Address"
@@ -387,13 +344,6 @@ export function EnrollmentStepOneForm() {
               name="currentAddress.street"
               placeholder="Enter street address"
               required
-            />
-            <EnrollmentInputField
-              autoComplete="address-line2"
-              control={control}
-              label="Apartment / Unit"
-              name="currentAddress.apartment"
-              placeholder="Apartment, suite, or unit"
             />
             <EnrollmentInputField
               autoComplete="address-level2"
@@ -427,18 +377,11 @@ export function EnrollmentStepOneForm() {
               placeholder="Enter country"
               required
             />
-            <EnrollmentInputField
-              control={control}
-              label="Years Lived"
-              name="currentAddress.yearsLived"
-              placeholder="How many years have you lived here?"
-              required
-            />
           </EnrollmentFormSection>
 
           <EnrollmentFormSection
             description="If your mailing address differs from your current residence, include it here."
-            fieldsPerRow={[2, 2, 2, 1]}
+            fieldsPerRow={[2, 2, 1]}
             headerAction={
               <EnrollmentCheckboxField
                 control={control}
@@ -459,14 +402,6 @@ export function EnrollmentStepOneForm() {
               placeholder="Enter mailing street address"
               readOnly={sameAsCurrentAddress}
               required
-            />
-            <EnrollmentInputField
-              autoComplete="address-line2"
-              control={control}
-              label="Apartment / Unit"
-              name="mailingAddress.apartment"
-              placeholder="Apartment, suite, or unit"
-              readOnly={sameAsCurrentAddress}
             />
             <EnrollmentInputField
               autoComplete="address-level2"
@@ -501,14 +436,6 @@ export function EnrollmentStepOneForm() {
               label="Country"
               name="mailingAddress.country"
               placeholder="Enter country"
-              readOnly={sameAsCurrentAddress}
-              required
-            />
-            <EnrollmentInputField
-              control={control}
-              label="Years Lived"
-              name="mailingAddress.yearsLived"
-              placeholder="How many years have you lived here?"
               readOnly={sameAsCurrentAddress}
               required
             />
@@ -547,7 +474,7 @@ export function EnrollmentStepOneForm() {
           </EnrollmentFormSection>
 
           <EnrollmentFormSection
-            description="Add background details that help us better understand your personal and community context."
+            description="Add any optional background details that help us better understand your personal and community context."
             fieldsPerRow={[2, 1, 1, 1]}
             iconSrc={enrollmentSectionIcons.additional}
             iconWrapperClassName="bg-[#6d7b2e] shadow-[0_14px_28px_-22px_rgba(109,123,46,0.52)]"
@@ -557,31 +484,26 @@ export function EnrollmentStepOneForm() {
               control={control}
               label="Marital Status"
               name="additionalInfo.maritalStatus"
-              options={maritalStatusOptions}
+              options={enrollmentStepOneMaritalStatusOptions}
               placeholder="Select marital status"
-              required
             />
-            <EnrollmentSelectField
+            <EnrollmentInputField
               control={control}
               label="Education Level"
               name="additionalInfo.educationLevel"
-              options={educationLevelOptions}
-              placeholder="Select education level"
-              required
+              placeholder="High School, Bachelor's, Trade School"
             />
             <EnrollmentInputField
               control={control}
               label="Occupation"
               name="additionalInfo.occupation"
               placeholder="Enter occupation"
-              required
             />
             <EnrollmentInputField
               control={control}
               label="Languages Spoken"
               name="additionalInfo.languagesSpokenInput"
               placeholder="English, Spanish, Taíno"
-              required
             />
             <EnrollmentTextareaField
               control={control}

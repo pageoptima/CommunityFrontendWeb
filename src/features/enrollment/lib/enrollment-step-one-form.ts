@@ -8,33 +8,85 @@ import type {
 } from "@/types/enrollment";
 
 const phonePattern = /^[+()0-9\s-]{7,20}$/;
-const educationLevelValueMap = {
-  "high-school": "High School",
-  associate: "Associate Degree",
-  bachelors: "Bachelor's",
-  masters: "Master's",
-  doctorate: "Doctorate",
-  "trade-school": "Trade School",
-  other: "Other",
-  "High School": "High School",
-  "Associate Degree": "Associate Degree",
-  "Bachelor's": "Bachelor's",
-  "Master's": "Master's",
-  Doctorate: "Doctorate",
-  "Trade School": "Trade School",
-  Other: "Other",
-} as const;
+const dateInputPattern = /^\d{4}-\d{2}-\d{2}$/;
+
+export const enrollmentStepOneGenderValues = [
+  "MALE",
+  "FEMALE",
+  "NON_BINARY",
+  "TWO_SPIRIT",
+  "SELF_DESCRIBE",
+  "PREFER_NOT_TO_SAY",
+  "OTHER",
+] as const;
+
+export const enrollmentStepOneGenderOptions = [
+  { label: "Male", value: "MALE" },
+  { label: "Female", value: "FEMALE" },
+  { label: "Non-binary", value: "NON_BINARY" },
+  { label: "Two-Spirit", value: "TWO_SPIRIT" },
+  { label: "Self-describe", value: "SELF_DESCRIBE" },
+  { label: "Prefer not to say", value: "PREFER_NOT_TO_SAY" },
+  { label: "Other", value: "OTHER" },
+] as const;
+
+export const enrollmentStepOnePhoneTypeValues = [
+  "MOBILE",
+  "HOME",
+  "WORK",
+] as const;
+
+export const enrollmentStepOnePhoneTypeOptions = [
+  { label: "Mobile", value: "MOBILE" },
+  { label: "Home", value: "HOME" },
+  { label: "Work", value: "WORK" },
+] as const;
+
+export const enrollmentStepOneMaritalStatusValues = [
+  "SINGLE",
+  "MARRIED",
+  "DIVORCED",
+  "WIDOWED",
+] as const;
+
+export const enrollmentStepOneMaritalStatusOptions = [
+  { label: "Single", value: "SINGLE" },
+  { label: "Married", value: "MARRIED" },
+  { label: "Divorced", value: "DIVORCED" },
+  { label: "Widowed", value: "WIDOWED" },
+] as const;
 
 const requiredString = (label: string) =>
   z.string().trim().min(1, `${label} is required`);
+const optionalString = z.string().trim();
+
+function createRequiredSelectionSchema<
+  TValues extends readonly [string, ...string[]],
+>(label: string, allowedValues: TValues) {
+  return requiredString(label).refine(
+    (value) =>
+      allowedValues.includes(normalizeSelectionValue(value) as TValues[number]),
+    `Select a valid ${label.toLowerCase()}`,
+  );
+}
+
+function createOptionalSelectionSchema<
+  TValues extends readonly [string, ...string[]],
+>(label: string, allowedValues: TValues) {
+  return optionalString.refine(
+    (value) =>
+      value === "" ||
+      allowedValues.includes(normalizeSelectionValue(value) as TValues[number]),
+    `Select a valid ${label.toLowerCase()}`,
+  );
+}
+
 const requiredDateString = (label: string) =>
   requiredString(label).refine((value) => {
     const parsedDate = parseISO(value);
 
     return isValid(parsedDate) && format(parsedDate, "yyyy-MM-dd") === value;
   }, "Enter a valid date");
-
-const optionalString = z.string().trim();
 
 export const enrollmentStepOneSchema = z.object({
   legalName: z.object({
@@ -47,11 +99,14 @@ export const enrollmentStepOneSchema = z.object({
   birthInfo: z.object({
     dateOfBirth: requiredDateString("Date of birth"),
     cityOfBirth: requiredString("City or town of birth"),
-    municipalityOfBirth: optionalString,
+    municipalityOfBirth: requiredString("Municipality of birth"),
     countryOfBirth: requiredString("Country of birth"),
   }),
   gender: z.object({
-    gender: requiredString("Gender"),
+    gender: createRequiredSelectionSchema(
+      "gender identity",
+      enrollmentStepOneGenderValues,
+    ),
     pronouns: optionalString,
   }),
   contact: z.object({
@@ -65,26 +120,25 @@ export const enrollmentStepOneSchema = z.object({
       .trim()
       .min(1, "Phone number is required")
       .regex(phonePattern, "Enter a valid phone number"),
-    phoneType: requiredString("Phone type"),
+    phoneType: createRequiredSelectionSchema(
+      "phone type",
+      enrollmentStepOnePhoneTypeValues,
+    ),
     allowSMS: z.boolean(),
   }),
   currentAddress: z.object({
     street: requiredString("Street address"),
-    apartment: optionalString,
     city: requiredString("City"),
     state: requiredString("State or province"),
     zipCode: requiredString("ZIP or postal code"),
     country: requiredString("Country"),
-    yearsLived: requiredString("Years lived"),
   }),
   mailingAddress: z.object({
     street: requiredString("Street address"),
-    apartment: optionalString,
     city: requiredString("City"),
     state: requiredString("State or province"),
     zipCode: requiredString("ZIP or postal code"),
     country: requiredString("Country"),
-    yearsLived: requiredString("Years lived"),
   }),
   sameAsCurrentAddress: z.boolean(),
   emergencyContact: z.object({
@@ -97,10 +151,13 @@ export const enrollmentStepOneSchema = z.object({
       .regex(phonePattern, "Enter a valid phone number"),
   }),
   additionalInfo: z.object({
-    maritalStatus: requiredString("Marital status"),
-    occupation: requiredString("Occupation"),
-    educationLevel: requiredString("Education level"),
-    languagesSpokenInput: requiredString("Languages spoken"),
+    maritalStatus: createOptionalSelectionSchema(
+      "marital status",
+      enrollmentStepOneMaritalStatusValues,
+    ),
+    occupation: optionalString,
+    educationLevel: optionalString,
+    languagesSpokenInput: optionalString,
     specialSkills: optionalString,
   }),
 });
@@ -115,6 +172,88 @@ function readString(value: unknown) {
 
 function readBoolean(value: unknown, fallback = false) {
   return typeof value === "boolean" ? value : fallback;
+}
+
+function trimValue(value: string) {
+  return value.trim();
+}
+
+function toOptionalString(value: string) {
+  const trimmedValue = trimValue(value);
+
+  return trimmedValue || undefined;
+}
+
+function normalizeSelectionValue(value: string) {
+  return trimValue(value)
+    .replace(/[\s-]+/g, "_")
+    .toUpperCase();
+}
+
+function normalizeKnownSelection<TValues extends readonly string[]>(
+  value: unknown,
+  allowedValues: TValues,
+) {
+  const normalizedValue = normalizeSelectionValue(readString(value));
+
+  return allowedValues.includes(normalizedValue as TValues[number])
+    ? (normalizedValue as TValues[number])
+    : "";
+}
+
+function resolveRequiredSelection<TValues extends readonly string[]>(
+  value: string,
+  allowedValues: TValues,
+) {
+  const normalizedValue = normalizeKnownSelection(value, allowedValues);
+
+  if (!normalizedValue) {
+    throw new Error("Encountered an invalid step 1 selection value.");
+  }
+
+  return normalizedValue;
+}
+
+function resolveOptionalSelection<TValues extends readonly string[]>(
+  value: string,
+  allowedValues: TValues,
+) {
+  const normalizedValue = normalizeKnownSelection(value, allowedValues);
+
+  return normalizedValue || undefined;
+}
+
+function normalizeDateInputValue(value: unknown) {
+  const normalizedValue = trimValue(readString(value));
+
+  if (!normalizedValue) {
+    return "";
+  }
+
+  if (dateInputPattern.test(normalizedValue)) {
+    return normalizedValue;
+  }
+
+  const isoDatePrefix = normalizedValue.slice(0, 10);
+
+  if (dateInputPattern.test(isoDatePrefix)) {
+    return isoDatePrefix;
+  }
+
+  const parsedDate = parseISO(normalizedValue);
+
+  return isValid(parsedDate) ? format(parsedDate, "yyyy-MM-dd") : "";
+}
+
+function toIsoDateString(value: string) {
+  return `${trimValue(value)}T00:00:00.000Z`;
+}
+
+function splitLanguages(value: string) {
+  return value
+    .split(",")
+    .map((part) => part.trim())
+    .filter(Boolean);
 }
 
 function normalizeAddressType(value: string | null | undefined) {
@@ -156,12 +295,10 @@ function hasAddressContent(address: EnrollmentAddressSummary | null) {
 
   return [
     address.street,
-    address.apartment,
     address.city,
     address.state,
     address.zipCode,
     address.country,
-    address.yearsLived,
   ].some((value) => Boolean(readString(value).trim()));
 }
 
@@ -176,8 +313,6 @@ function areAddressesEqual(
   return (
     readString(currentAddress.street).trim() ===
       readString(mailingAddress.street).trim() &&
-    readString(currentAddress.apartment).trim() ===
-      readString(mailingAddress.apartment).trim() &&
     readString(currentAddress.city).trim() ===
       readString(mailingAddress.city).trim() &&
     readString(currentAddress.state).trim() ===
@@ -185,9 +320,7 @@ function areAddressesEqual(
     readString(currentAddress.zipCode).trim() ===
       readString(mailingAddress.zipCode).trim() &&
     readString(currentAddress.country).trim() ===
-      readString(mailingAddress.country).trim() &&
-    readString(currentAddress.yearsLived).trim() ===
-      readString(mailingAddress.yearsLived).trim()
+      readString(mailingAddress.country).trim()
   );
 }
 
@@ -217,38 +350,40 @@ export function getEnrollmentStepOneDefaultValues(
       preferredName: readString(personalInfo?.preferredName),
     },
     birthInfo: {
-      dateOfBirth: readString(personalInfo?.dateOfBirth),
+      dateOfBirth: normalizeDateInputValue(personalInfo?.dateOfBirth),
       cityOfBirth: readString(personalInfo?.cityOfBirth),
       municipalityOfBirth: readString(personalInfo?.municipalityOfBirth),
       countryOfBirth: readString(personalInfo?.countryOfBirth),
     },
     gender: {
-      gender: readString(personalInfo?.gender),
+      gender: normalizeKnownSelection(
+        personalInfo?.gender,
+        enrollmentStepOneGenderValues,
+      ),
       pronouns: readString(personalInfo?.pronouns),
     },
     contact: {
       email: readString(contact?.email) || readString(accountInfo?.user.email),
       phoneNumber: readString(contact?.phoneNumber),
-      phoneType: readString(contact?.phoneType),
+      phoneType: normalizeKnownSelection(
+        contact?.phoneType,
+        enrollmentStepOnePhoneTypeValues,
+      ),
       allowSMS: readBoolean(contact?.allowSMS),
     },
     currentAddress: {
       street: readString(currentAddress?.street),
-      apartment: readString(currentAddress?.apartment),
       city: readString(currentAddress?.city),
       state: readString(currentAddress?.state),
       zipCode: readString(currentAddress?.zipCode),
       country: readString(currentAddress?.country),
-      yearsLived: readString(currentAddress?.yearsLived),
     },
     mailingAddress: {
       street: readString(mailingAddress?.street),
-      apartment: readString(mailingAddress?.apartment),
       city: readString(mailingAddress?.city),
       state: readString(mailingAddress?.state),
       zipCode: readString(mailingAddress?.zipCode),
       country: readString(mailingAddress?.country),
-      yearsLived: readString(mailingAddress?.yearsLived),
     },
     sameAsCurrentAddress:
       hasAddressContent(currentAddress) &&
@@ -260,11 +395,12 @@ export function getEnrollmentStepOneDefaultValues(
       phoneNumber: readString(emergencyContact?.phoneNumber),
     },
     additionalInfo: {
-      maritalStatus: readString(personalInfo?.maritalStatus),
-      occupation: readString(personalInfo?.occupation),
-      educationLevel: normalizeEducationLevel(
-        readString(personalInfo?.educationLevel),
+      maritalStatus: normalizeKnownSelection(
+        personalInfo?.maritalStatus,
+        enrollmentStepOneMaritalStatusValues,
       ),
+      occupation: readString(personalInfo?.occupation),
+      educationLevel: readString(personalInfo?.educationLevel),
       languagesSpokenInput: Array.isArray(personalInfo?.languagesSpoken)
         ? personalInfo.languagesSpoken.join(", ")
         : "",
@@ -273,71 +409,67 @@ export function getEnrollmentStepOneDefaultValues(
   };
 }
 
-function trimValue(value: string) {
-  return value.trim();
-}
-
-function splitLanguages(value: string) {
-  return value
-    .split(",")
-    .map((part) => part.trim())
-    .filter(Boolean);
-}
-
-function normalizeEducationLevel(value: string) {
-  const normalizedValue = value.trim();
-
-  return (
-    educationLevelValueMap[
-      normalizedValue as keyof typeof educationLevelValueMap
-    ] ?? normalizedValue
-  );
-}
-
 export function mapEnrollmentStepOneFormToPayload(
   values: EnrollmentStepOneFormValues,
 ): EnrollmentStepOneUpsertRequest {
+  const middleName = toOptionalString(values.legalName.middleName);
+  const maternalLastName = toOptionalString(values.legalName.maternalLastName);
+  const preferredName = toOptionalString(values.legalName.preferredName);
+  const pronouns = toOptionalString(values.gender.pronouns);
+  const maritalStatus = resolveOptionalSelection(
+    values.additionalInfo.maritalStatus,
+    enrollmentStepOneMaritalStatusValues,
+  );
+  const occupation = toOptionalString(values.additionalInfo.occupation);
+  const educationLevel = toOptionalString(values.additionalInfo.educationLevel);
+  const languagesSpoken = splitLanguages(
+    values.additionalInfo.languagesSpokenInput,
+  );
+  const specialSkills = toOptionalString(values.additionalInfo.specialSkills);
+
   return {
     legalName: {
       firstName: trimValue(values.legalName.firstName),
-      middleName: trimValue(values.legalName.middleName),
+      ...(middleName ? { middleName } : {}),
       lastName: trimValue(values.legalName.lastName),
-      maternalLastName: trimValue(values.legalName.maternalLastName),
-      preferredName: trimValue(values.legalName.preferredName),
+      ...(maternalLastName ? { maternalLastName } : {}),
+      ...(preferredName ? { preferredName } : {}),
     },
     birthInfo: {
-      dateOfBirth: trimValue(values.birthInfo.dateOfBirth),
+      dateOfBirth: toIsoDateString(values.birthInfo.dateOfBirth),
       cityOfBirth: trimValue(values.birthInfo.cityOfBirth),
       municipalityOfBirth: trimValue(values.birthInfo.municipalityOfBirth),
       countryOfBirth: trimValue(values.birthInfo.countryOfBirth),
     },
     gender: {
-      gender: trimValue(values.gender.gender),
-      pronouns: trimValue(values.gender.pronouns),
+      gender: resolveRequiredSelection(
+        values.gender.gender,
+        enrollmentStepOneGenderValues,
+      ),
+      ...(pronouns ? { pronouns } : {}),
     },
     contact: {
       email: trimValue(values.contact.email).toLowerCase(),
       phoneNumber: trimValue(values.contact.phoneNumber),
-      phoneType: trimValue(values.contact.phoneType),
+      phoneType: resolveRequiredSelection(
+        values.contact.phoneType,
+        enrollmentStepOnePhoneTypeValues,
+      ),
       allowSMS: values.contact.allowSMS,
     },
     currentAddress: {
       street: trimValue(values.currentAddress.street),
-      apartment: trimValue(values.currentAddress.apartment),
       city: trimValue(values.currentAddress.city),
       state: trimValue(values.currentAddress.state),
       zipCode: trimValue(values.currentAddress.zipCode),
       country: trimValue(values.currentAddress.country),
-      yearsLived: trimValue(values.currentAddress.yearsLived),
     },
     mailingAddress: {
       street: trimValue(values.mailingAddress.street),
-      apartment: trimValue(values.mailingAddress.apartment),
       city: trimValue(values.mailingAddress.city),
       state: trimValue(values.mailingAddress.state),
       zipCode: trimValue(values.mailingAddress.zipCode),
       country: trimValue(values.mailingAddress.country),
-      yearsLived: trimValue(values.mailingAddress.yearsLived),
     },
     emergencyContact: {
       fullName: trimValue(values.emergencyContact.fullName),
@@ -345,15 +477,11 @@ export function mapEnrollmentStepOneFormToPayload(
       phoneNumber: trimValue(values.emergencyContact.phoneNumber),
     },
     additionalInfo: {
-      maritalStatus: trimValue(values.additionalInfo.maritalStatus),
-      occupation: trimValue(values.additionalInfo.occupation),
-      educationLevel: normalizeEducationLevel(
-        trimValue(values.additionalInfo.educationLevel),
-      ),
-      languagesSpoken: splitLanguages(
-        values.additionalInfo.languagesSpokenInput,
-      ),
-      specialSkills: trimValue(values.additionalInfo.specialSkills),
+      ...(maritalStatus ? { maritalStatus } : {}),
+      ...(occupation ? { occupation } : {}),
+      ...(educationLevel ? { educationLevel } : {}),
+      ...(languagesSpoken.length > 0 ? { languagesSpoken } : {}),
+      ...(specialSkills ? { specialSkills } : {}),
     },
   };
 }
