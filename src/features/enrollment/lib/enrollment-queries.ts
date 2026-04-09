@@ -2,11 +2,14 @@
 
 import { useMutation, useQuery } from "@tanstack/react-query";
 
-import { requestJson } from "@/services/http/fetcher";
+import { requestJson, requestMultipart } from "@/services/http/fetcher";
 import type {
   AccountInfoResponse,
   ActiveConsent,
   ConsentAcceptRequest,
+  EnrollmentDocumentListResponse,
+  EnrollmentDocumentType,
+  EnrollmentDocumentUploadResponse,
   EnrollmentStepOneUpsertRequest,
   EnrollmentStepOneUpsertResponse,
   EnrollmentStepThreeCulturalConnectionListResponse,
@@ -25,6 +28,7 @@ type ConsentAcceptResponse = Record<string, unknown>;
 
 export const enrollmentQueryKeys = {
   activeConsents: ["enrollment", "consent", "active"] as const,
+  documentList: ["enrollment", "document", "list"] as const,
   stepThreeCulturalConnectionList: [
     "enrollment",
     "step3",
@@ -142,7 +146,43 @@ export function useEnrollmentStepThreeUpsertMutation() {
   });
 }
 
+export function useEnrollmentDocumentListQuery() {
+  return useQuery({
+    queryKey: enrollmentQueryKeys.documentList,
+    queryFn: () =>
+      requestJson<EnrollmentDocumentListResponse>("/api/document/list", {
+        fallbackMessage: "Unable to load your enrollment documents right now.",
+      }),
+    staleTime: 30 * 1000,
+  });
+}
+
+type EnrollmentDocumentUploadPayload = Readonly<{
+  documentType: EnrollmentDocumentType;
+  file: File;
+}>;
+
+export function useEnrollmentDocumentUploadMutation() {
+  return useMutation({
+    mutationFn: ({ documentType, file }: EnrollmentDocumentUploadPayload) => {
+      const formData = new FormData();
+      formData.set("documentType", documentType);
+      formData.set("file", file, file.name);
+
+      return requestMultipart<EnrollmentDocumentUploadResponse>(
+        "/api/document/upload",
+        {
+          method: "POST",
+          body: formData,
+          fallbackMessage: "Unable to upload the selected document right now.",
+        },
+      );
+    },
+  });
+}
+
 export type {
+  EnrollmentDocumentUploadResponse,
   EnrollmentStepOneUpsertResponse,
   EnrollmentStepThreeUpsertResponse,
   EnrollmentStepTwoUpsertResponse,

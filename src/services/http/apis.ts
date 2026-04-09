@@ -27,4 +27,8 @@ export const endpoints = {
       "/enrollment/step3/upsert",
     ),
   },
+  DOCUMENT: {
+    LIST: normalizePath("/document/list"),
+    UPLOAD: normalizePath("/document/upload"),
+  },
 } as const;

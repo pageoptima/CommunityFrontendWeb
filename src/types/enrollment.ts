@@ -32,10 +32,33 @@ export type AccountEnrollmentConsent = Readonly<{
   required: boolean;
 }>;
 
+export type EnrollmentDocumentType =
+  | "USER_PHOTO"
+  | "BIRTH_CERTIFICATE"
+  | "FAMILY_RECORD"
+  | "FAMILY_PHOTO"
+  | "ADDITIONAL_EVIDENCE";
+
+export type EnrollmentDocumentStatus = string;
+
+export type EnrollmentDocumentRecord = Readonly<{
+  id: string;
+  type: EnrollmentDocumentType;
+  status: EnrollmentDocumentStatus;
+  fileName: string;
+  fileKey: string;
+  fileSize: number;
+  mimeType?: string | null;
+  url: string;
+  verifiedByAdmin: boolean;
+  rejectedReason: string | null;
+  uploadedAt: string;
+}>;
+
 export type EnrollmentDocumentBucket = Readonly<{
-  type: string;
+  type: EnrollmentDocumentType;
   isSingle: boolean;
-  documents: unknown[] | null;
+  documents: EnrollmentDocumentRecord | EnrollmentDocumentRecord[] | null;
 }>;
 
 export type EnrollmentPersonalInfoSummary = Readonly<{
@@ -251,4 +274,12 @@ export type EnrollmentStepThreeUpsertRequest = Readonly<{
 
 export type EnrollmentStepThreeUpsertResponse = Readonly<{
   success: boolean;
+}>;
+
+export type EnrollmentDocumentListResponse =
+  readonly EnrollmentDocumentBucket[];
+
+export type EnrollmentDocumentUploadResponse = Readonly<{
+  message: string;
+  document: EnrollmentDocumentRecord;
 }>;
