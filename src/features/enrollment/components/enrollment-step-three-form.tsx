@@ -181,10 +181,15 @@ export function EnrollmentStepThreeForm() {
                       <div className="grid gap-3 sm:grid-cols-2">
                         {culturalConnectionOptions.map((option) => {
                           const isChecked = selectedKeys.includes(option.key);
+                          const optionDescription =
+                            typeof option.description === "string" &&
+                            option.description.trim().length > 0
+                              ? option.description
+                              : "Description unavailable";
 
                           return (
                             <label
-                              className="flex min-h-[4.5rem] cursor-pointer items-start gap-3 rounded-xl border border-[#e3e7e4] bg-[#f8faf9] px-4 py-3 transition-colors hover:border-[#b8cbc3] hover:bg-[#f3f8f6]"
+                              className="flex cursor-pointer items-start gap-3 rounded-xl border border-[#e3e7e4] bg-[#f8faf9] px-4 py-3 transition-colors hover:border-[#b8cbc3] hover:bg-[#f3f8f6]"
                               key={option.key}
                             >
                               <Checkbox
@@ -206,11 +211,8 @@ export function EnrollmentStepThreeForm() {
                               />
                               <span className="min-w-0">
                                 <span className="block cursor-pointer text-[0.9rem] leading-6 font-medium tracking-[-0.01em] text-[#243238]">
-                                  {option.description}
+                                  {optionDescription}
                                 </span>
-                                <p className="text-[0.76rem] leading-5 text-[#7a817d]">
-                                  {option.key}
-                                </p>
                               </span>
                             </label>
                           );
