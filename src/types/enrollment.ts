@@ -104,6 +104,12 @@ export type EnrollmentMaternalLineageSummary = Readonly<{
   additionalNotes: string | null;
 }>;
 
+export type EnrollmentCulturalConnectionSummary = Readonly<{
+  id?: string | null;
+  key: string | null;
+  description: string | null;
+}>;
+
 export type AccountEnrollmentInfo = Readonly<{
   id: string;
   status: string;
@@ -114,7 +120,7 @@ export type AccountEnrollmentInfo = Readonly<{
   addresses: EnrollmentAddressSummary[];
   emergencyContact: EnrollmentEmergencyContactSummary | null;
   maternalLineages: EnrollmentMaternalLineageSummary[];
-  culturalConnections: unknown[];
+  culturalConnections: EnrollmentCulturalConnectionSummary[];
   consent: AccountEnrollmentConsent[];
   documents: EnrollmentDocumentBucket[];
   steps: EnrollmentStepState;
@@ -210,14 +216,15 @@ export type EnrollmentStepOneUpsertResponse = Readonly<{
 }>;
 
 export type EnrollmentStepTwoMaternalLineage = Readonly<{
+  id?: string;
   relation: EnrollmentMaternalLineageRelationValue;
   fullName: string;
   maidenName?: string;
   dateOfBirth?: string;
   placeOfBirth?: string;
   livingStatus: EnrollmentMaternalLineageLivingStatusValue;
-  approximateBirthYear: number;
-  regionOfOrigin: string;
+  approximateBirthYear?: number;
+  regionOfOrigin?: string;
   familyOccupation?: string;
   additionalNotes?: string;
 }>;
@@ -227,5 +234,21 @@ export type EnrollmentStepTwoUpsertRequest = Readonly<{
 }>;
 
 export type EnrollmentStepTwoUpsertResponse = Readonly<{
+  success: boolean;
+}>;
+
+export type EnrollmentStepThreeCulturalConnection = Readonly<{
+  key: string;
+  description: string;
+}>;
+
+export type EnrollmentStepThreeCulturalConnectionListResponse =
+  readonly EnrollmentStepThreeCulturalConnection[];
+
+export type EnrollmentStepThreeUpsertRequest = Readonly<{
+  culturalConnectionKeys: string[];
+}>;
+
+export type EnrollmentStepThreeUpsertResponse = Readonly<{
   success: boolean;
 }>;

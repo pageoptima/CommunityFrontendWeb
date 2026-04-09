@@ -61,8 +61,8 @@ export const enrollmentStepDefinitions = [
     title: "Cultural Connection",
     description:
       "Share your cultural ties, traditions, and community connection.",
-    progressTitle: "Document Upload",
-    progressDescription: "Submit supporting lineage documents",
+    progressTitle: "Cultural Connection",
+    progressDescription: "Share traditions and community ties",
     ctaLabel: "Start Step 3",
     href: "/enrollment/step-3",
     icon: FileCheck2,
@@ -76,8 +76,8 @@ export const enrollmentStepDefinitions = [
     title: "Document Upload",
     description:
       "Upload the supporting records required for enrollment review.",
-    progressTitle: "Review & Submit",
-    progressDescription: "Final review and application submission",
+    progressTitle: "Document Upload",
+    progressDescription: "Upload supporting lineage documents",
     ctaLabel: "Start Step 4",
     href: "/enrollment/step-4",
     icon: FileUp,

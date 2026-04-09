@@ -103,10 +103,11 @@ const optionalBirthYearString = optionalString.refine((value) => {
 
   const parsedYear = Number.parseInt(normalizedValue, 10);
 
-  return parsedYear >= 1500 && parsedYear <= currentYear;
+  return parsedYear >= 1800 && parsedYear <= currentYear;
 }, "Enter a valid 4-digit year");
 
 export const emptyEnrollmentStepTwoLineageValue = {
+  id: "",
   fullName: "",
   maidenName: "",
   dateOfBirth: "",
@@ -119,6 +120,7 @@ export const emptyEnrollmentStepTwoLineageValue = {
 } as const;
 
 const maternalLineageEntrySchema = z.object({
+  id: optionalString,
   fullName: optionalString,
   maidenName: optionalString,
   dateOfBirth: optionalDateString,
@@ -173,24 +175,6 @@ export const enrollmentStepTwoSchema = z
           index,
           "livingStatus",
           "Living status",
-        );
-      }
-
-      if (!trimValue(lineage.approximateBirthYear)) {
-        addRequiredLineageFieldIssue(
-          context,
-          index,
-          "approximateBirthYear",
-          "Approximate birth year",
-        );
-      }
-
-      if (!trimValue(lineage.regionOfOrigin)) {
-        addRequiredLineageFieldIssue(
-          context,
-          index,
-          "regionOfOrigin",
-          "Region of origin",
         );
       }
 
@@ -341,6 +325,7 @@ function buildLineageValueFromSummary(
   }
 
   return {
+    id: readString(lineage.id),
     fullName: readString(lineage.fullName),
     maidenName: readString(lineage.maidenName),
     dateOfBirth: normalizeDateInputValue(lineage.dateOfBirth),
@@ -395,14 +380,20 @@ export function mapEnrollmentStepTwoFormToPayload(
         }
 
         const lineage = values.maternalLineages[index];
+        const id = toOptionalString(lineage.id);
         const maidenName = toOptionalString(lineage.maidenName);
         const dateOfBirth = toOptionalString(lineage.dateOfBirth);
         const placeOfBirth = toOptionalString(lineage.placeOfBirth);
+        const approximateBirthYear = toOptionalString(
+          lineage.approximateBirthYear,
+        );
+        const regionOfOrigin = toOptionalString(lineage.regionOfOrigin);
         const familyOccupation = toOptionalString(lineage.familyOccupation);
         const additionalNotes = toOptionalString(lineage.additionalNotes);
 
         return [
           {
+            ...(id ? { id } : {}),
             relation,
             fullName: trimValue(lineage.fullName),
             ...(maidenName ? { maidenName } : {}),
@@ -412,11 +403,15 @@ export function mapEnrollmentStepTwoFormToPayload(
               lineage.livingStatus,
               enrollmentStepTwoLivingStatusValues,
             ),
-            approximateBirthYear: Number.parseInt(
-              trimValue(lineage.approximateBirthYear),
-              10,
-            ),
-            regionOfOrigin: trimValue(lineage.regionOfOrigin),
+            ...(approximateBirthYear
+              ? {
+                  approximateBirthYear: Number.parseInt(
+                    approximateBirthYear,
+                    10,
+                  ),
+                }
+              : {}),
+            ...(regionOfOrigin ? { regionOfOrigin } : {}),
             ...(familyOccupation ? { familyOccupation } : {}),
             ...(additionalNotes ? { additionalNotes } : {}),
           },

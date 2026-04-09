@@ -266,7 +266,6 @@ export function EnrollmentStepTwoForm() {
                   label="Approximate Birth Year"
                   name={`${fieldBase}.approximateBirthYear`}
                   placeholder="1975"
-                  required
                 />
                 <EnrollmentInputField
                   control={control}
@@ -279,7 +278,6 @@ export function EnrollmentStepTwoForm() {
                   label="Region of Origin"
                   name={`${fieldBase}.regionOfOrigin`}
                   placeholder="Enter region of origin"
-                  required
                 />
                 <EnrollmentRadioGroupField
                   control={control}

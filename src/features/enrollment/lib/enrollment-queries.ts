@@ -9,6 +9,9 @@ import type {
   ConsentAcceptRequest,
   EnrollmentStepOneUpsertRequest,
   EnrollmentStepOneUpsertResponse,
+  EnrollmentStepThreeCulturalConnectionListResponse,
+  EnrollmentStepThreeUpsertRequest,
+  EnrollmentStepThreeUpsertResponse,
   EnrollmentStepTwoUpsertRequest,
   EnrollmentStepTwoUpsertResponse,
 } from "@/types/enrollment";
@@ -22,6 +25,11 @@ type ConsentAcceptResponse = Record<string, unknown>;
 
 export const enrollmentQueryKeys = {
   activeConsents: ["enrollment", "consent", "active"] as const,
+  stepThreeCulturalConnectionList: [
+    "enrollment",
+    "step3",
+    "cultural-connection-list",
+  ] as const,
 };
 
 export function useAccountInfoQuery() {
@@ -104,7 +112,38 @@ export function useEnrollmentStepTwoUpsertMutation() {
   });
 }
 
+export function useEnrollmentStepThreeConnectionListQuery() {
+  return useQuery({
+    queryKey: enrollmentQueryKeys.stepThreeCulturalConnectionList,
+    queryFn: () =>
+      requestJson<EnrollmentStepThreeCulturalConnectionListResponse>(
+        "/api/enrollment/step3/cultural-connection-list",
+        {
+          fallbackMessage:
+            "Unable to load the cultural connection options right now.",
+        },
+      ),
+    staleTime: 5 * 60 * 1000,
+  });
+}
+
+export function useEnrollmentStepThreeUpsertMutation() {
+  return useMutation({
+    mutationFn: (payload: EnrollmentStepThreeUpsertRequest) =>
+      requestJson<
+        EnrollmentStepThreeUpsertResponse,
+        EnrollmentStepThreeUpsertRequest
+      >("/api/enrollment/step3/upsert", {
+        method: "POST",
+        body: payload,
+        fallbackMessage:
+          "Unable to save your step 3 cultural connection information right now.",
+      }),
+  });
+}
+
 export type {
   EnrollmentStepOneUpsertResponse,
+  EnrollmentStepThreeUpsertResponse,
   EnrollmentStepTwoUpsertResponse,
 };
