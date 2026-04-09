@@ -2,15 +2,17 @@ import { Button } from "@/components/ui/button";
 import { SvgIcon } from "@/components/shared/svg-icon";
 
 import { ProfileActionButton } from "./profile-action-button";
-import { profileConfig } from "../config/profile-config";
+import type { ProfileDetail } from "../config/profile-config";
 
 type ProfileSummaryProps = Readonly<{
+  details: readonly ProfileDetail[];
   name: string;
   memberSince: string;
   memberStatus: string;
 }>;
 
 export function ProfileSummary({
+  details,
   name,
   memberSince,
   memberStatus,
@@ -39,7 +41,7 @@ export function ProfileSummary({
       </p>
 
       <div className="mt-4 grid justify-items-start gap-2.5 sm:grid-cols-2 sm:justify-items-start sm:gap-x-4 sm:gap-y-2.5 lg:flex lg:flex-wrap lg:items-center lg:gap-x-4 lg:gap-y-2">
-        {profileConfig.details.map((detail) => (
+        {details.map((detail) => (
           <div
             key={detail.value}
             className="flex items-center gap-1.5 whitespace-normal sm:whitespace-nowrap"

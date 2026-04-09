@@ -1,34 +1,74 @@
+"use client";
+
+import { useMemo } from "react";
+
+import { useAccountInfoQuery } from "@/features/dashboard/lib/enrollment-queries";
 import type { AuthUser } from "@/lib/auth";
 
 import { ProfileAvatar } from "./profile-avatar";
 import { ProfileLineageSection } from "./profile-lineage-section";
 import { ProfileRegionalMembersSection } from "./profile-regional-members-section";
 import { ProfileSummary } from "./profile-summary";
-import { profileConfig } from "../config/profile-config";
+import { buildProfileViewData } from "../lib/profile-view-data";
 
 export function ProfilePageContent({ user }: Readonly<{ user: AuthUser }>) {
+  const accountInfoQuery = useAccountInfoQuery();
+
+  const profileViewData = useMemo(
+    () =>
+      buildProfileViewData({
+        accountInfo: accountInfoQuery.data ?? null,
+        authUser: user,
+      }),
+    [accountInfoQuery.data, user],
+  );
+
+  const accountInfoErrorMessage =
+    !accountInfoQuery.data && accountInfoQuery.error instanceof Error
+      ? accountInfoQuery.error.message
+      : null;
+
   return (
     <section
-      aria-label={`Profile summary for ${profileConfig.copy.name}`}
+      aria-label={`Profile summary for ${profileViewData.copy.name}`}
       className="mx-auto w-full max-w-5xl pt-24 sm:pt-28 lg:pt-32"
       data-auth-user-id={user.id}
     >
+      {accountInfoErrorMessage ? (
+        <div className="mb-5 rounded-[20px] border border-[#e9d8aa] bg-[#fff9eb] px-4 py-3 text-sm font-medium text-[#8a6000] sm:px-5">
+          {accountInfoErrorMessage} Showing fallback profile values where
+          needed.
+        </div>
+      ) : null}
+
       <div className="mr-auto flex max-w-[48rem] flex-col items-start gap-4 text-left lg:flex-row lg:items-center lg:gap-4 xl:max-w-[52rem] xl:gap-5">
         <ProfileAvatar
-          name={profileConfig.copy.name}
-          portraitSrc={profileConfig.copy.portraitSrc}
+          name={profileViewData.copy.name}
+          portraitSrc={profileViewData.copy.portraitSrc}
         />
 
         <ProfileSummary
-          memberSince={profileConfig.copy.memberSince}
-          memberStatus={profileConfig.copy.memberStatus}
-          name={profileConfig.copy.name}
+          details={profileViewData.details}
+          memberSince={profileViewData.copy.memberSince}
+          memberStatus={profileViewData.copy.memberStatus}
+          name={profileViewData.copy.name}
         />
       </div>
 
-      <ProfileLineageSection />
+      <ProfileLineageSection
+        activityData={profileViewData.activityData}
+        documentsData={profileViewData.documentsData}
+        lineageEntries={profileViewData.lineageEntries}
+        lineageTreeData={profileViewData.lineageTreeData}
+        lineageStats={profileViewData.lineageStats}
+        overviewData={profileViewData.overviewData}
+        settingsData={profileViewData.settingsData}
+        yucayekeData={profileViewData.yucayekeData}
+      />
 
-      <ProfileRegionalMembersSection />
+      <ProfileRegionalMembersSection
+        members={profileViewData.regionalMembers}
+      />
     </section>
   );
 }

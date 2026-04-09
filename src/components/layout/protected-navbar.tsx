@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { useQueryClient } from "@tanstack/react-query";
 import {
@@ -12,6 +12,7 @@ import {
   LogOut,
   Menu,
   ShieldCheck,
+  User,
   X,
 } from "lucide-react";
 
@@ -52,6 +53,40 @@ export function ProtectedNavbar({ user }: Readonly<{ user: AuthUser }>) {
   const queryClient = useQueryClient();
   const logoutMutation = useLogoutMutation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+  const profileMenuRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!isProfileMenuOpen) {
+      return;
+    }
+
+    const handlePointerDown = (event: MouseEvent) => {
+      if (!profileMenuRef.current) {
+        return;
+      }
+
+      const targetNode = event.target as Node | null;
+
+      if (targetNode && !profileMenuRef.current.contains(targetNode)) {
+        setIsProfileMenuOpen(false);
+      }
+    };
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsProfileMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handlePointerDown);
+    document.addEventListener("keydown", handleEscape);
+
+    return () => {
+      document.removeEventListener("mousedown", handlePointerDown);
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, [isProfileMenuOpen]);
 
   const handleLogout = async () => {
     logoutMutation.reset();
@@ -60,6 +95,7 @@ export function ProtectedNavbar({ user }: Readonly<{ user: AuthUser }>) {
       await logoutMutation.mutateAsync();
       queryClient.clear();
       setIsMobileMenuOpen(false);
+      setIsProfileMenuOpen(false);
       router.replace("/sign-in");
       router.refresh();
     } catch {
@@ -70,6 +106,8 @@ export function ProtectedNavbar({ user }: Readonly<{ user: AuthUser }>) {
   const isLoggingOut = logoutMutation.isPending;
   const logoutError =
     logoutMutation.error instanceof Error ? logoutMutation.error.message : null;
+  const dropdownItemClass =
+    "text-foreground hover:bg-surface-muted flex w-full cursor-pointer items-center gap-2 rounded-xl px-3 py-2 text-left text-sm font-semibold no-underline transition-colors";
 
   return (
     <header className="width-before-scroll-bar fixed inset-x-0 top-0 z-50">
@@ -114,8 +152,14 @@ export function ProtectedNavbar({ user }: Readonly<{ user: AuthUser }>) {
               <span className="absolute top-2 right-2 size-2 rounded-full bg-[#ea384c]" />
             </button>
 
-            <details className="group relative">
-              <summary className="flex cursor-pointer list-none items-center gap-3 rounded-full px-2 py-1.5 outline-none lg:gap-2.5 lg:px-1.5 lg:py-1 xl:gap-3 xl:px-2 xl:py-1.5 [&::-webkit-details-marker]:hidden">
+            <div className="relative" ref={profileMenuRef}>
+              <button
+                aria-expanded={isProfileMenuOpen}
+                aria-haspopup="menu"
+                className="flex cursor-pointer list-none items-center gap-3 rounded-full px-2 py-1.5 outline-none lg:gap-2.5 lg:px-1.5 lg:py-1 xl:gap-3 xl:px-2 xl:py-1.5"
+                type="button"
+                onClick={() => setIsProfileMenuOpen((value) => !value)}
+              >
                 <div className="relative flex size-11 items-center justify-center rounded-full bg-[linear-gradient(135deg,#35d6c1_0%,#2b74d8_100%)] text-sm font-semibold text-white shadow-[0_14px_30px_-18px_rgba(43,116,216,0.8)] lg:size-10 lg:text-[0.82rem] xl:size-11 xl:text-sm">
                   {getInitials(user.name)}
                   <span className="absolute right-0 bottom-0 flex size-4 items-center justify-center rounded-full border-2 border-white bg-[#17a2b8] text-[10px] text-white lg:size-3.5 xl:size-4">
@@ -132,25 +176,40 @@ export function ProtectedNavbar({ user }: Readonly<{ user: AuthUser }>) {
                   </p>
                 </div>
 
-                <ChevronDown className="text-muted-foreground size-4 transition-transform group-open:rotate-180 lg:size-3.5 xl:size-4" />
-              </summary>
+                <ChevronDown
+                  className={cn(
+                    "text-muted-foreground size-4 transition-transform lg:size-3.5 xl:size-4",
+                    isProfileMenuOpen && "rotate-180",
+                  )}
+                />
+              </button>
 
-              <div className="border-border bg-surface absolute top-[calc(100%+0.75rem)] right-0 w-56 rounded-2xl border p-2 shadow-[0_24px_48px_-30px_rgba(16,47,52,0.38)]">
-                <button
-                  className="text-foreground hover:bg-surface-muted flex w-full items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium transition-colors"
-                  onClick={handleLogout}
-                  type="button"
-                >
-                  <LogOut className="size-4" />
-                  {isLoggingOut ? "Signing out..." : "Sign out"}
-                </button>
-                {logoutError ? (
-                  <p className="px-3 py-2 text-xs leading-5 text-red-600">
-                    {logoutError}
-                  </p>
-                ) : null}
-              </div>
-            </details>
+              {isProfileMenuOpen ? (
+                <div className="border-border bg-surface absolute top-[calc(100%+0.75rem)] right-0 w-56 rounded-2xl border p-2 shadow-[0_24px_48px_-30px_rgba(16,47,52,0.38)]">
+                  <Link
+                    className={dropdownItemClass}
+                    href="/profile"
+                    onClick={() => setIsProfileMenuOpen(false)}
+                  >
+                    <User className="size-4" />
+                    Profile
+                  </Link>
+                  <button
+                    className={dropdownItemClass}
+                    onClick={handleLogout}
+                    type="button"
+                  >
+                    <LogOut className="size-4" />
+                    {isLoggingOut ? "Signing out..." : "Sign out"}
+                  </button>
+                  {logoutError ? (
+                    <p className="px-3 py-2 text-xs leading-5 text-red-600">
+                      {logoutError}
+                    </p>
+                  ) : null}
+                </div>
+              ) : null}
+            </div>
           </div>
 
           <Button
@@ -180,7 +239,7 @@ export function ProtectedNavbar({ user }: Readonly<{ user: AuthUser }>) {
                   {user.name}
                 </p>
                 <p className="text-muted-foreground truncate text-xs">
-                  {user.email}
+                  Member ID: {formatMemberId(user.id)}
                 </p>
               </div>
             </div>

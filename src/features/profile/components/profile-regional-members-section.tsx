@@ -9,14 +9,15 @@ import { cn } from "@/lib/utils";
 import sharedStyles from "../styles/profile-shared.module.scss";
 import { ProfileRegionalMemberCard } from "./profile-regional-member-card";
 import { filterRegionalMembers } from "./profile-regional-members-utils";
-import { profileConfig } from "../config/profile-config";
+import type { ProfileRegionalMember } from "../config/profile-config";
 
-export function ProfileRegionalMembersSection() {
+export function ProfileRegionalMembersSection({
+  members,
+}: Readonly<{
+  members: readonly ProfileRegionalMember[];
+}>) {
   const [query, setQuery] = useState("");
-  const filteredMembers = filterRegionalMembers(
-    profileConfig.regionalMembers,
-    query,
-  );
+  const filteredMembers = filterRegionalMembers(members, query);
 
   return (
     <section

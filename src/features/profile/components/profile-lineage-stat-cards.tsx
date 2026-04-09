@@ -1,4 +1,4 @@
-import { profileConfig } from "../config/profile-config";
+import type { ProfileLineageStat } from "../config/profile-config";
 
 function ProfileLineageStatCard({
   description,
@@ -26,10 +26,14 @@ function ProfileLineageStatCard({
   );
 }
 
-export function ProfileLineageStatCards() {
+export function ProfileLineageStatCards({
+  stats,
+}: Readonly<{
+  stats: readonly ProfileLineageStat[];
+}>) {
   return (
     <div className="mt-5 grid gap-3 sm:grid-cols-2 sm:gap-3 lg:grid-cols-3 lg:gap-3.5 xl:gap-4">
-      {profileConfig.lineageStats.map((stat) => (
+      {stats.map((stat) => (
         <ProfileLineageStatCard
           key={stat.value}
           description={stat.description}

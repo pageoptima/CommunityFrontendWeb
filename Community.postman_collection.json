@@ -1110,9 +1110,61 @@
               "host": ["localhost"],
               "port": "3000",
               "path": ["account", "info"]
-            }
+            },
+            "description": "Returns account and enrollment data for the authenticated user profile.\n\nAuth\n- Requires Bearer {{accessToken}} (JwtAuthGuard).\n\nTop-level response shape (200)\n- user: minimal user object from UserService.findById\n  - id: string (UUID)\n  - name: string | null\n  - email: string\n  - role: USER | ADMIN | MODERATOR\n- enrollment: object | null\n  - null when user has not started enrollment\n  - otherwise returns the extended enrollment summary shape described below\n- enrollmentStep: object | undefined\n  - mirrors enrollment.steps when enrollment exists\n  - map of step number to completion flag, example: { \"1\": true, \"2\": false, \"3\": false, \"4\": false }\n- enrollmentStatus: DRAFT | SUBMITTED | APPROVED | REJECTED | undefined\n  - mirrors enrollment.status when enrollment exists\n- hasEnrollment: boolean\n\nEnrollment object (when present)\n- id: string\n- status: DRAFT | SUBMITTED | APPROVED | REJECTED\n- consentAccepted: boolean\n- user: duplicated user summary inside enrollment\n  - id, email, name, role\n- personalInfo:\n  - firstName, middleName, lastName, preferredName, maternalLastName: string | null\n  - dateOfBirth: ISO date string | null\n  - cityOfBirth, municipalityOfBirth, countryOfBirth: string | null\n  - gender: MALE | FEMALE | NON_BINARY | TWO_SPIRIT | SELF_DESCRIBE | PREFER_NOT_TO_SAY | OTHER | null\n  - pronouns: string | null\n  - maritalStatus: SINGLE | MARRIED | DIVORCED | WIDOWED | null\n  - occupation, educationLevel, specialSkills: string | null\n  - languagesSpoken: string[]\n- contact: { id, enrollmentId, email, phoneNumber, phoneType, allowSMS, createdAt, updatedAt } | null\n- addresses: array of { id, enrollmentId, type, street, apartment, city, state, zipCode, country, yearsLived, createdAt, updatedAt }\n- emergencyContact: { id, enrollmentId, fullName, relationship, phoneNumber } | null\n- maternalLineages: array of summaries\n  - id, fullName, maidenName, dateOfBirth, placeOfBirth, LivingStatus, approximateBirthYear, regionOfOrigin, familyOccupation, additionalNotes, relation\n  - Note: key name is currently \"LivingStatus\" (capital L) in backend response.\n- culturalConnections: array of { id, key, description }\n- consent: array of { id, key, version, title, accepted, acceptedAt, required }\n- documents: grouped document list (same structure as GET /document/list)\n- steps: map of step number to completion boolean\n\nImportant integration notes\n- When hasEnrollment is false: enrollment is null, enrollmentStep is undefined, enrollmentStatus is undefined.\n- JSON object keys for numeric step map appear as strings on the wire (\"1\", \"2\", ...).\n- Current backend throws generic Error(\"User not found\") if user lookup fails, which may surface as 500."
           },
-          "response": []
+          "response": [
+            {
+              "name": "Info Success - with enrollment",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:3000/account/info",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["account", "info"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"user\": {\n    \"id\": \"3f81b7aa-10b6-4f89-9abc-e7a43b51e92f\",\n    \"name\": \"Test User\",\n    \"email\": \"testuser@email.com\",\n    \"role\": \"USER\"\n  },\n  \"enrollment\": {\n    \"id\": \"14c1f0c6-5f16-46fa-a691-2b09ab5d6777\",\n    \"status\": \"DRAFT\",\n    \"consentAccepted\": true,\n    \"user\": {\n      \"id\": \"3f81b7aa-10b6-4f89-9abc-e7a43b51e92f\",\n      \"email\": \"testuser@email.com\",\n      \"name\": \"Test User\",\n      \"role\": \"USER\"\n    },\n    \"personalInfo\": {\n      \"firstName\": \"Pravat\",\n      \"middleName\": \"Kumar\",\n      \"lastName\": \"Sahoo\",\n      \"preferredName\": \"Prav\",\n      \"maternalLastName\": \"Das\",\n      \"dateOfBirth\": \"2002-05-14T00:00:00.000Z\",\n      \"cityOfBirth\": \"Durgapur\",\n      \"municipalityOfBirth\": \"Durgapur Municipal Corporation\",\n      \"countryOfBirth\": \"India\",\n      \"gender\": \"MALE\",\n      \"pronouns\": \"he/him\",\n      \"maritalStatus\": \"SINGLE\",\n      \"occupation\": \"Student\",\n      \"educationLevel\": \"Bachelor's\",\n      \"languagesSpoken\": [\n        \"English\",\n        \"Hindi\",\n        \"Bengali\"\n      ],\n      \"specialSkills\": \"Programming, Problem Solving\"\n    },\n    \"contact\": {\n      \"id\": \"1f923af8-b4f2-4f9c-a682-2a4724ec54f8\",\n      \"enrollmentId\": \"14c1f0c6-5f16-46fa-a691-2b09ab5d6777\",\n      \"email\": \"pravat.sahoo@example.com\",\n      \"phoneNumber\": \"9876543210\",\n      \"phoneType\": \"MOBILE\",\n      \"allowSMS\": true,\n      \"createdAt\": \"2026-04-09T07:25:13.256Z\",\n      \"updatedAt\": \"2026-04-09T07:25:13.256Z\"\n    },\n    \"addresses\": [\n      {\n        \"id\": \"2e6f655b-befd-4d8d-a17f-fecf979d8ff4\",\n        \"enrollmentId\": \"14c1f0c6-5f16-46fa-a691-2b09ab5d6777\",\n        \"type\": \"CURRENT\",\n        \"street\": \"Street 12, Sector 2\",\n        \"apartment\": null,\n        \"city\": \"Durgapur\",\n        \"state\": \"West Bengal\",\n        \"zipCode\": \"713201\",\n        \"country\": \"India\",\n        \"yearsLived\": null,\n        \"createdAt\": \"2026-04-09T07:25:13.256Z\",\n        \"updatedAt\": \"2026-04-09T07:25:13.256Z\"\n      },\n      {\n        \"id\": \"5cf8cd8e-08e4-49b8-b243-6dc3ce35916d\",\n        \"enrollmentId\": \"14c1f0c6-5f16-46fa-a691-2b09ab5d6777\",\n        \"type\": \"MAILING\",\n        \"street\": \"Street 45, Bidhannagar\",\n        \"apartment\": null,\n        \"city\": \"Kolkata\",\n        \"state\": \"West Bengal\",\n        \"zipCode\": \"700064\",\n        \"country\": \"India\",\n        \"yearsLived\": null,\n        \"createdAt\": \"2026-04-09T07:25:13.256Z\",\n        \"updatedAt\": \"2026-04-09T07:25:13.256Z\"\n      }\n    ],\n    \"emergencyContact\": {\n      \"id\": \"f11f2f6b-9f64-4daa-9f8c-0f18b02ef8b3\",\n      \"enrollmentId\": \"14c1f0c6-5f16-46fa-a691-2b09ab5d6777\",\n      \"fullName\": \"Ramesh Sahoo\",\n      \"relationship\": \"Father\",\n      \"phoneNumber\": \"9123456789\"\n    },\n    \"maternalLineages\": [\n      {\n        \"id\": \"59d4f5db-bce0-4bb0-a5be-18d94b355f8e\",\n        \"fullName\": \"Anita Sahoo\",\n        \"maidenName\": \"Das\",\n        \"dateOfBirth\": \"1975-06-15T00:00:00.000Z\",\n        \"placeOfBirth\": \"Kolkata\",\n        \"LivingStatus\": \"LIVING\",\n        \"approximateBirthYear\": 1975,\n        \"regionOfOrigin\": \"West Bengal\",\n        \"familyOccupation\": \"Teacher\",\n        \"additionalNotes\": \"Loves gardening\",\n        \"relation\": \"MOTHER\"\n      }\n    ],\n    \"culturalConnections\": [\n      {\n        \"id\": \"a34e4b34-dcff-4aa0-a464-5535e4dd9f69\",\n        \"key\": \"medicinal_plant_knowledge\",\n        \"description\": \"Knowledge and use of traditional medicinal plants\"\n      }\n    ],\n    \"consent\": [\n      {\n        \"id\": \"4dd4bcc8-307b-4af4-aa17-df1f5fc57dc0\",\n        \"key\": \"privacy_policy\",\n        \"version\": 1,\n        \"title\": \"Privacy Policy\",\n        \"accepted\": true,\n        \"acceptedAt\": \"2026-04-09T07:23:57.151Z\",\n        \"required\": true\n      }\n    ],\n    \"documents\": [\n      {\n        \"type\": \"USER_PHOTO\",\n        \"isSingle\": true,\n        \"documents\": null\n      },\n      {\n        \"type\": \"BIRTH_CERTIFICATE\",\n        \"isSingle\": true,\n        \"documents\": null\n      },\n      {\n        \"type\": \"ADDITIONAL_EVIDENCE\",\n        \"isSingle\": false,\n        \"documents\": []\n      },\n      {\n        \"type\": \"FAMILY_PHOTO\",\n        \"isSingle\": false,\n        \"documents\": []\n      },\n      {\n        \"type\": \"FAMILY_RECORD\",\n        \"isSingle\": false,\n        \"documents\": []\n      }\n    ],\n    \"steps\": {\n      \"1\": true,\n      \"2\": true,\n      \"3\": false,\n      \"4\": false\n    }\n  },\n  \"enrollmentStep\": {\n    \"1\": true,\n    \"2\": true,\n    \"3\": false,\n    \"4\": false\n  },\n  \"enrollmentStatus\": \"DRAFT\",\n  \"hasEnrollment\": true\n}"
+            },
+            {
+              "name": "Info Success - no enrollment",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:3000/account/info",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["account", "info"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"user\": {\n    \"id\": \"3f81b7aa-10b6-4f89-9abc-e7a43b51e92f\",\n    \"name\": \"Test User\",\n    \"email\": \"testuser@email.com\",\n    \"role\": \"USER\"\n  },\n  \"enrollment\": null,\n  \"hasEnrollment\": false\n}"
+            }
+          ]
         }
       ],
       "auth": {

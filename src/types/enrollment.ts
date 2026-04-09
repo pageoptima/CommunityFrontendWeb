@@ -120,6 +120,8 @@ export type EnrollmentMaternalLineageSummary = Readonly<{
   maidenName: string | null;
   dateOfBirth: string | null;
   placeOfBirth: string | null;
+  // Backend payload currently may return "LivingStatus" (capital L) in /account/info.
+  LivingStatus?: EnrollmentMaternalLineageLivingStatusValue | null;
   livingStatus: EnrollmentMaternalLineageLivingStatusValue | null;
   approximateBirthYear: number | null;
   regionOfOrigin: string | null;
