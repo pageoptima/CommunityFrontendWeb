@@ -20,6 +20,9 @@ export type AccountInfoUser = Readonly<{
   name: string;
   email: string;
   role: string;
+  avatarUrl?: string | null;
+  createdAt?: string | null;
+  updatedAt?: string | null;
 }>;
 
 export type AccountEnrollmentConsent = Readonly<{
@@ -157,6 +160,16 @@ export type AccountInfoResponse = Readonly<{
   enrollmentStep?: EnrollmentStepState;
   enrollmentStatus?: string | null;
   hasEnrollment: boolean;
+  avatarUrl?: string | null;
+  memberSinceDate?: string | null;
+  lastUpdatedAt?: string | null;
+  regionalMembers?: ReadonlyArray<{
+    id?: string | null;
+    memberId?: string | null;
+    name?: string | null;
+    portraitSrc?: string | null;
+    role?: string | null;
+  }>;
 }>;
 
 export type EnrollmentStepOneLegalName = Readonly<{

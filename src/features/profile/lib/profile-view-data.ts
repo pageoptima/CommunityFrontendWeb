@@ -44,8 +44,6 @@ export type ProfileViewData = Readonly<{
 
 const fallbackCopy = profileConfig.copy;
 const fallbackDetails = profileConfig.details;
-const fallbackLineageEntries = profileConfig.lineageEntries;
-const fallbackLineageTree = profileConfig.lineageTree;
 const fallbackLineageStats = profileConfig.lineageStats;
 const fallbackOverview = profileConfig.overview;
 const fallbackYucayeke = profileConfig.yucayeke;
@@ -81,6 +79,10 @@ const documentTypeLabels: Readonly<Record<EnrollmentDocumentType, string>> = {
   FAMILY_PHOTO: "Lineage Photos",
   ADDITIONAL_EVIDENCE: "Additional Evidence",
 };
+
+const missingValueLabel = "Not provided";
+const notAvailableLabel = "Not available";
+const defaultEnrollmentStepCount = 4;
 
 function readText(value: string | null | undefined) {
   if (!value) {
@@ -265,6 +267,55 @@ function countCompletedSteps(stepState?: EnrollmentStepState) {
   return `${completed} / ${Object.keys(stepState).length}`;
 }
 
+function getCompletedStepsLabel(stepState?: EnrollmentStepState) {
+  return countCompletedSteps(stepState) ?? `0 / ${defaultEnrollmentStepCount}`;
+}
+
+function sortMaternalLineages(
+  maternalLineages: readonly EnrollmentMaternalLineageSummary[],
+) {
+  return [...maternalLineages]
+    .filter((lineage) =>
+      Boolean(
+        readText(lineage.fullName) ||
+        readText(lineage.placeOfBirth) ||
+        readText(lineage.regionOfOrigin),
+      ),
+    )
+    .sort((leftLineage, rightLineage) => {
+      const leftRank = leftLineage.relation
+        ? lineageRelationRank[leftLineage.relation]
+        : 99;
+      const rightRank = rightLineage.relation
+        ? lineageRelationRank[rightLineage.relation]
+        : 99;
+
+      return leftRank - rightRank;
+    });
+}
+
+function getLineageBornLabel(lineage: EnrollmentMaternalLineageSummary) {
+  const birthDate = formatDateLabel(lineage.dateOfBirth);
+
+  if (birthDate) {
+    return birthDate;
+  }
+
+  if (typeof lineage.approximateBirthYear === "number") {
+    return String(lineage.approximateBirthYear);
+  }
+
+  return "Unknown";
+}
+
+function getLineageStatusLabel(lineage: EnrollmentMaternalLineageSummary) {
+  const livingStatusLabel = toStatusLabel(
+    lineage.livingStatus ?? lineage.LivingStatus,
+  );
+
+  return livingStatusLabel || "Recorded";
+}
+
 type DocumentMap = Record<EnrollmentDocumentType, EnrollmentDocumentRecord[]>;
 
 function createEmptyDocumentMap(): DocumentMap {
@@ -414,91 +465,126 @@ function getYearsTraced(entries: readonly ProfileLineageEntry[]) {
   return String(Math.max(currentYear - earliestYear, 0));
 }
 
-function mapLineageEntries(accountInfo?: AccountInfoResponse | null) {
+function mapLineageEntries({
+  accountInfo,
+  authUser,
+}: Readonly<{
+  accountInfo?: AccountInfoResponse | null;
+  authUser: AuthUser;
+}>) {
   const personalInfo = accountInfo?.enrollment?.personalInfo;
-  const selfFallback = fallbackLineageEntries[0];
   const selfName =
     buildFullName([
       personalInfo?.firstName,
       personalInfo?.middleName,
       personalInfo?.lastName,
-    ]) || selfFallback?.name;
-  const selfBorn =
-    formatDateLabel(personalInfo?.dateOfBirth) || selfFallback?.born;
+    ]) ||
+    readText(personalInfo?.preferredName) ||
+    readText(accountInfo?.user?.name) ||
+    readText(authUser.name) ||
+    "Member";
+  const selfBorn = formatDateLabel(personalInfo?.dateOfBirth) || "Unknown";
   const selfPlace =
     [
       readText(personalInfo?.cityOfBirth),
       readText(personalInfo?.countryOfBirth),
     ]
       .filter(Boolean)
-      .join(", ") || selfFallback?.place;
+      .join(", ") || "Unknown";
   const entries: ProfileLineageEntry[] = [
     {
-      born: selfBorn || "Unknown",
+      born: selfBorn,
       generation: "1",
-      generationLabel:
-        selfFallback?.generationLabel ?? "You (Current Generation)",
-      name: selfName || "Member",
-      place: selfPlace || "Unknown",
-      status: selfFallback?.status ?? "Verified",
-      statusLabel: selfFallback?.statusLabel ?? "Status",
+      generationLabel: "You (Current Generation)",
+      name: selfName,
+      place: selfPlace,
+      status: "Current",
+      statusLabel: "Status",
     },
   ];
 
-  const maternalLineages = [
-    ...(accountInfo?.enrollment?.maternalLineages ?? []),
-  ]
-    .filter((lineage) =>
-      Boolean(
-        readText(lineage.fullName) ||
-        readText(lineage.placeOfBirth) ||
-        readText(lineage.regionOfOrigin),
-      ),
-    )
-    .sort((leftLineage, rightLineage) => {
-      const leftRank = leftLineage.relation
-        ? lineageRelationRank[leftLineage.relation]
-        : 99;
-      const rightRank = rightLineage.relation
-        ? lineageRelationRank[rightLineage.relation]
-        : 99;
-
-      return leftRank - rightRank;
-    });
+  const maternalLineages = sortMaternalLineages(
+    accountInfo?.enrollment?.maternalLineages ?? [],
+  );
 
   for (const [index, lineage] of maternalLineages.entries()) {
-    const fallbackEntry = fallbackLineageEntries[index + 1];
     const generationIndex = index + 2;
-    const birthDate = formatDateLabel(lineage.dateOfBirth);
-    const bornValue =
-      birthDate ||
-      (typeof lineage.approximateBirthYear === "number"
-        ? String(lineage.approximateBirthYear)
-        : fallbackEntry?.born) ||
-      "Unknown";
     const placeValue =
-      readText(lineage.placeOfBirth) ||
-      readText(lineage.regionOfOrigin) ||
-      fallbackEntry?.place ||
-      "Unknown";
+      readText(lineage.placeOfBirth) || readText(lineage.regionOfOrigin);
     const generationLabel =
       (lineage.relation ? lineageRelationLabel[lineage.relation] : "") ||
-      fallbackEntry?.generationLabel ||
       `Generation ${generationIndex}`;
 
     entries.push({
-      born: bornValue,
+      born: getLineageBornLabel(lineage),
       generation: String(generationIndex),
       generationLabel,
-      name:
-        readText(lineage.fullName) || fallbackEntry?.name || "Unknown Ancestor",
-      place: placeValue,
-      status: fallbackEntry?.status ?? "Verified",
-      statusLabel: fallbackEntry?.statusLabel ?? "Status",
+      name: readText(lineage.fullName) || "Unknown Ancestor",
+      place: placeValue || "Unknown",
+      status: getLineageStatusLabel(lineage),
+      statusLabel: "Status",
     });
   }
 
-  return entries.length > 1 ? entries : fallbackLineageEntries;
+  return entries;
+}
+
+function mapLineageTreeData({
+  accountInfo,
+  authUser,
+}: Readonly<{
+  accountInfo?: AccountInfoResponse | null;
+  authUser: AuthUser;
+}>): ProfileLineageTreeData {
+  const personalInfo = accountInfo?.enrollment?.personalInfo;
+  const selfNode = {
+    born: formatDateLabel(personalInfo?.dateOfBirth) || "Unknown",
+    id: "tree-self",
+    name:
+      buildFullName([
+        personalInfo?.firstName,
+        personalInfo?.middleName,
+        personalInfo?.lastName,
+      ]) ||
+      readText(personalInfo?.preferredName) ||
+      readText(accountInfo?.user?.name) ||
+      readText(authUser.name) ||
+      "Member",
+    relation: "You",
+    status:
+      toStatusLabel(
+        accountInfo?.enrollmentStatus ?? accountInfo?.enrollment?.status,
+      ) || "Current Member",
+  };
+
+  const maternalLineagesDescending = [
+    ...sortMaternalLineages(accountInfo?.enrollment?.maternalLineages ?? []),
+  ].reverse();
+
+  const rootNode = maternalLineagesDescending.reduce(
+    (childNode, lineage, index) => {
+      const relation =
+        (lineage.relation ? lineageRelationLabel[lineage.relation] : "") ||
+        `Generation ${maternalLineagesDescending.length - index + 1}`;
+
+      return {
+        born: getLineageBornLabel(lineage),
+        children: [childNode],
+        id: readText(lineage.id) || `tree-lineage-${index + 1}`,
+        name: readText(lineage.fullName) || "Unknown Ancestor",
+        relation,
+        status: getLineageStatusLabel(lineage),
+      };
+    },
+    selfNode,
+  );
+
+  return {
+    description:
+      "Linear maternal lineage generated from enrollment data in sequential order.",
+    roots: [rootNode],
+    title: profileConfig.lineageTree.title,
+  };
 }
 
 function mapOverviewData(
@@ -508,16 +594,15 @@ function mapOverviewData(
   const personalInfo = enrollment?.personalInfo;
   const contact = enrollment?.contact;
   const stepState = getResolvedStepState(accountInfo);
-  const completedSteps = countCompletedSteps(stepState);
+  const completedSteps = getCompletedStepsLabel(stepState);
   const totalDocuments = getDocumentCount(enrollment?.documents);
-  const lineageRecordCount = (enrollment?.maternalLineages ?? []).filter(
-    (lineage) =>
-      Boolean(readText(lineage.fullName) || readText(lineage.placeOfBirth)),
+  const lineageRecordCount = sortMaternalLineages(
+    enrollment?.maternalLineages ?? [],
   ).length;
 
   const enrollmentStatus =
     toStatusLabel(accountInfo?.enrollmentStatus ?? enrollment?.status) ||
-    fallbackOverview.metrics[0]?.value;
+    (accountInfo?.hasEnrollment ? "Enrollment In Progress" : "Not Started");
 
   const preferredName =
     readText(personalInfo?.preferredName) ||
@@ -543,7 +628,7 @@ function mapOverviewData(
     checklist: fallbackOverview.checklist.map((item, index) => {
       const stepKey = String(index + 1) as keyof EnrollmentStepState;
       return {
-        completed: stepState?.[stepKey] ?? item.completed,
+        completed: stepState?.[stepKey] ?? false,
         label: item.label,
       };
     }),
@@ -553,72 +638,57 @@ function mapOverviewData(
         value:
           readText(contact?.email) ||
           readText(accountInfo?.user?.email) ||
-          fallbackOverview.contactFacts[0].value,
+          missingValueLabel,
       },
       {
         ...fallbackOverview.contactFacts[1],
-        value:
-          formatPhoneLabel(contact?.phoneNumber) ||
-          fallbackOverview.contactFacts[1].value,
+        value: formatPhoneLabel(contact?.phoneNumber) || missingValueLabel,
       },
       {
         ...fallbackOverview.contactFacts[2],
-        value: currentAddress || fallbackOverview.contactFacts[2].value,
+        value: currentAddress || missingValueLabel,
       },
       {
         ...fallbackOverview.contactFacts[3],
-        value: emergencyContact || fallbackOverview.contactFacts[3].value,
+        value: emergencyContact || missingValueLabel,
       },
     ],
-    culturalConnections:
-      fromApiCulturalConnections.length > 0
-        ? fromApiCulturalConnections
-        : fallbackOverview.culturalConnections,
+    culturalConnections: fromApiCulturalConnections,
     description: fallbackOverview.description,
     metrics: [
       {
         ...fallbackOverview.metrics[0],
-        value: enrollmentStatus || fallbackOverview.metrics[0].value,
+        value: enrollmentStatus,
       },
       {
         ...fallbackOverview.metrics[1],
-        value: completedSteps || fallbackOverview.metrics[1].value,
+        value: completedSteps,
       },
       {
         ...fallbackOverview.metrics[2],
-        value:
-          totalDocuments > 0
-            ? String(totalDocuments)
-            : fallbackOverview.metrics[2].value,
+        value: String(totalDocuments),
       },
       {
         ...fallbackOverview.metrics[3],
-        value:
-          lineageRecordCount > 0
-            ? String(lineageRecordCount)
-            : fallbackOverview.metrics[3].value,
+        value: String(lineageRecordCount),
       },
     ],
     personalFacts: [
       {
         ...fallbackOverview.personalFacts[0],
-        value: preferredName || fallbackOverview.personalFacts[0].value,
+        value: preferredName || missingValueLabel,
       },
       {
         ...fallbackOverview.personalFacts[1],
-        value:
-          readText(personalInfo?.occupation) ||
-          fallbackOverview.personalFacts[1].value,
+        value: readText(personalInfo?.occupation) || missingValueLabel,
       },
       {
         ...fallbackOverview.personalFacts[2],
-        value:
-          readText(personalInfo?.educationLevel) ||
-          fallbackOverview.personalFacts[2].value,
+        value: readText(personalInfo?.educationLevel) || missingValueLabel,
       },
       {
         ...fallbackOverview.personalFacts[3],
-        value: languagesSpoken || fallbackOverview.personalFacts[3].value,
+        value: languagesSpoken || missingValueLabel,
       },
     ],
     title: fallbackOverview.title,
@@ -631,10 +701,10 @@ function mapYucayekeData(
   const enrollment = accountInfo?.enrollment;
   const personalInfo = enrollment?.personalInfo;
   const stepState = getResolvedStepState(accountInfo);
-  const completedSteps = countCompletedSteps(stepState);
+  const completedSteps = getCompletedStepsLabel(stepState);
   const totalDocuments = getDocumentCount(enrollment?.documents);
-  const lineageEntries = (enrollment?.maternalLineages ?? []).filter(
-    (lineage) => Boolean(readText(lineage.fullName)),
+  const maternalLineages = sortMaternalLineages(
+    enrollment?.maternalLineages ?? [],
   );
   const culturalConnections = (enrollment?.culturalConnections ?? [])
     .map(
@@ -651,10 +721,10 @@ function mapYucayekeData(
   const currentTerritory = currentTerritoryParts.join(", ");
   const communityName = readText(currentAddress?.city)
     ? `Yucayeke ${readText(currentAddress?.city)}`
-    : fallbackYucayeke.communityName;
+    : "Yucayeke";
   const lineageRegions = Array.from(
     new Set(
-      lineageEntries
+      maternalLineages
         .map((lineage) => readText(lineage.regionOfOrigin))
         .filter(Boolean),
     ),
@@ -668,72 +738,54 @@ function mapYucayekeData(
     readText(accountInfo?.user?.email);
   const statusLabel =
     toStatusLabel(accountInfo?.enrollmentStatus ?? enrollment?.status) ||
-    fallbackYucayeke.rhythm[0].value;
+    (accountInfo?.hasEnrollment ? "Enrollment In Progress" : "Not Started");
 
   const circles = [
     {
-      detail: currentTerritory || fallbackYucayeke.circles[0].detail,
+      detail: currentTerritory || missingValueLabel,
       name:
         buildFullName([
           personalInfo?.firstName,
           personalInfo?.middleName,
           personalInfo?.lastName,
-        ]) || fallbackYucayeke.circles[0].name,
-      role: fallbackYucayeke.circles[0].role,
+        ]) ||
+        readText(personalInfo?.preferredName) ||
+        readText(accountInfo?.user?.name) ||
+        "Member",
+      role: "You",
     },
-    ...[...lineageEntries]
-      .sort((leftLineage, rightLineage) => {
-        const leftRank = leftLineage.relation
-          ? lineageRelationRank[leftLineage.relation]
-          : 99;
-        const rightRank = rightLineage.relation
-          ? lineageRelationRank[rightLineage.relation]
-          : 99;
-
-        return leftRank - rightRank;
-      })
-      .slice(0, 2)
-      .map((lineage) => ({
-        detail:
-          readText(lineage.placeOfBirth) ||
-          readText(lineage.regionOfOrigin) ||
-          fallbackYucayeke.circles[1].detail,
-        name: readText(lineage.fullName) || fallbackYucayeke.circles[1].name,
-        role:
-          (lineage.relation ? lineageRelationLabel[lineage.relation] : "") ||
-          fallbackYucayeke.circles[1].role,
-      })),
+    ...maternalLineages.map((lineage) => ({
+      detail:
+        readText(lineage.placeOfBirth) ||
+        readText(lineage.regionOfOrigin) ||
+        missingValueLabel,
+      name: readText(lineage.fullName) || "Unknown Ancestor",
+      role:
+        (lineage.relation ? lineageRelationLabel[lineage.relation] : "") ||
+        "Maternal Ancestor",
+    })),
   ];
 
   return {
-    circles: circles.length > 1 ? circles : fallbackYucayeke.circles,
+    circles,
     communityName,
     description: fallbackYucayeke.description,
     metrics: [
       {
         ...fallbackYucayeke.metrics[0],
-        value: completedSteps || fallbackYucayeke.metrics[0].value,
+        value: completedSteps,
       },
       {
         ...fallbackYucayeke.metrics[1],
-        value:
-          lineageEntries.length > 0
-            ? String(lineageEntries.length)
-            : fallbackYucayeke.metrics[1].value,
+        value: String(maternalLineages.length),
       },
       {
         ...fallbackYucayeke.metrics[2],
-        value:
-          totalDocuments > 0
-            ? String(totalDocuments)
-            : fallbackYucayeke.metrics[2].value,
+        value: String(totalDocuments),
       },
       {
         ...fallbackYucayeke.metrics[3],
-        value:
-          culturalConnections.length > 0
-            ? String(culturalConnections.length)
-            : fallbackYucayeke.metrics[3].value,
+        value: String(culturalConnections.length),
       },
     ],
     rhythm: [
@@ -743,40 +795,42 @@ function mapYucayekeData(
       },
       {
         ...fallbackYucayeke.rhythm[1],
-        value: contactMethod || fallbackYucayeke.rhythm[1].value,
+        value: contactMethod || missingValueLabel,
       },
       {
         ...fallbackYucayeke.rhythm[2],
         value:
           culturalConnections[0] ||
           readText(personalInfo?.specialSkills) ||
-          fallbackYucayeke.rhythm[2].value,
+          missingValueLabel,
       },
       {
         ...fallbackYucayeke.rhythm[3],
-        value: fallbackYucayeke.rhythm[3].value,
+        value:
+          formatDateLabel(accountInfo?.lastUpdatedAt) ||
+          formatDateLabel(accountInfo?.user?.updatedAt) ||
+          fallbackYucayeke.rhythm[3].value,
       },
     ],
     territoryFacts: [
       {
         ...fallbackYucayeke.territoryFacts[0],
-        value: currentTerritory || fallbackYucayeke.territoryFacts[0].value,
+        value: currentTerritory || missingValueLabel,
       },
       {
         ...fallbackYucayeke.territoryFacts[1],
         value:
           readText(personalInfo?.municipalityOfBirth) ||
           readText(personalInfo?.cityOfBirth) ||
-          fallbackYucayeke.territoryFacts[1].value,
+          missingValueLabel,
       },
       {
         ...fallbackYucayeke.territoryFacts[2],
-        value:
-          lineageRegions.join(", ") || fallbackYucayeke.territoryFacts[2].value,
+        value: lineageRegions.join(", ") || missingValueLabel,
       },
       {
         ...fallbackYucayeke.territoryFacts[3],
-        value: languages.join(", ") || fallbackYucayeke.territoryFacts[3].value,
+        value: languages.join(", ") || missingValueLabel,
       },
     ],
     title: fallbackYucayeke.title,
@@ -791,13 +845,9 @@ function mapDocumentsData(
     .flat()
     .sort(
       (leftDocument, rightDocument) =>
-        new Date(rightDocument.uploadedAt).getTime() -
-        new Date(leftDocument.uploadedAt).getTime(),
+        getTimeValue(rightDocument.uploadedAt) -
+        getTimeValue(leftDocument.uploadedAt),
     );
-
-  if (allDocuments.length === 0) {
-    return fallbackDocuments;
-  }
 
   const approvedCount = getApprovedDocumentCount(allDocuments);
   const pendingCount = getPendingDocumentCount(allDocuments);
@@ -876,7 +926,7 @@ function mapActivityData({
         getTimeValue(leftDocument.uploadedAt),
     );
   const pendingDocumentsCount = getPendingDocumentCount(allDocuments);
-  const completedSteps = countCompletedSteps(stepState);
+  const completedSteps = getCompletedStepsLabel(stepState);
 
   type RawActivityEvent = {
     description: string;
@@ -948,11 +998,6 @@ function mapActivityData({
     .sort(
       (leftEvent, rightEvent) => rightEvent.timestamp - leftEvent.timestamp,
     );
-
-  if (sortedEvents.length === 0) {
-    return fallbackActivity;
-  }
-
   const latestEventDate = sortedEvents[0]?.rawDate;
   const missingRequiredDocuments = getMissingRequiredDocuments(documentMap);
   const nextActions: string[] = [];
@@ -988,7 +1033,7 @@ function mapActivityData({
       },
       {
         ...fallbackActivity.metrics[1],
-        value: completedSteps || fallbackActivity.metrics[1].value,
+        value: completedSteps,
       },
       {
         ...fallbackActivity.metrics[2],
@@ -997,11 +1042,13 @@ function mapActivityData({
       {
         ...fallbackActivity.metrics[3],
         value:
-          formatDateLabel(latestEventDate) || fallbackActivity.metrics[3].value,
+          formatDateLabel(latestEventDate) ||
+          formatDateLabel(accountInfo?.lastUpdatedAt) ||
+          formatDateLabel(accountInfo?.user?.updatedAt) ||
+          fallbackActivity.metrics[3].value,
       },
     ],
-    nextActions:
-      nextActions.length > 0 ? nextActions : [...fallbackActivity.nextActions],
+    nextActions,
     title: fallbackActivity.title,
   };
 }
@@ -1015,7 +1062,7 @@ function mapSettingsData({
 }>): ProfileSettingsData {
   const enrollment = accountInfo?.enrollment;
   const stepState = getResolvedStepState(accountInfo);
-  const completedSteps = countCompletedSteps(stepState);
+  const completedSteps = getCompletedStepsLabel(stepState);
   const documentMap = getDocumentMap(enrollment?.documents);
   const allDocuments = Object.values(documentMap).flat();
   const approvedDocumentsCount = getApprovedDocumentCount(allDocuments);
@@ -1029,6 +1076,7 @@ function mapSettingsData({
   const hasAllRequiredConsents =
     requiredConsents.length > 0 &&
     acceptedRequiredConsentsCount === requiredConsents.length;
+  const memberId = accountInfo?.user?.id ?? authUser.id;
   const email =
     readText(enrollment?.contact?.email) ||
     readText(accountInfo?.user?.email) ||
@@ -1036,32 +1084,29 @@ function mapSettingsData({
   const phone = formatPhoneLabel(enrollment?.contact?.phoneNumber);
   const enrollmentStatus =
     toStatusLabel(accountInfo?.enrollmentStatus ?? enrollment?.status) ||
-    fallbackSettings.accountFacts[3].value;
+    (accountInfo?.hasEnrollment ? "Enrollment In Progress" : "Not Started");
 
   return {
     accountFacts: [
       {
         ...fallbackSettings.accountFacts[0],
-        value:
-          accountInfo?.user?.id || authUser.id
-            ? formatMemberId(accountInfo?.user?.id ?? authUser.id)
-            : fallbackSettings.accountFacts[0].value,
+        value: memberId ? formatMemberId(memberId) : missingValueLabel,
       },
       {
         ...fallbackSettings.accountFacts[1],
-        value: email || fallbackSettings.accountFacts[1].value,
+        value: email || missingValueLabel,
       },
       {
         ...fallbackSettings.accountFacts[2],
-        value: phone || fallbackSettings.accountFacts[2].value,
+        value: phone || missingValueLabel,
       },
       {
         ...fallbackSettings.accountFacts[3],
-        value: enrollmentStatus || fallbackSettings.accountFacts[3].value,
+        value: enrollmentStatus,
       },
       {
         ...fallbackSettings.accountFacts[4],
-        value: completedSteps || fallbackSettings.accountFacts[4].value,
+        value: completedSteps,
       },
     ],
     description: fallbackSettings.description,
@@ -1072,18 +1117,15 @@ function mapSettingsData({
       },
       {
         ...fallbackSettings.preferences[1],
-        enabled:
-          enrollment?.contact?.allowSMS ??
-          fallbackSettings.preferences[1].enabled,
+        enabled: Boolean(enrollment?.contact?.allowSMS),
       },
       {
         ...fallbackSettings.preferences[2],
-        enabled:
-          pendingDocumentsCount > 0 || fallbackSettings.preferences[2].enabled,
+        enabled: pendingDocumentsCount > 0,
       },
       {
         ...fallbackSettings.preferences[3],
-        enabled: Boolean(stepState) || fallbackSettings.preferences[3].enabled,
+        enabled: Boolean(stepState),
       },
     ],
     securityItems: [
@@ -1094,11 +1136,11 @@ function mapSettingsData({
             ? hasAllRequiredConsents
               ? "All required consents accepted for this profile."
               : "Some required consents are still pending."
-            : fallbackSettings.securityItems[0].description,
+            : "No required consent records found yet.",
         statusLabel:
           requiredConsents.length > 0
             ? `${acceptedRequiredConsentsCount}/${requiredConsents.length} Accepted`
-            : fallbackSettings.securityItems[0].statusLabel,
+            : "0/0 Accepted",
         tone:
           requiredConsents.length > 0
             ? hasAllRequiredConsents
@@ -1131,6 +1173,53 @@ function mapSettingsData({
   };
 }
 
+function resolveMemberSince(
+  accountInfo: AccountInfoResponse | null | undefined,
+) {
+  return formatDateLabel(
+    readText(accountInfo?.memberSinceDate) ||
+      readText(accountInfo?.user?.createdAt),
+  );
+}
+
+function resolvePortraitSrc(
+  accountInfo: AccountInfoResponse | null | undefined,
+) {
+  return (
+    readText(accountInfo?.avatarUrl) ||
+    readText(accountInfo?.user?.avatarUrl) ||
+    fallbackCopy.portraitSrc
+  );
+}
+
+function mapRegionalMembers(
+  accountInfo: AccountInfoResponse | null | undefined,
+): readonly ProfileRegionalMember[] {
+  const fromApi = (accountInfo?.regionalMembers ?? [])
+    .map((member) => {
+      const memberId =
+        readText(member.memberId) || readText(member.id) || missingValueLabel;
+      const name = readText(member.name);
+      const role = readText(member.role);
+      const portraitSrc = readText(member.portraitSrc);
+
+      if (!name || !role || !portraitSrc) {
+        return null;
+      }
+
+      return {
+        memberId,
+        name,
+        portraitSrc,
+        role,
+      };
+    })
+    .filter((member): member is ProfileRegionalMember => Boolean(member));
+
+  // Keep current dummy values until backend adds regionalMembers.
+  return fromApi.length > 0 ? fromApi : fallbackRegionalMembers;
+}
+
 export function buildProfileViewData({
   accountInfo,
   authUser,
@@ -1142,38 +1231,41 @@ export function buildProfileViewData({
       accountInfo?.enrollment?.personalInfo?.middleName,
       accountInfo?.enrollment?.personalInfo?.lastName,
     ]) || readText(accountInfo?.enrollment?.personalInfo?.preferredName);
-  const name = enrollmentName || userName || fallbackCopy.name;
+  const name = enrollmentName || userName || "Member";
   const statusLabel =
-    toStatusLabel(accountInfo?.enrollment?.status) || fallbackCopy.memberStatus;
-  const createdAtLabel = formatDateLabel(authUser.createdAt);
+    toStatusLabel(
+      accountInfo?.enrollmentStatus ?? accountInfo?.enrollment?.status,
+    ) ||
+    (accountInfo?.hasEnrollment ? "Enrollment In Progress" : "Not Started");
+  const createdAtLabel =
+    resolveMemberSince(accountInfo) || formatDateLabel(authUser.createdAt);
   const memberSince = createdAtLabel
     ? `Member since ${createdAtLabel}`
     : fallbackCopy.memberSince;
-  const location =
-    resolveLocation(accountInfo) || fallbackDetails[1]?.value || "";
-  const birthDateLabel =
-    formatDateLabel(accountInfo?.enrollment?.personalInfo?.dateOfBirth) ||
-    fallbackDetails[2]?.value.replace("Born: ", "");
+  const location = resolveLocation(accountInfo) || missingValueLabel;
+  const birthDateLabel = formatDateLabel(
+    accountInfo?.enrollment?.personalInfo?.dateOfBirth,
+  );
   const details: ProfileDetail[] = [
     {
       iconSrc: fallbackDetails[0]?.iconSrc ?? "/icons/profile/member.svg",
       value:
         accountInfo?.user?.id || authUser.id
           ? formatMemberId(accountInfo?.user?.id ?? authUser.id)
-          : fallbackDetails[0]?.value,
+          : missingValueLabel,
     },
     {
       iconSrc: fallbackDetails[1]?.iconSrc ?? "/icons/profile/location.svg",
-      value: location || fallbackDetails[1]?.value,
+      value: location,
     },
     {
       iconSrc: fallbackDetails[2]?.iconSrc ?? "/icons/profile/calendar.svg",
       value: birthDateLabel
         ? `Born: ${birthDateLabel}`
-        : fallbackDetails[2]?.value,
+        : `Born: ${notAvailableLabel}`,
     },
   ];
-  const lineageEntries = mapLineageEntries(accountInfo);
+  const lineageEntries = mapLineageEntries({ accountInfo, authUser });
   const totalDocuments = getDocumentCount(accountInfo?.enrollment?.documents);
   const yearsTraced = getYearsTraced(lineageEntries);
   const lineageStats: ProfileLineageStat[] = [
@@ -1183,14 +1275,11 @@ export function buildProfileViewData({
     },
     {
       ...fallbackLineageStats[1],
-      value:
-        totalDocuments > 0
-          ? String(totalDocuments)
-          : fallbackLineageStats[1].value,
+      value: String(totalDocuments),
     },
     {
       ...fallbackLineageStats[2],
-      value: yearsTraced ?? fallbackLineageStats[2].value,
+      value: yearsTraced ?? "0",
     },
   ];
 
@@ -1200,16 +1289,16 @@ export function buildProfileViewData({
       memberSince,
       memberStatus: statusLabel,
       name,
-      portraitSrc: fallbackCopy.portraitSrc,
+      portraitSrc: resolvePortraitSrc(accountInfo),
     },
     details,
-    lineageTreeData: fallbackLineageTree,
+    lineageTreeData: mapLineageTreeData({ accountInfo, authUser }),
     lineageEntries,
     lineageStats,
     overviewData: mapOverviewData(accountInfo),
     yucayekeData: mapYucayekeData(accountInfo),
     documentsData: mapDocumentsData(accountInfo),
     settingsData: mapSettingsData({ accountInfo, authUser }),
-    regionalMembers: fallbackRegionalMembers,
+    regionalMembers: mapRegionalMembers(accountInfo),
   };
 }

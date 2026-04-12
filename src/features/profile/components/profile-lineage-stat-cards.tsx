@@ -33,9 +33,9 @@ export function ProfileLineageStatCards({
 }>) {
   return (
     <div className="mt-5 grid gap-3 sm:grid-cols-2 sm:gap-3 lg:grid-cols-3 lg:gap-3.5 xl:gap-4">
-      {stats.map((stat) => (
+      {stats.map((stat, index) => (
         <ProfileLineageStatCard
-          key={stat.value}
+          key={`${stat.label}-${index}`}
           description={stat.description}
           label={stat.label}
           value={stat.value}
