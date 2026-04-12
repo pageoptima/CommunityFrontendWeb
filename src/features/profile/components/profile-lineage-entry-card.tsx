@@ -1,8 +1,11 @@
 import { SvgIcon } from "@/components/shared/svg-icon";
 
 type ProfileLineageEntryCardProps = Readonly<{
+  additionalNotes?: string;
   born: string;
+  familyOccupation?: string;
   generationLabel: string;
+  maidenName?: string;
   name: string;
   place: string;
   status: string;
@@ -10,8 +13,11 @@ type ProfileLineageEntryCardProps = Readonly<{
 }>;
 
 export function ProfileLineageEntryCard({
+  additionalNotes,
   born,
+  familyOccupation,
   generationLabel,
+  maidenName,
   name,
   place,
   status,
@@ -44,6 +50,28 @@ export function ProfileLineageEntryCard({
           <span className="font-bold text-[#19A417]">{status}</span>
         </div>
       </div>
+
+      {maidenName || familyOccupation ? (
+        <div className="mt-2 flex flex-col gap-1 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-6 sm:gap-y-1">
+          {maidenName ? (
+            <p className="text-[12px] font-medium text-[#215A64] sm:text-[13px]">
+              Maiden Name: <span className="font-semibold">{maidenName}</span>
+            </p>
+          ) : null}
+          {familyOccupation ? (
+            <p className="text-[12px] font-medium text-[#215A64] sm:text-[13px]">
+              Occupation:{" "}
+              <span className="font-semibold">{familyOccupation}</span>
+            </p>
+          ) : null}
+        </div>
+      ) : null}
+
+      {additionalNotes ? (
+        <p className="mt-2 text-[12px] leading-[1.15rem] text-[#2f5156] sm:text-[13px]">
+          {additionalNotes}
+        </p>
+      ) : null}
 
       <SvgIcon
         className="absolute top-3 right-3"

@@ -19,9 +19,12 @@ export type ProfileDetail = Readonly<{
 }>;
 
 export type ProfileLineageEntry = Readonly<{
+  additionalNotes?: string;
   born: string;
+  familyOccupation?: string;
   generation: string;
   generationLabel: string;
+  maidenName?: string;
   name: string;
   place: string;
   status: string;

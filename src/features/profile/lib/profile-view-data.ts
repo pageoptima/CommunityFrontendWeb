@@ -516,9 +516,12 @@ function mapLineageEntries({
       `Generation ${generationIndex}`;
 
     entries.push({
+      additionalNotes: readText(lineage.additionalNotes) || undefined,
       born: getLineageBornLabel(lineage),
+      familyOccupation: readText(lineage.familyOccupation) || undefined,
       generation: String(generationIndex),
       generationLabel,
+      maidenName: readText(lineage.maidenName) || undefined,
       name: readText(lineage.fullName) || "Unknown Ancestor",
       place: placeValue || "Unknown",
       status: getLineageStatusLabel(lineage),
@@ -570,7 +573,7 @@ function mapLineageTreeData({
       return {
         born: getLineageBornLabel(lineage),
         children: [childNode],
-        id: readText(lineage.id) || `tree-lineage-${index + 1}`,
+        id: `${readText(lineage.id) || "tree-lineage"}-${index + 1}`,
         name: readText(lineage.fullName) || "Unknown Ancestor",
         relation,
         status: getLineageStatusLabel(lineage),
@@ -611,12 +614,14 @@ function mapOverviewData(
       personalInfo?.middleName,
       personalInfo?.lastName,
     ]);
-  const languagesSpoken = (personalInfo?.languagesSpoken ?? [])
-    .map((item) => readText(item))
-    .filter(Boolean)
-    .join(", ");
+  const phoneTypeLabel = toStatusLabel(contact?.phoneType);
+  const phoneLabel = formatPhoneLabel(contact?.phoneNumber);
   const emergencyContact = readText(enrollment?.emergencyContact?.fullName);
+  const emergencyContactRelation = toStatusLabel(
+    enrollment?.emergencyContact?.relationship,
+  );
   const currentAddress = resolveCurrentAddressLabel(accountInfo);
+  const specialSkills = readText(personalInfo?.specialSkills);
   const fromApiCulturalConnections = (enrollment?.culturalConnections ?? [])
     .map(
       (connection) =>
@@ -642,7 +647,10 @@ function mapOverviewData(
       },
       {
         ...fallbackOverview.contactFacts[1],
-        value: formatPhoneLabel(contact?.phoneNumber) || missingValueLabel,
+        value:
+          phoneLabel && phoneTypeLabel
+            ? `${phoneLabel} (${phoneTypeLabel})`
+            : phoneLabel || missingValueLabel,
       },
       {
         ...fallbackOverview.contactFacts[2],
@@ -650,7 +658,10 @@ function mapOverviewData(
       },
       {
         ...fallbackOverview.contactFacts[3],
-        value: emergencyContact || missingValueLabel,
+        value:
+          emergencyContact && emergencyContactRelation
+            ? `${emergencyContact} (${emergencyContactRelation})`
+            : emergencyContact || missingValueLabel,
       },
     ],
     culturalConnections: fromApiCulturalConnections,
@@ -688,7 +699,7 @@ function mapOverviewData(
       },
       {
         ...fallbackOverview.personalFacts[3],
-        value: languagesSpoken || missingValueLabel,
+        value: specialSkills || missingValueLabel,
       },
     ],
     title: fallbackOverview.title,
@@ -910,10 +921,8 @@ function mapDocumentsData(
 
 function mapActivityData({
   accountInfo,
-  authUser,
 }: Readonly<{
   accountInfo?: AccountInfoResponse | null;
-  authUser: AuthUser;
 }>): ProfileActivityData {
   const enrollment = accountInfo?.enrollment;
   const stepState = getResolvedStepState(accountInfo);
@@ -938,7 +947,7 @@ function mapActivityData({
   };
 
   const events: RawActivityEvent[] = [];
-  const accountCreatedAt = readText(authUser.createdAt);
+  const accountCreatedAt = readText(accountInfo?.user?.createdAt);
 
   if (accountCreatedAt) {
     events.push({
@@ -1237,8 +1246,7 @@ export function buildProfileViewData({
       accountInfo?.enrollmentStatus ?? accountInfo?.enrollment?.status,
     ) ||
     (accountInfo?.hasEnrollment ? "Enrollment In Progress" : "Not Started");
-  const createdAtLabel =
-    resolveMemberSince(accountInfo) || formatDateLabel(authUser.createdAt);
+  const createdAtLabel = resolveMemberSince(accountInfo);
   const memberSince = createdAtLabel
     ? `Member since ${createdAtLabel}`
     : fallbackCopy.memberSince;
@@ -1284,7 +1292,7 @@ export function buildProfileViewData({
   ];
 
   return {
-    activityData: mapActivityData({ accountInfo, authUser }),
+    activityData: mapActivityData({ accountInfo }),
     copy: {
       memberSince,
       memberStatus: statusLabel,

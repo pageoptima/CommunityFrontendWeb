@@ -26,8 +26,11 @@ export function ProfileLineageTable({
             </div>
 
             <ProfileLineageEntryCard
+              additionalNotes={entry.additionalNotes}
               born={entry.born}
+              familyOccupation={entry.familyOccupation}
               generationLabel={entry.generationLabel}
+              maidenName={entry.maidenName}
               name={entry.name}
               place={entry.place}
               status={entry.status}

@@ -68,9 +68,9 @@ export function ProfileYucayekePanel({
             Family Circle In This Yucayeke
           </h3>
           <ul className="mt-3 space-y-2.5">
-            {yucayekeData.circles.map((member) => (
+            {yucayekeData.circles.map((member, index) => (
               <li
-                key={`${member.role}-${member.name}`}
+                key={`${member.role}-${member.name}-${index}`}
                 className="rounded-[10px] border border-[#e2dfd4] bg-[#fbfcfb] px-3 py-2.5"
               >
                 <div className="flex items-center justify-between gap-2">

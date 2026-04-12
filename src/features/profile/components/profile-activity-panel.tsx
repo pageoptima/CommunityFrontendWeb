@@ -95,10 +95,10 @@ export function ProfileActivityPanel({
 
           {activityData.nextActions.length > 0 ? (
             <ul className="mt-3 space-y-2.5">
-              {activityData.nextActions.map((action) => (
+              {activityData.nextActions.map((action, index) => (
                 <li
                   className="rounded-[12px] border border-[#dae6ea] bg-[#f5fafc] px-3 py-2.5 text-[12px] font-medium text-[#1f5562] sm:text-[13px]"
-                  key={action}
+                  key={`${action}-${index}`}
                 >
                   {action}
                 </li>

@@ -117,9 +117,9 @@ export function ProfileOverviewPanel({
           </h3>
           {overviewData.culturalConnections.length > 0 ? (
             <div className="mt-3 flex flex-wrap gap-2">
-              {overviewData.culturalConnections.map((item) => (
+              {overviewData.culturalConnections.map((item, index) => (
                 <span
-                  key={item}
+                  key={`${item}-${index}`}
                   className="inline-flex rounded-full border border-[#c8d7dc] bg-[#eef6f8] px-3 py-1.5 text-[12px] font-medium text-[#20535f] sm:text-[13px]"
                 >
                   {item}
