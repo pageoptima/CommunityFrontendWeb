@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import { AUTH_COOKIE_NAME, AUTH_PROFILE_COOKIE_NAME } from "@/lib/auth";
+import { AUTH_COOKIE_NAME } from "@/lib/auth";
 
 export async function POST() {
   const response = NextResponse.json({ success: true });
@@ -15,7 +15,6 @@ export async function POST() {
     ...cookieOptions,
     httpOnly: true,
   });
-  response.cookies.set(AUTH_PROFILE_COOKIE_NAME, "", cookieOptions);
 
   return response;
 }

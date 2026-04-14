@@ -14,7 +14,9 @@ import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { EnrollmentFormSection } from "@/features/enrollment/components/enrollment-form-section";
 import {
   accountQueryKeys,
+  enrollmentQueryKeys,
   useAccountInfoQuery,
+  useEnrollmentStepThreeQuery,
   useEnrollmentStepThreeConnectionListQuery,
   useEnrollmentStepThreeUpsertMutation,
 } from "@/features/enrollment/lib/enrollment-queries";
@@ -37,6 +39,13 @@ export function EnrollmentStepThreeForm() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const accountInfoQuery = useAccountInfoQuery();
+  const shouldFetchStepThreePrefill = Boolean(
+    accountInfoQuery.data?.enrollment?.steps?.["3"] ??
+    accountInfoQuery.data?.enrollmentStep?.["3"],
+  );
+  const stepThreeQuery = useEnrollmentStepThreeQuery(
+    shouldFetchStepThreePrefill,
+  );
   const culturalConnectionListQuery =
     useEnrollmentStepThreeConnectionListQuery();
   const upsertMutation = useEnrollmentStepThreeUpsertMutation();
@@ -57,12 +66,12 @@ export function EnrollmentStepThreeForm() {
   } = form;
 
   useEffect(() => {
-    if (!accountInfoQuery.data || isDirty) {
+    if (!stepThreeQuery.data || isDirty) {
       return;
     }
 
     const nextDefaultValues = getEnrollmentStepThreeDefaultValues(
-      accountInfoQuery.data,
+      stepThreeQuery.data,
     );
     const nextDefaultsSignature = JSON.stringify(nextDefaultValues);
 
@@ -72,11 +81,13 @@ export function EnrollmentStepThreeForm() {
 
     reset(nextDefaultValues);
     lastHydratedDefaultsRef.current = nextDefaultsSignature;
-  }, [accountInfoQuery.data, isDirty, reset]);
+  }, [isDirty, reset, stepThreeQuery.data]);
 
-  const accountInfoErrorMessage =
-    !accountInfoQuery.data && accountInfoQuery.error instanceof Error
-      ? accountInfoQuery.error.message
+  const stepThreeErrorMessage =
+    shouldFetchStepThreePrefill &&
+    !stepThreeQuery.data &&
+    stepThreeQuery.error instanceof Error
+      ? stepThreeQuery.error.message
       : null;
 
   const culturalConnectionListErrorMessage =
@@ -104,6 +115,9 @@ export function EnrollmentStepThreeForm() {
       await queryClient.invalidateQueries({
         queryKey: accountQueryKeys.info,
       });
+      await queryClient.invalidateQueries({
+        queryKey: enrollmentQueryKeys.stepThreeCulturalConnection,
+      });
       router.push("/enrollment/step-4");
     } catch (error) {
       setError("root", {
@@ -124,9 +138,9 @@ export function EnrollmentStepThreeForm() {
           noValidate
           onSubmit={form.handleSubmit(onSubmit)}
         >
-          {accountInfoErrorMessage ? (
+          {stepThreeErrorMessage ? (
             <div className="rounded-[22px] border border-[#e9d8aa] bg-[#fff9eb] px-4 py-3 text-sm font-medium text-[#8a6000] sm:px-5">
-              {accountInfoErrorMessage} You can still continue, but previously
+              {stepThreeErrorMessage} You can still continue, but previously
               saved step 3 values may not be prefilled.
             </div>
           ) : null}

@@ -2,30 +2,30 @@
 
 import { useMemo } from "react";
 
-import { useAccountInfoQuery } from "@/features/dashboard/lib/enrollment-queries";
 import type { AuthUser } from "@/lib/auth";
 
 import { ProfileAvatar } from "./profile-avatar";
 import { ProfileLineageSection } from "./profile-lineage-section";
 import { ProfileRegionalMembersSection } from "./profile-regional-members-section";
 import { ProfileSummary } from "./profile-summary";
+import { useProfileInfoQuery } from "../lib/profile-queries";
 import { buildProfileViewData } from "../lib/profile-view-data";
 
 export function ProfilePageContent({ user }: Readonly<{ user: AuthUser }>) {
-  const accountInfoQuery = useAccountInfoQuery();
+  const profileInfoQuery = useProfileInfoQuery();
 
   const profileViewData = useMemo(
     () =>
       buildProfileViewData({
-        accountInfo: accountInfoQuery.data ?? null,
+        accountInfo: profileInfoQuery.data ?? null,
         authUser: user,
       }),
-    [accountInfoQuery.data, user],
+    [profileInfoQuery.data, user],
   );
 
-  const accountInfoErrorMessage =
-    !accountInfoQuery.data && accountInfoQuery.error instanceof Error
-      ? accountInfoQuery.error.message
+  const profileInfoErrorMessage =
+    !profileInfoQuery.data && profileInfoQuery.error instanceof Error
+      ? profileInfoQuery.error.message
       : null;
 
   return (
@@ -34,9 +34,9 @@ export function ProfilePageContent({ user }: Readonly<{ user: AuthUser }>) {
       className="mx-auto w-full max-w-5xl pt-24 sm:pt-28 lg:pt-32"
       data-auth-user-id={user.id}
     >
-      {accountInfoErrorMessage ? (
+      {profileInfoErrorMessage ? (
         <div className="mb-5 rounded-[20px] border border-[#e9d8aa] bg-[#fff9eb] px-4 py-3 text-sm font-medium text-[#8a6000] sm:px-5">
-          {accountInfoErrorMessage} Showing fallback profile values where
+          {profileInfoErrorMessage} Showing fallback profile values where
           needed.
         </div>
       ) : null}

@@ -52,9 +52,23 @@ export function DashboardEnrollmentSection({
     null,
   );
   const [selectedConsentIds, setSelectedConsentIds] = useState<string[]>([]);
+  const hasEnrollment = Boolean(accountInfoQuery.data?.hasEnrollment);
   const resolvedStepState = resolveEnrollmentStepState(accountInfoQuery.data);
 
-  const enrollmentSteps = buildDashboardEnrollmentSteps(resolvedStepState);
+  const enrollmentSteps = buildDashboardEnrollmentSteps(resolvedStepState).map(
+    (step) => {
+      if (step.step !== 1 || !hasEnrollment) {
+        return step;
+      }
+
+      return {
+        ...step,
+        ctaLabel: resolvedStepState?.["1"]
+          ? "Review Step 1"
+          : "Continue Step 1",
+      };
+    },
+  );
   const stepOne = enrollmentSteps.find((step) => step.step === 1);
   const stepOneHref = stepOne?.href ?? "/enrollment/step-1";
   const activeConsents = activeConsentsQuery.data ?? [];
@@ -97,15 +111,16 @@ export function DashboardEnrollmentSection({
     );
   };
 
-  const handleStartStepOne = async () => {
+  const handleStepOneNavigation = async () => {
     setSectionErrorMessage(null);
     setDialogErrorMessage(null);
 
     try {
-      const [consentResult] = await Promise.all([
-        activeConsentsQuery.refetch(),
-        startEnrollmentMutation.mutateAsync(),
-      ]);
+      if (!hasEnrollment) {
+        await startEnrollmentMutation.mutateAsync();
+      }
+
+      const consentResult = await activeConsentsQuery.refetch();
 
       if (consentResult.error) {
         throw consentResult.error;
@@ -223,7 +238,7 @@ export function DashboardEnrollmentSection({
                 {...step}
                 href={step.step === 1 ? undefined : step.href}
                 isLoading={step.step === 1 && isPreparingStepOne}
-                onAction={step.step === 1 ? handleStartStepOne : undefined}
+                onAction={step.step === 1 ? handleStepOneNavigation : undefined}
               />
             ))}
           </div>

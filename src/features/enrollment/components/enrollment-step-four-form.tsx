@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import {
   accountQueryKeys,
   enrollmentQueryKeys,
-  useEnrollmentDocumentListQuery,
+  useEnrollmentStepFourDocumentListQuery,
   useEnrollmentDocumentUploadMutation,
 } from "@/features/enrollment/lib/enrollment-queries";
 import {
@@ -160,7 +160,7 @@ function UploadDropArea({
 export function EnrollmentStepFourForm() {
   const router = useRouter();
   const queryClient = useQueryClient();
-  const documentListQuery = useEnrollmentDocumentListQuery();
+  const documentListQuery = useEnrollmentStepFourDocumentListQuery();
   const uploadMutation = useEnrollmentDocumentUploadMutation();
   const inputRefs = useRef<
     Partial<Record<EnrollmentStepFourUploadSlotId, HTMLInputElement | null>>
@@ -249,7 +249,7 @@ export function EnrollmentStepFourForm() {
 
       await Promise.all([
         queryClient.invalidateQueries({
-          queryKey: enrollmentQueryKeys.documentList,
+          queryKey: enrollmentQueryKeys.stepFourDocumentList,
         }),
         queryClient.invalidateQueries({
           queryKey: accountQueryKeys.info,

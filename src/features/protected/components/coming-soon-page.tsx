@@ -1,6 +1,6 @@
 import { ShieldCheck } from "lucide-react";
 
-import { formatMemberId, type AuthUser } from "@/lib/auth";
+import type { AuthUser } from "@/lib/auth";
 
 export function ComingSoonPage({
   title,
@@ -29,7 +29,7 @@ export function ComingSoonPage({
 
             <div className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#e8f6fb] px-3 py-1 text-xs font-semibold text-[#1f8ca5]">
               <ShieldCheck className="size-3.5" />
-              Member ID: {formatMemberId(user.id)}
+              Member ID: {user.publicId ?? user.id}
             </div>
           </div>
         </div>

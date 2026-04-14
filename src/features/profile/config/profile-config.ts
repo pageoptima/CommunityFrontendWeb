@@ -7,7 +7,7 @@ export type ProfileLineageTabValue =
   | "settings";
 
 export type ProfileCopy = Readonly<{
-  memberSince: string;
+  memberSince?: string;
   memberStatus: string;
   name: string;
   portraitSrc: string;

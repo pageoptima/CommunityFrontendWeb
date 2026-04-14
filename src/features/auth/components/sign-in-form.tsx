@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -11,8 +12,11 @@ import { Button } from "@/components/ui/button";
 import { AuthTrustNote } from "@/features/auth/components/auth-trust-note";
 import { AuthField } from "@/features/auth/components/auth-field";
 import { useSignInMutation } from "@/features/auth/lib/auth-mutations";
+import { accountQueryKeys } from "@/features/dashboard/lib/enrollment-queries";
+import { requestJson } from "@/services/http/fetcher";
+import type { AccountInfoResponse } from "@/types/enrollment";
 import { cn } from "@/lib/utils";
-import { appendNextQuery, getSafeRedirectPath } from "@/lib/auth";
+import { appendNextQuery } from "@/lib/auth";
 import sharedStyles from "@/features/auth/styles/auth-shared.module.scss";
 
 const signInSchema = z.object({
@@ -26,9 +30,25 @@ const signInSchema = z.object({
 
 type SignInFormValues = z.infer<typeof signInSchema>;
 
+function resolvePostLoginPath(accountInfo: AccountInfoResponse) {
+  if (!accountInfo.hasEnrollment) {
+    return "/dashboard";
+  }
+
+  const enrollmentStatus =
+    accountInfo.enrollmentStatus ?? accountInfo.enrollment?.status ?? "";
+
+  if (enrollmentStatus.toUpperCase() === "SUBMITTED") {
+    return "/";
+  }
+
+  return "/dashboard";
+}
+
 export function SignInForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const queryClient = useQueryClient();
   const signInMutation = useSignInMutation();
   const {
     register,
@@ -51,7 +71,23 @@ export function SignInForm() {
 
     try {
       await signInMutation.mutateAsync(values);
-      router.replace(getSafeRedirectPath(searchParams.get("next")));
+      let postLoginPath = "/dashboard";
+
+      try {
+        const accountInfo = await requestJson<AccountInfoResponse>(
+          "/api/account/info",
+          {
+            fallbackMessage:
+              "Unable to load account enrollment information right now.",
+          },
+        );
+        queryClient.setQueryData(accountQueryKeys.info, accountInfo);
+        postLoginPath = resolvePostLoginPath(accountInfo);
+      } catch {
+        postLoginPath = "/dashboard";
+      }
+
+      router.replace(postLoginPath);
       router.refresh();
     } catch (error) {
       setError("root", {

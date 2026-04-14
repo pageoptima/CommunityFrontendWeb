@@ -10,11 +10,14 @@ import type {
   EnrollmentDocumentListResponse,
   EnrollmentDocumentType,
   EnrollmentDocumentUploadResponse,
+  EnrollmentStepOnePrefillResponse,
   EnrollmentStepOneUpsertRequest,
   EnrollmentStepOneUpsertResponse,
   EnrollmentStepThreeCulturalConnectionListResponse,
+  EnrollmentStepThreePrefillResponse,
   EnrollmentStepThreeUpsertRequest,
   EnrollmentStepThreeUpsertResponse,
+  EnrollmentStepTwoPrefillResponse,
   EnrollmentStepTwoUpsertRequest,
   EnrollmentStepTwoUpsertResponse,
 } from "@/types/enrollment";
@@ -28,7 +31,14 @@ type ConsentAcceptResponse = Record<string, unknown>;
 
 export const enrollmentQueryKeys = {
   activeConsents: ["enrollment", "consent", "active"] as const,
-  documentList: ["enrollment", "document", "list"] as const,
+  stepOnePersonalInfo: ["enrollment", "step1", "personal-info"] as const,
+  stepTwoMaternalLineage: ["enrollment", "step2", "maternal-lineage"] as const,
+  stepThreeCulturalConnection: [
+    "enrollment",
+    "step3",
+    "cultural-connection",
+  ] as const,
+  stepFourDocumentList: ["enrollment", "step4", "document-list"] as const,
   stepThreeCulturalConnectionList: [
     "enrollment",
     "step3",
@@ -101,6 +111,19 @@ export function useEnrollmentStepOneUpsertMutation() {
   });
 }
 
+export function useEnrollmentStepOneQuery(enabled = true) {
+  return useQuery({
+    queryKey: enrollmentQueryKeys.stepOnePersonalInfo,
+    queryFn: () =>
+      requestJson<EnrollmentStepOnePrefillResponse>("/api/enrollment/step1", {
+        fallbackMessage:
+          "Unable to load your step 1 enrollment information right now.",
+      }),
+    enabled,
+    staleTime: 60 * 1000,
+  });
+}
+
 export function useEnrollmentStepTwoUpsertMutation() {
   return useMutation({
     mutationFn: (payload: EnrollmentStepTwoUpsertRequest) =>
@@ -113,6 +136,19 @@ export function useEnrollmentStepTwoUpsertMutation() {
         fallbackMessage:
           "Unable to save your step 2 maternal lineage information right now.",
       }),
+  });
+}
+
+export function useEnrollmentStepTwoQuery(enabled = true) {
+  return useQuery({
+    queryKey: enrollmentQueryKeys.stepTwoMaternalLineage,
+    queryFn: () =>
+      requestJson<EnrollmentStepTwoPrefillResponse>("/api/enrollment/step2", {
+        fallbackMessage:
+          "Unable to load your step 2 maternal lineage information right now.",
+      }),
+    enabled,
+    staleTime: 60 * 1000,
   });
 }
 
@@ -131,6 +167,19 @@ export function useEnrollmentStepThreeConnectionListQuery() {
   });
 }
 
+export function useEnrollmentStepThreeQuery(enabled = true) {
+  return useQuery({
+    queryKey: enrollmentQueryKeys.stepThreeCulturalConnection,
+    queryFn: () =>
+      requestJson<EnrollmentStepThreePrefillResponse>("/api/enrollment/step3", {
+        fallbackMessage:
+          "Unable to load your step 3 cultural connection information right now.",
+      }),
+    enabled,
+    staleTime: 60 * 1000,
+  });
+}
+
 export function useEnrollmentStepThreeUpsertMutation() {
   return useMutation({
     mutationFn: (payload: EnrollmentStepThreeUpsertRequest) =>
@@ -146,9 +195,9 @@ export function useEnrollmentStepThreeUpsertMutation() {
   });
 }
 
-export function useEnrollmentDocumentListQuery() {
+export function useEnrollmentStepFourDocumentListQuery() {
   return useQuery({
-    queryKey: enrollmentQueryKeys.documentList,
+    queryKey: enrollmentQueryKeys.stepFourDocumentList,
     queryFn: () =>
       requestJson<EnrollmentDocumentListResponse>("/api/document/list", {
         fallbackMessage: "Unable to load your enrollment documents right now.",

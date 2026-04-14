@@ -2,9 +2,9 @@ import { format, isValid, parseISO } from "date-fns";
 import { z } from "zod";
 
 import type {
-  AccountInfoResponse,
   EnrollmentMaternalLineageRelationValue,
-  EnrollmentMaternalLineageSummary,
+  EnrollmentStepTwoPrefillLineage,
+  EnrollmentStepTwoPrefillResponse,
   EnrollmentStepTwoUpsertRequest,
 } from "@/types/enrollment";
 
@@ -296,7 +296,7 @@ function normalizeLineageRelation(value: unknown) {
 }
 
 function hasLineageSummaryContent(
-  lineage: EnrollmentMaternalLineageSummary | undefined,
+  lineage: EnrollmentStepTwoPrefillLineage | undefined,
 ) {
   if (!lineage) {
     return false;
@@ -318,7 +318,7 @@ function hasLineageSummaryContent(
 }
 
 function buildLineageValueFromSummary(
-  lineage: EnrollmentMaternalLineageSummary | undefined,
+  lineage: EnrollmentStepTwoPrefillLineage | undefined,
 ) {
   if (!lineage) {
     return { ...emptyEnrollmentStepTwoLineageValue };
@@ -345,9 +345,9 @@ function buildLineageValueFromSummary(
 }
 
 export function getEnrollmentStepTwoDefaultValues(
-  accountInfo?: AccountInfoResponse | null,
+  stepTwoData?: EnrollmentStepTwoPrefillResponse | null,
 ): EnrollmentStepTwoFormValues {
-  const savedLineages = accountInfo?.enrollment?.maternalLineages ?? [];
+  const savedLineages = stepTwoData ?? [];
 
   return {
     includedLineages: maternalLineageDefinitions.map(({ relation }, index) => {

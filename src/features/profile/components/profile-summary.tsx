@@ -7,7 +7,7 @@ import type { ProfileDetail } from "../config/profile-config";
 type ProfileSummaryProps = Readonly<{
   details: readonly ProfileDetail[];
   name: string;
-  memberSince: string;
+  memberSince?: string;
   memberStatus: string;
 }>;
 
@@ -36,9 +36,11 @@ export function ProfileSummary({
         </div>
       </div>
 
-      <p className="mt-2 text-[14px] font-semibold tracking-[-0.03em] text-[#2f3336] sm:mt-2.5 sm:text-[16px] lg:text-[17px]">
-        {memberSince}
-      </p>
+      {memberSince ? (
+        <p className="mt-2 text-[14px] font-semibold tracking-[-0.03em] text-[#2f3336] sm:mt-2.5 sm:text-[16px] lg:text-[17px]">
+          {memberSince}
+        </p>
+      ) : null}
 
       <div className="mt-4 grid justify-items-start gap-2.5 sm:grid-cols-2 sm:justify-items-start sm:gap-x-4 sm:gap-y-2.5 lg:flex lg:flex-wrap lg:items-center lg:gap-x-4 lg:gap-y-2">
         {details.map((detail) => (

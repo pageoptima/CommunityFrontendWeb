@@ -3,8 +3,6 @@ import { NextResponse } from "next/server";
 
 import {
   AUTH_COOKIE_NAME,
-  AUTH_PROFILE_COOKIE_NAME,
-  encodeAuthProfile,
   getTokenMaxAge,
   type AuthSessionResponse,
 } from "@/lib/auth";
@@ -37,11 +35,6 @@ export function issueAuthSession(
     ...cookieOptions,
     httpOnly: true,
   });
-  response.cookies.set(
-    AUTH_PROFILE_COOKIE_NAME,
-    encodeAuthProfile(payload.user),
-    cookieOptions,
-  );
 
   return response;
 }

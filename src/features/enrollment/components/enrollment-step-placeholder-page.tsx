@@ -1,7 +1,7 @@
 import { ArrowRight, ShieldCheck } from "lucide-react";
 
 import type { EnrollmentStepDefinition } from "@/features/enrollment/config/enrollment-steps";
-import { formatMemberId, type AuthUser } from "@/lib/auth";
+import type { AuthUser } from "@/lib/auth";
 
 type EnrollmentStepPlaceholderPageProps = Readonly<{
   step: EnrollmentStepDefinition;
@@ -32,7 +32,7 @@ export function EnrollmentStepPlaceholderPage({
             <div className="mt-6 flex flex-wrap items-center gap-3">
               <div className="inline-flex items-center gap-2 rounded-full bg-[#e8f6fb] px-3 py-1 text-xs font-semibold text-[#1f8ca5]">
                 <ShieldCheck className="size-3.5" />
-                Member ID: {formatMemberId(user.id)}
+                Member ID: {user.publicId ?? user.id}
               </div>
               <div className="inline-flex items-center gap-2 rounded-full bg-white px-3 py-1 text-xs font-semibold text-[#0b625d] shadow-[0_10px_24px_-20px_rgba(11,98,93,0.55)]">
                 Form Route Ready

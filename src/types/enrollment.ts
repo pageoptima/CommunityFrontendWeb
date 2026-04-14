@@ -17,6 +17,7 @@ export type EnrollmentStepState = Readonly<Record<EnrollmentStepKey, boolean>>;
 
 export type AccountInfoUser = Readonly<{
   id: string;
+  publicId?: string | null;
   name: string;
   email: string;
   role: string;
@@ -142,6 +143,7 @@ export type AccountEnrollmentInfo = Readonly<{
   id: string;
   status: string;
   consentAccepted: boolean;
+  approvalDate?: string | null;
   user: AccountInfoUser;
   personalInfo: EnrollmentPersonalInfoSummary | null;
   contact: EnrollmentContactSummary | null;
@@ -154,23 +156,34 @@ export type AccountEnrollmentInfo = Readonly<{
   steps: EnrollmentStepState;
 }>;
 
+export type RegionalMemberLocation = Readonly<{
+  city?: string | null;
+  state?: string | null;
+  zipCode?: string | null;
+}>;
+
+export type RegionalMemberSummary = Readonly<{
+  id?: string | null;
+  memberId?: string | null;
+  name?: string | null;
+  portraitSrc?: string | null;
+  role?: string | null;
+  location?: RegionalMemberLocation | null;
+}>;
+
 export type AccountInfoResponse = Readonly<{
   user: AccountInfoUser;
   enrollment: AccountEnrollmentInfo | null;
-  enrollmentStep?: EnrollmentStepState;
+  enrollmentStep?: EnrollmentStepState | null;
   enrollmentStatus?: string | null;
   hasEnrollment: boolean;
   avatarUrl?: string | null;
   memberSinceDate?: string | null;
   lastUpdatedAt?: string | null;
-  regionalMembers?: ReadonlyArray<{
-    id?: string | null;
-    memberId?: string | null;
-    name?: string | null;
-    portraitSrc?: string | null;
-    role?: string | null;
-  }>;
+  regionalMembers?: readonly RegionalMemberSummary[];
 }>;
+
+export type ProfileResponse = AccountInfoResponse;
 
 export type EnrollmentStepOneLegalName = Readonly<{
   firstName: string;
@@ -238,6 +251,17 @@ export type EnrollmentStepOneAdditionalInfo = Readonly<{
   specialSkills?: string;
 }>;
 
+export type EnrollmentStepOnePrefillResponse = Readonly<{
+  legalName?: Partial<EnrollmentStepOneLegalName> | null;
+  birthInfo?: Partial<EnrollmentStepOneBirthInfo> | null;
+  gender?: Partial<EnrollmentStepOneGenderInfo> | null;
+  contact?: Partial<EnrollmentStepOneContactInfo> | null;
+  currentAddress?: Partial<EnrollmentStepOneAddressInfo> | null;
+  mailingAddress?: Partial<EnrollmentStepOneAddressInfo> | null;
+  emergencyContact?: Partial<EnrollmentStepOneEmergencyContact> | null;
+  additionalInfo?: Partial<EnrollmentStepOneAdditionalInfo> | null;
+}>;
+
 export type EnrollmentStepOneUpsertRequest = Readonly<{
   legalName: EnrollmentStepOneLegalName;
   birthInfo: EnrollmentStepOneBirthInfo;
@@ -267,6 +291,23 @@ export type EnrollmentStepTwoMaternalLineage = Readonly<{
   additionalNotes?: string;
 }>;
 
+export type EnrollmentStepTwoPrefillLineage = Readonly<{
+  id?: string | null;
+  relation?: EnrollmentMaternalLineageRelationValue | null;
+  fullName?: string | null;
+  maidenName?: string | null;
+  dateOfBirth?: string | null;
+  placeOfBirth?: string | null;
+  livingStatus?: EnrollmentMaternalLineageLivingStatusValue | null;
+  approximateBirthYear?: number | null;
+  regionOfOrigin?: string | null;
+  familyOccupation?: string | null;
+  additionalNotes?: string | null;
+}>;
+
+export type EnrollmentStepTwoPrefillResponse =
+  readonly EnrollmentStepTwoPrefillLineage[];
+
 export type EnrollmentStepTwoUpsertRequest = Readonly<{
   maternalLineages: EnrollmentStepTwoMaternalLineage[];
 }>;
@@ -282,6 +323,10 @@ export type EnrollmentStepThreeCulturalConnection = Readonly<{
 
 export type EnrollmentStepThreeCulturalConnectionListResponse =
   readonly EnrollmentStepThreeCulturalConnection[];
+
+export type EnrollmentStepThreePrefillResponse = Readonly<{
+  culturalConnectionKeys: string[];
+}>;
 
 export type EnrollmentStepThreeUpsertRequest = Readonly<{
   culturalConnectionKeys: string[];

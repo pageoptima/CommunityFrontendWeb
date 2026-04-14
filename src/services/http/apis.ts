@@ -5,6 +5,9 @@ export const endpoints = {
   ACCOUNT: {
     INFO: normalizePath("/account/info"),
   },
+  PROFILE: {
+    INFO: normalizePath("/profile"),
+  },
   AUTH: {
     REGISTER: normalizePath("/auth/register"),
     LOGIN: normalizePath("/auth/login"),

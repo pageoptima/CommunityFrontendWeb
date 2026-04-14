@@ -20,7 +20,9 @@ import {
 import { EnrollmentFormSection } from "@/features/enrollment/components/enrollment-form-section";
 import {
   accountQueryKeys,
+  enrollmentQueryKeys,
   useAccountInfoQuery,
+  useEnrollmentStepOneQuery,
   useEnrollmentStepOneUpsertMutation,
 } from "@/features/enrollment/lib/enrollment-queries";
 import {
@@ -55,6 +57,11 @@ export function EnrollmentStepOneForm() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const accountInfoQuery = useAccountInfoQuery();
+  const shouldFetchStepOnePrefill = Boolean(
+    accountInfoQuery.data?.enrollment?.steps?.["1"] ??
+    accountInfoQuery.data?.enrollmentStep?.["1"],
+  );
+  const stepOneQuery = useEnrollmentStepOneQuery(shouldFetchStepOnePrefill);
   const upsertMutation = useEnrollmentStepOneUpsertMutation();
   const lastHydratedDefaultsRef = useRef<string | null>(null);
   const maxBirthDate = formatDateInputValue(new Date());
@@ -88,12 +95,12 @@ export function EnrollmentStepOneForm() {
   });
 
   useEffect(() => {
-    if (!accountInfoQuery.data || isDirty) {
+    if (!stepOneQuery.data || isDirty) {
       return;
     }
 
     const nextDefaultValues = getEnrollmentStepOneDefaultValues(
-      accountInfoQuery.data,
+      stepOneQuery.data,
     );
     const nextDefaultsSignature = JSON.stringify(nextDefaultValues);
 
@@ -103,7 +110,7 @@ export function EnrollmentStepOneForm() {
 
     reset(nextDefaultValues);
     lastHydratedDefaultsRef.current = nextDefaultsSignature;
-  }, [accountInfoQuery.data, isDirty, reset]);
+  }, [isDirty, reset, stepOneQuery.data]);
 
   useEffect(() => {
     if (!sameAsCurrentAddress) {
@@ -136,9 +143,11 @@ export function EnrollmentStepOneForm() {
     });
   }, [currentAddress, mailingAddress, sameAsCurrentAddress, setValue]);
 
-  const accountInfoErrorMessage =
-    !accountInfoQuery.data && accountInfoQuery.error instanceof Error
-      ? accountInfoQuery.error.message
+  const stepOneErrorMessage =
+    shouldFetchStepOnePrefill &&
+    !stepOneQuery.data &&
+    stepOneQuery.error instanceof Error
+      ? stepOneQuery.error.message
       : null;
 
   const onSubmit = async (values: EnrollmentStepOneFormValues) => {
@@ -151,6 +160,9 @@ export function EnrollmentStepOneForm() {
       reset(values);
       await queryClient.invalidateQueries({
         queryKey: accountQueryKeys.info,
+      });
+      await queryClient.invalidateQueries({
+        queryKey: enrollmentQueryKeys.stepOnePersonalInfo,
       });
       router.push("/enrollment/step-2");
     } catch (error) {
@@ -172,11 +184,10 @@ export function EnrollmentStepOneForm() {
           noValidate
           onSubmit={form.handleSubmit(onSubmit)}
         >
-          {accountInfoErrorMessage ? (
+          {stepOneErrorMessage ? (
             <div className="rounded-[22px] border border-[#e9d8aa] bg-[#fff9eb] px-4 py-3 text-sm font-medium text-[#8a6000] sm:px-5">
-              {accountInfoErrorMessage} You can still complete the form
-              manually, but any previously saved step 1 values may not be
-              prefilled.
+              {stepOneErrorMessage} You can still complete the form manually,
+              but any previously saved step 1 values may not be prefilled.
             </div>
           ) : null}
 

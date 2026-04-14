@@ -19,7 +19,7 @@ import {
 import { BrandMark } from "@/components/shared/brand-mark";
 import { Button } from "@/components/ui/button";
 import { useLogoutMutation } from "@/features/auth/lib/auth-mutations";
-import { formatMemberId, type AuthUser } from "@/lib/auth";
+import type { AuthUser } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 
 const navItems = [
@@ -172,7 +172,7 @@ export function ProtectedNavbar({ user }: Readonly<{ user: AuthUser }>) {
                     {user.name}
                   </p>
                   <p className="text-muted-foreground text-xs lg:text-[11px] xl:text-xs">
-                    Member ID: {formatMemberId(user.id)}
+                    Member ID: {user.publicId ?? user.id}
                   </p>
                 </div>
 
@@ -239,7 +239,7 @@ export function ProtectedNavbar({ user }: Readonly<{ user: AuthUser }>) {
                   {user.name}
                 </p>
                 <p className="text-muted-foreground truncate text-xs">
-                  Member ID: {formatMemberId(user.id)}
+                  Member ID: {user.publicId ?? user.id}
                 </p>
               </div>
             </div>

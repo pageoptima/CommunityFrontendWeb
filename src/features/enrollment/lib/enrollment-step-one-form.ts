@@ -2,8 +2,8 @@ import { format, isValid, parseISO } from "date-fns";
 import { z } from "zod";
 
 import type {
-  AccountInfoResponse,
-  EnrollmentAddressSummary,
+  EnrollmentStepOneAddressInfo,
+  EnrollmentStepOnePrefillResponse,
   EnrollmentStepOneUpsertRequest,
 } from "@/types/enrollment";
 
@@ -256,39 +256,9 @@ function splitLanguages(value: string) {
     .filter(Boolean);
 }
 
-function normalizeAddressType(value: string | null | undefined) {
-  return (
-    value
-      ?.trim()
-      .toLowerCase()
-      .replace(/[\s_-]+/g, "") ?? ""
-  );
-}
-
-function resolveAddress(
-  addresses: readonly EnrollmentAddressSummary[] | undefined,
-  expectedType: "current" | "mailing",
-  fallbackIndex: number,
+function hasAddressContent(
+  address: Partial<EnrollmentStepOneAddressInfo> | null,
 ) {
-  if (!addresses?.length) {
-    return null;
-  }
-
-  const matchedAddress =
-    addresses.find((address) => {
-      const addressType = normalizeAddressType(address.type);
-
-      if (expectedType === "current") {
-        return addressType.includes("current");
-      }
-
-      return addressType.includes("mailing");
-    }) ?? addresses[fallbackIndex];
-
-  return matchedAddress ?? null;
-}
-
-function hasAddressContent(address: EnrollmentAddressSummary | null) {
   if (!address) {
     return false;
   }
@@ -303,8 +273,8 @@ function hasAddressContent(address: EnrollmentAddressSummary | null) {
 }
 
 function areAddressesEqual(
-  currentAddress: EnrollmentAddressSummary | null,
-  mailingAddress: EnrollmentAddressSummary | null,
+  currentAddress: Partial<EnrollmentStepOneAddressInfo> | null,
+  mailingAddress: Partial<EnrollmentStepOneAddressInfo> | null,
 ) {
   if (!currentAddress || !mailingAddress) {
     return false;
@@ -325,45 +295,40 @@ function areAddressesEqual(
 }
 
 export function getEnrollmentStepOneDefaultValues(
-  accountInfo?: AccountInfoResponse | null,
+  stepOneData?: EnrollmentStepOnePrefillResponse | null,
 ): EnrollmentStepOneFormValues {
-  const personalInfo = accountInfo?.enrollment?.personalInfo;
-  const contact = accountInfo?.enrollment?.contact;
-  const currentAddress = resolveAddress(
-    accountInfo?.enrollment?.addresses,
-    "current",
-    0,
-  );
-  const mailingAddress = resolveAddress(
-    accountInfo?.enrollment?.addresses,
-    "mailing",
-    1,
-  );
-  const emergencyContact = accountInfo?.enrollment?.emergencyContact;
+  const legalName = stepOneData?.legalName;
+  const birthInfo = stepOneData?.birthInfo;
+  const gender = stepOneData?.gender;
+  const contact = stepOneData?.contact;
+  const currentAddress = stepOneData?.currentAddress ?? null;
+  const mailingAddress = stepOneData?.mailingAddress ?? null;
+  const emergencyContact = stepOneData?.emergencyContact;
+  const additionalInfo = stepOneData?.additionalInfo;
 
   return {
     legalName: {
-      firstName: readString(personalInfo?.firstName),
-      middleName: readString(personalInfo?.middleName),
-      lastName: readString(personalInfo?.lastName),
-      maternalLastName: readString(personalInfo?.maternalLastName),
-      preferredName: readString(personalInfo?.preferredName),
+      firstName: readString(legalName?.firstName),
+      middleName: readString(legalName?.middleName),
+      lastName: readString(legalName?.lastName),
+      maternalLastName: readString(legalName?.maternalLastName),
+      preferredName: readString(legalName?.preferredName),
     },
     birthInfo: {
-      dateOfBirth: normalizeDateInputValue(personalInfo?.dateOfBirth),
-      cityOfBirth: readString(personalInfo?.cityOfBirth),
-      municipalityOfBirth: readString(personalInfo?.municipalityOfBirth),
-      countryOfBirth: readString(personalInfo?.countryOfBirth),
+      dateOfBirth: normalizeDateInputValue(birthInfo?.dateOfBirth),
+      cityOfBirth: readString(birthInfo?.cityOfBirth),
+      municipalityOfBirth: readString(birthInfo?.municipalityOfBirth),
+      countryOfBirth: readString(birthInfo?.countryOfBirth),
     },
     gender: {
       gender: normalizeKnownSelection(
-        personalInfo?.gender,
+        gender?.gender,
         enrollmentStepOneGenderValues,
       ),
-      pronouns: readString(personalInfo?.pronouns),
+      pronouns: readString(gender?.pronouns),
     },
     contact: {
-      email: readString(contact?.email) || readString(accountInfo?.user.email),
+      email: readString(contact?.email),
       phoneNumber: readString(contact?.phoneNumber),
       phoneType: normalizeKnownSelection(
         contact?.phoneType,
@@ -396,15 +361,15 @@ export function getEnrollmentStepOneDefaultValues(
     },
     additionalInfo: {
       maritalStatus: normalizeKnownSelection(
-        personalInfo?.maritalStatus,
+        additionalInfo?.maritalStatus,
         enrollmentStepOneMaritalStatusValues,
       ),
-      occupation: readString(personalInfo?.occupation),
-      educationLevel: readString(personalInfo?.educationLevel),
-      languagesSpokenInput: Array.isArray(personalInfo?.languagesSpoken)
-        ? personalInfo.languagesSpoken.join(", ")
+      occupation: readString(additionalInfo?.occupation),
+      educationLevel: readString(additionalInfo?.educationLevel),
+      languagesSpokenInput: Array.isArray(additionalInfo?.languagesSpoken)
+        ? additionalInfo.languagesSpoken.join(", ")
         : "",
-      specialSkills: readString(personalInfo?.specialSkills),
+      specialSkills: readString(additionalInfo?.specialSkills),
     },
   };
 }

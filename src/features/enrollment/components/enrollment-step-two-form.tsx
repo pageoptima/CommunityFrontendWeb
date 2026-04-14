@@ -19,7 +19,9 @@ import {
 import { EnrollmentFormSection } from "@/features/enrollment/components/enrollment-form-section";
 import {
   accountQueryKeys,
+  enrollmentQueryKeys,
   useAccountInfoQuery,
+  useEnrollmentStepTwoQuery,
   useEnrollmentStepTwoUpsertMutation,
 } from "@/features/enrollment/lib/enrollment-queries";
 import {
@@ -44,6 +46,11 @@ export function EnrollmentStepTwoForm() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const accountInfoQuery = useAccountInfoQuery();
+  const shouldFetchStepTwoPrefill = Boolean(
+    accountInfoQuery.data?.enrollment?.steps?.["2"] ??
+    accountInfoQuery.data?.enrollmentStep?.["2"],
+  );
+  const stepTwoQuery = useEnrollmentStepTwoQuery(shouldFetchStepTwoPrefill);
   const upsertMutation = useEnrollmentStepTwoUpsertMutation();
   const lastHydratedDefaultsRef = useRef<string | null>(null);
   const maxBirthDate = formatDateInputValue(new Date());
@@ -72,12 +79,12 @@ export function EnrollmentStepTwoForm() {
     includedLineages ?? maternalLineageDefinitions.map((_, index) => index < 2);
 
   useEffect(() => {
-    if (!accountInfoQuery.data || isDirty) {
+    if (!stepTwoQuery.data || isDirty) {
       return;
     }
 
     const nextDefaultValues = getEnrollmentStepTwoDefaultValues(
-      accountInfoQuery.data,
+      stepTwoQuery.data,
     );
     const nextDefaultsSignature = JSON.stringify(nextDefaultValues);
 
@@ -87,11 +94,13 @@ export function EnrollmentStepTwoForm() {
 
     reset(nextDefaultValues);
     lastHydratedDefaultsRef.current = nextDefaultsSignature;
-  }, [accountInfoQuery.data, isDirty, reset]);
+  }, [isDirty, reset, stepTwoQuery.data]);
 
-  const accountInfoErrorMessage =
-    !accountInfoQuery.data && accountInfoQuery.error instanceof Error
-      ? accountInfoQuery.error.message
+  const stepTwoErrorMessage =
+    shouldFetchStepTwoPrefill &&
+    !stepTwoQuery.data &&
+    stepTwoQuery.error instanceof Error
+      ? stepTwoQuery.error.message
       : null;
 
   const canAddMoreLineages = resolvedIncludedLineages.some(
@@ -155,6 +164,9 @@ export function EnrollmentStepTwoForm() {
       await queryClient.invalidateQueries({
         queryKey: accountQueryKeys.info,
       });
+      await queryClient.invalidateQueries({
+        queryKey: enrollmentQueryKeys.stepTwoMaternalLineage,
+      });
       router.push("/enrollment/step-3");
     } catch (error) {
       setError("root", {
@@ -175,11 +187,10 @@ export function EnrollmentStepTwoForm() {
           noValidate
           onSubmit={form.handleSubmit(onSubmit)}
         >
-          {accountInfoErrorMessage ? (
+          {stepTwoErrorMessage ? (
             <div className="rounded-[22px] border border-[#e9d8aa] bg-[#fff9eb] px-4 py-3 text-sm font-medium text-[#8a6000] sm:px-5">
-              {accountInfoErrorMessage} You can still complete the form
-              manually, but any previously saved step 2 values may not be
-              prefilled.
+              {stepTwoErrorMessage} You can still complete the form manually,
+              but any previously saved step 2 values may not be prefilled.
             </div>
           ) : null}
 

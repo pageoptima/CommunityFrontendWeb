@@ -1,10 +1,11 @@
-import { formatMemberId, type AuthUser } from "@/lib/auth";
+import type { AuthUser } from "@/lib/auth";
 import type {
-  AccountInfoResponse,
+  ProfileResponse,
   EnrollmentDocumentBucket,
   EnrollmentDocumentRecord,
   EnrollmentDocumentType,
   EnrollmentMaternalLineageSummary,
+  RegionalMemberLocation,
   EnrollmentStepState,
 } from "@/types/enrollment";
 
@@ -22,6 +23,8 @@ import {
   type ProfileSettingsData,
   type ProfileYucayekeData,
 } from "../config/profile-config";
+
+type AccountInfoResponse = ProfileResponse;
 
 type BuildProfileViewDataArgs = Readonly<{
   accountInfo?: AccountInfoResponse | null;
@@ -1085,7 +1088,11 @@ function mapSettingsData({
   const hasAllRequiredConsents =
     requiredConsents.length > 0 &&
     acceptedRequiredConsentsCount === requiredConsents.length;
-  const memberId = accountInfo?.user?.id ?? authUser.id;
+  const memberId =
+    readText(accountInfo?.user?.publicId) ||
+    readText(authUser.publicId) ||
+    readText(accountInfo?.user?.id) ||
+    readText(authUser.id);
   const email =
     readText(enrollment?.contact?.email) ||
     readText(accountInfo?.user?.email) ||
@@ -1099,7 +1106,7 @@ function mapSettingsData({
     accountFacts: [
       {
         ...fallbackSettings.accountFacts[0],
-        value: memberId ? formatMemberId(memberId) : missingValueLabel,
+        value: memberId || missingValueLabel,
       },
       {
         ...fallbackSettings.accountFacts[1],
@@ -1185,34 +1192,57 @@ function mapSettingsData({
 function resolveMemberSince(
   accountInfo: AccountInfoResponse | null | undefined,
 ) {
-  return formatDateLabel(
-    readText(accountInfo?.memberSinceDate) ||
-      readText(accountInfo?.user?.createdAt),
-  );
+  return formatDateLabel(readText(accountInfo?.enrollment?.approvalDate));
 }
 
 function resolvePortraitSrc(
   accountInfo: AccountInfoResponse | null | undefined,
 ) {
   return (
-    readText(accountInfo?.avatarUrl) ||
-    readText(accountInfo?.user?.avatarUrl) ||
-    fallbackCopy.portraitSrc
+    readText(accountInfo?.avatarUrl) || readText(accountInfo?.user?.avatarUrl)
   );
+}
+
+function formatRegionalMemberLocation(
+  location: RegionalMemberLocation | null | undefined,
+) {
+  if (!location) {
+    return "";
+  }
+
+  const city = readText(location.city);
+  const state = readText(location.state);
+  const zipCode = readText(location.zipCode);
+  const cityState = [city, state].filter(Boolean).join(", ");
+
+  if (cityState && zipCode) {
+    return `${cityState} ${zipCode}`;
+  }
+
+  return cityState || zipCode;
 }
 
 function mapRegionalMembers(
   accountInfo: AccountInfoResponse | null | undefined,
 ): readonly ProfileRegionalMember[] {
   const fromApi = (accountInfo?.regionalMembers ?? [])
-    .map((member) => {
+    .map((member, index) => {
       const memberId =
         readText(member.memberId) || readText(member.id) || missingValueLabel;
       const name = readText(member.name);
-      const role = readText(member.role);
-      const portraitSrc = readText(member.portraitSrc);
+      const locationLabel = formatRegionalMemberLocation(member.location);
+      const role = readText(member.role) || locationLabel || "Regional Member";
+      const fallbackPortrait =
+        fallbackRegionalMembers.length > 0
+          ? fallbackRegionalMembers[index % fallbackRegionalMembers.length]
+              ?.portraitSrc
+          : "";
+      const portraitSrc =
+        readText(member.portraitSrc) ||
+        fallbackPortrait ||
+        fallbackCopy.portraitSrc;
 
-      if (!name || !role || !portraitSrc) {
+      if (!name) {
         return null;
       }
 
@@ -1246,10 +1276,10 @@ export function buildProfileViewData({
       accountInfo?.enrollmentStatus ?? accountInfo?.enrollment?.status,
     ) ||
     (accountInfo?.hasEnrollment ? "Enrollment In Progress" : "Not Started");
-  const createdAtLabel = resolveMemberSince(accountInfo);
-  const memberSince = createdAtLabel
-    ? `Member since ${createdAtLabel}`
-    : fallbackCopy.memberSince;
+  const approvalDateLabel = resolveMemberSince(accountInfo);
+  const memberSince = approvalDateLabel
+    ? `Member since ${approvalDateLabel}`
+    : undefined;
   const location = resolveLocation(accountInfo) || missingValueLabel;
   const birthDateLabel = formatDateLabel(
     accountInfo?.enrollment?.personalInfo?.dateOfBirth,
@@ -1258,9 +1288,11 @@ export function buildProfileViewData({
     {
       iconSrc: fallbackDetails[0]?.iconSrc ?? "/icons/profile/member.svg",
       value:
-        accountInfo?.user?.id || authUser.id
-          ? formatMemberId(accountInfo?.user?.id ?? authUser.id)
-          : missingValueLabel,
+        readText(accountInfo?.user?.publicId) ||
+        readText(authUser.publicId) ||
+        readText(accountInfo?.user?.id) ||
+        readText(authUser.id) ||
+        missingValueLabel,
     },
     {
       iconSrc: fallbackDetails[1]?.iconSrc ?? "/icons/profile/location.svg",

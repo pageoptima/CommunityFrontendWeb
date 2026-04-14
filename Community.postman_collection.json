@@ -2,509 +2,1016 @@
   "info": {
     "_postman_id": "5df2bc27-774a-45ea-928d-967a20b66a58",
     "name": "Community",
+    "description": "Comprehensive API documentation collection for Community backend. Uses {{baseUrl}} and auto-saves accessToken after successful login.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "24534365"
   },
+  "auth": {
+    "type": "noauth"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string",
+      "description": "Backend base URL. Update for Render/prod when needed."
+    },
+    {
+      "key": "accessToken",
+      "value": "",
+      "type": "string",
+      "description": "JWT saved automatically from login response test script."
+    },
+    {
+      "key": "maternalLineageId",
+      "value": "",
+      "type": "string",
+      "description": "Used by Step2 delete endpoint (/enrollment/step2/delete/:id)."
+    },
+    {
+      "key": "documentId",
+      "value": "",
+      "type": "string",
+      "description": "Used by document delete endpoint (/document/:id)."
+    }
+  ],
   "item": [
     {
-      "name": "auth:user",
-      "item": [
-        {
-          "name": "register",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [""],
-                "type": "text/javascript",
-                "packages": {}
-              }
-            }
-          ],
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "name": "cache-control",
-                "sortOrder": 2,
-                "infoTitle": "We recommend using this header",
-                "info": "Postman added \"Cache-Control: no-cache\" as a precautionary measure to prevent the server from returning stale response when one makes repeated requests.\n\nYou can remove this header in the app settings or enter a new one with a different value.",
-                "allowedToToggle": false,
-                "disableEdit": true,
-                "previewSettingsLink": "Go to settings",
-                "key": "Cache-Control",
-                "value": "no-cache",
-                "system": true,
-                "type": "text"
-              },
-              {
-                "name": "postman-token",
-                "sortOrder": 3,
-                "infoTitle": "We recommend using this header",
-                "info": "The Postman-Token header appends a random UUID to every outgoing request. Postman adds this header for API developers to better debug requests sent and to ensure separate requests appear distinct to the receiving server.\n\nYou can remove this header in the app settings.",
-                "allowedToToggle": false,
-                "disableEdit": true,
-                "previewSettingsLink": "Go to settings",
-                "key": "Postman-Token",
-                "value": "<calculated when request is sent>",
-                "system": true,
-                "type": "text"
-              },
-              {
-                "name": "content-type",
-                "sortOrder": 4,
-                "infoTitle": "This header was automatically added",
-                "info": "The Content-Type header is added to help the server identify the media type of the request body that is present in this request.\n\nUse the request body tab to control the value or to remove this header.",
-                "allowedToToggle": true,
-                "disableEdit": true,
-                "previewSettingsLink": "Go to body",
-                "key": "Content-Type",
-                "value": "application/json",
-                "system": true,
-                "type": "text"
-              },
-              {
-                "name": "content-length",
-                "sortOrder": 5,
-                "infoTitle": "This header was automatically added",
-                "info": "The Content-Length header was added to indicate to the server the size of the request body that is added to this request. Server uses this value to parse the request body accurately.\n\nYou can remove the header or enter a new one with a different value.",
-                "allowedToToggle": true,
-                "disableEdit": true,
-                "previewSettingsLink": "Go to body",
-                "key": "Content-Length",
-                "value": "<calculated when request is sent>",
-                "system": true,
-                "type": "text"
-              },
-              {
-                "name": "host",
-                "sortOrder": 6,
-                "infoTitle": "We recommend using this header",
-                "info": "The Host header is added to identify the domain name for which a request is being sent to the server. This header is implicitly sent by every HTTP client.\n\nYou can remove the header or enter a new one with a different value. It is most likely that without this header, your request will return an HTTP 400 error.",
-                "allowedToToggle": true,
-                "disableEdit": true,
-                "key": "Host",
-                "value": "<calculated when request is sent>",
-                "system": true,
-                "type": "text"
-              },
-              {
-                "name": "user-agent",
-                "sortOrder": 7,
-                "infoTitle": "We recommend using this header",
-                "info": "The User-Agent header is added to help the server identify Postman as the HTTP requesting application or client.\n\nIt is recommended that this header be sent, but you can remove the header or enter a new one with a different value.",
-                "allowedToToggle": true,
-                "disableEdit": true,
-                "key": "User-Agent",
-                "value": "PostmanRuntime/7.39.1",
-                "system": true,
-                "type": "text"
-              },
-              {
-                "name": "accept",
-                "sortOrder": 8,
-                "infoTitle": "We recommend using this header",
-                "info": "The \"Accept: */*\" header is added to tell the server that Postman can understand and process all forms of response content types.\n\nIt is recommended that this header be sent, but you can remove the header or enter a new one with a different value.",
-                "allowedToToggle": true,
-                "disableEdit": true,
-                "key": "Accept",
-                "value": "*/*",
-                "system": true,
-                "type": "text"
-              },
-              {
-                "name": "accept-encoding",
-                "sortOrder": 9,
-                "infoTitle": "We recommend using this header",
-                "info": "The Accept-Encoding header is added to indicate to the server that Postman HTTP client supports a defined list of content-encoding or compression algorithms as response.\n\nYou can remove the header or enter a new one with a different value. Doing that may not accurately render the response within the app.",
-                "allowedToToggle": true,
-                "disableEdit": true,
-                "key": "Accept-Encoding",
-                "value": "gzip, deflate, br",
-                "system": true,
-                "type": "text"
-              },
-              {
-                "name": "connection",
-                "sortOrder": 10,
-                "infoTitle": "We recommend using this header",
-                "info": "Postman added the Connection header to indicate the server to keep the underlying network connection open once the current response is received. This allows Postman to reuse the same connection for faster response times in subsequent requests to the same server.\n\nYou can remove this header or enter a new one with a different value, such as `Connection: Close` to control this behaviour.",
-                "allowedToToggle": true,
-                "disableEdit": true,
-                "key": "Connection",
-                "value": "keep-alive",
-                "system": true,
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n    \"name\": \"testuser\",\n    \"email\": \"testuser@email.com\",\n    \"password\": \"testuser\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:3000/auth/register",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "3000",
-              "path": ["auth", "register"]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "login",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n    \"email\": \"testuser@email.com\",\n    \"password\": \"testuser\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:3000/auth/login",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "3000",
-              "path": ["auth", "login"]
-            }
-          },
-          "response": []
-        }
-      ],
+      "name": "Health",
       "auth": {
         "type": "noauth"
       },
-      "event": [
+      "description": "Service health endpoints for uptime checks.",
+      "item": [
         {
-          "listen": "test",
-          "script": {
-            "exec": [
-              "const response = pm.response.json();",
-              "",
-              "pm.environment.set(\"accessToken\", response.accessToken);"
-            ],
-            "type": "text/javascript",
-            "packages": {}
-          }
+          "name": "Root Health",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/",
+            "description": "Public endpoint. Returns basic health status used to verify service is reachable.",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [
+            {
+              "name": "200 - OK",
+              "originalRequest": {},
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"ok\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/health",
+            "description": "Public endpoint intended for Render health checks. Configure Render Health Check Path as /health.",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [
+            {
+              "name": "200 - OK",
+              "originalRequest": {},
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"ok\"\n}"
+            }
+          ]
         }
       ]
     },
     {
-      "name": "enrollment",
+      "name": "Auth",
+      "auth": {
+        "type": "noauth"
+      },
+      "description": "Authentication endpoints. Login request auto-saves token.",
       "item": [
         {
-          "name": "step1",
-          "item": [
-            {
-              "name": "upsert",
-              "request": {
-                "method": "POST",
-                "header": [],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"legalName\": {\n    \"firstName\": \"Pravat\",\n    \"middleName\": \"Kumar\",\n    \"lastName\": \"Sahoo\",\n    \"maternalLastName\": \"Das\",\n    \"preferredName\": \"Prav\"\n  },\n  \"birthInfo\": {\n    \"dateOfBirth\": \"2002-05-14\",\n    \"cityOfBirth\": \"Durgapur\",\n    \"municipalityOfBirth\": \"Durgapur Municipal Corporation\",\n    \"countryOfBirth\": \"India\"\n  },\n  \"gender\": {\n    \"gender\": \"male\",\n    \"pronouns\": \"he/him\"\n  },\n  \"contact\": {\n    \"email\": \"pravat.sahoo@example.com\",\n    \"phoneNumber\": \"9876543210\",\n    \"phoneType\": \"mobile\",\n    \"allowSMS\": true\n  },\n  \"currentAddress\": {\n    \"street\": \"Street 12, Sector 2\",\n    \"apartment\": \"Flat 3B\",\n    \"city\": \"Durgapur\",\n    \"state\": \"West Bengal\",\n    \"zipCode\": \"713201\",\n    \"country\": \"India\",\n    \"yearsLived\": \"5\"\n  },\n  \"mailingAddress\": {\n    \"street\": \"Street 45, Bidhannagar\",\n    \"apartment\": \"House 22\",\n    \"city\": \"Kolkata\",\n    \"state\": \"West Bengal\",\n    \"zipCode\": \"700064\",\n    \"country\": \"India\",\n    \"yearsLived\": \"10\"\n  },\n  \"emergencyContact\": {\n    \"fullName\": \"Ramesh Sahoo\",\n    \"relationship\": \"Father\",\n    \"phoneNumber\": \"9123456789\"\n  },\n  \"additionalInfo\": {\n    \"maritalStatus\": \"single\",\n    \"occupation\": \"Student\",\n    \"educationLevel\": \"Bachelor's\",\n    \"languagesSpoken\": [\"English\", \"Hindi\", \"Bengali\"],\n    \"specialSkills\": \"Programming, Problem Solving\"\n  }\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": {
-                  "raw": "http://localhost:3000/enrollment/step1/upsert",
-                  "protocol": "http",
-                  "host": ["localhost"],
-                  "port": "3000",
-                  "path": ["enrollment", "step1", "upsert"]
-                }
-              },
-              "response": []
-            }
-          ]
-        },
-        {
-          "name": "step2",
-          "item": [
-            {
-              "name": "upsert",
-              "request": {
-                "method": "POST",
-                "header": [],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"maternalLineages\": [\n    {\n      \"relation\": \"MOTHER\",\n      \"fullName\": \"Anita Sahoo\",\n      \"maidenName\": \"Das\",\n      \"dateOfBirth\": \"1975-06-15\",\n      \"placeOfBirth\": \"Kolkata\",\n      \"livingStatus\": \"LIVING\",\n      \"approximateBirthYear\": 1975,\n      \"regionOfOrigin\": \"West Bengal\",\n      \"familyOccupation\": \"Teacher\",\n      \"additionalNotes\": \"Loves gardening\"\n    },\n    {\n      \"relation\": \"GRANDMOTHER\",\n      \"fullName\": \"Saraswati Das\",\n      \"maidenName\": \"Mukherjee\",\n      \"dateOfBirth\": \"1950-03-10\",\n      \"placeOfBirth\": \"Bardhaman\",\n      \"livingStatus\": \"DECEASED\",\n      \"approximateBirthYear\": 1950,\n      \"regionOfOrigin\": \"West Bengal\",\n      \"familyOccupation\": \"Homemaker\",\n      \"additionalNotes\": \"Known for traditional cooking\"\n    },\n    {\n      \"relation\": \"GREAT_GRANDMOTHER\",\n      \"fullName\": \"Kamala Mukherjee\",\n      \"maidenName\": \"Banerjee\",\n      \"livingStatus\": \"DECEASED\",\n      \"approximateBirthYear\": 1925,\n      \"regionOfOrigin\": \"Bengal Presidency\",\n      \"familyOccupation\": \"Agriculture\",\n      \"additionalNotes\": \"Lived during pre-independence era\"\n    },\n    {\n      \"relation\": \"GREAT_GREAT_GRANDMOTHER\",\n      \"fullName\": \"Charulata Banerjee\",\n      \"livingStatus\": \"DECEASED\",\n      \"approximateBirthYear\": 1900,\n      \"regionOfOrigin\": \"Undivided Bengal\",\n      \"familyOccupation\": \"Handloom weaving\",\n      \"additionalNotes\": \"Part of a large joint family\"\n    },\n    {\n      \"relation\": \"GREAT_GREAT_GREAT_GRANDMOTHER\",\n      \"fullName\": \"Unknown Devi\",\n      \"livingStatus\": \"DECEASED\",\n      \"approximateBirthYear\": 1875,\n      \"regionOfOrigin\": \"Rural Bengal\",\n      \"familyOccupation\": \"Farming\",\n      \"additionalNotes\": \"Limited historical records available\"\n    }\n  ]\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": {
-                  "raw": "http://localhost:3000/enrollment/step2/upsert",
-                  "protocol": "http",
-                  "host": ["localhost"],
-                  "port": "3000",
-                  "path": ["enrollment", "step2", "upsert"]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "delete",
-              "request": {
-                "method": "POST",
-                "header": [],
-                "url": {
-                  "raw": "http://localhost:3000/enrollment/step2/delete/dcafb6fb-7333-42a8-bba7-2447fdbe88bf",
-                  "protocol": "http",
-                  "host": ["localhost"],
-                  "port": "3000",
-                  "path": [
-                    "enrollment",
-                    "step2",
-                    "delete",
-                    "dcafb6fb-7333-42a8-bba7-2447fdbe88bf"
-                  ]
-                }
-              },
-              "response": []
-            }
-          ]
-        },
-        {
-          "name": "step3",
-          "item": [
-            {
-              "name": "cultural-connection-list",
-              "request": {
-                "method": "GET",
-                "header": [],
-                "url": {
-                  "raw": "http://localhost:3000/enrollment/step3/cultural-connection-list",
-                  "protocol": "http",
-                  "host": ["localhost"],
-                  "port": "3000",
-                  "path": ["enrollment", "step3", "cultural-connection-list"]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "upsert",
-              "request": {
-                "method": "POST",
-                "header": [],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n    \"culturalConnectionKeys\": [\n        \"medicinal_plant_knowledge\",\n        \"traditional_food_preparation\",\n        \"spiritual_or_ceremonial_practices\"\n    ]\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": {
-                  "raw": "http://localhost:3000/enrollment/step3/upsert",
-                  "protocol": "http",
-                  "host": ["localhost"],
-                  "port": "3000",
-                  "path": ["enrollment", "step3", "upsert"]
-                }
-              },
-              "response": []
-            }
-          ]
-        },
-        {
-          "name": "start",
+          "name": "Register",
           "request": {
             "method": "POST",
             "header": [
               {
-                "name": "cache-control",
-                "sortOrder": 2,
-                "infoTitle": "We recommend using this header",
-                "info": "Postman added \"Cache-Control: no-cache\" as a precautionary measure to prevent the server from returning stale response when one makes repeated requests.\n\nYou can remove this header in the app settings or enter a new one with a different value.",
-                "allowedToToggle": false,
-                "disableEdit": true,
-                "previewSettingsLink": "Go to settings",
-                "key": "Cache-Control",
-                "value": "no-cache",
-                "system": true,
-                "type": "text",
-                "id": 0
-              },
-              {
-                "name": "postman-token",
-                "sortOrder": 3,
-                "infoTitle": "We recommend using this header",
-                "info": "The Postman-Token header appends a random UUID to every outgoing request. Postman adds this header for API developers to better debug requests sent and to ensure separate requests appear distinct to the receiving server.\n\nYou can remove this header in the app settings.",
-                "allowedToToggle": false,
-                "disableEdit": true,
-                "previewSettingsLink": "Go to settings",
-                "key": "Postman-Token",
-                "value": "<calculated when request is sent>",
-                "system": true,
-                "type": "text",
-                "id": 1
-              },
-              {
-                "name": "content-length",
-                "sortOrder": 5,
-                "infoTitle": "This header was automatically added",
-                "info": "The Content-Length header was added to indicate to the server the size of the request body that is added to this request. Server uses this value to parse the request body accurately.\n\nYou can remove the header or enter a new one with a different value.",
-                "allowedToToggle": true,
-                "disableEdit": true,
-                "previewSettingsLink": "Go to body",
-                "key": "Content-Length",
-                "value": "0",
-                "system": true,
-                "type": "text",
-                "id": 2
-              },
-              {
-                "name": "host",
-                "sortOrder": 6,
-                "infoTitle": "We recommend using this header",
-                "info": "The Host header is added to identify the domain name for which a request is being sent to the server. This header is implicitly sent by every HTTP client.\n\nYou can remove the header or enter a new one with a different value. It is most likely that without this header, your request will return an HTTP 400 error.",
-                "allowedToToggle": true,
-                "disableEdit": true,
-                "key": "Host",
-                "value": "<calculated when request is sent>",
-                "system": true,
-                "type": "text",
-                "id": 3
-              },
-              {
-                "name": "user-agent",
-                "sortOrder": 7,
-                "infoTitle": "We recommend using this header",
-                "info": "The User-Agent header is added to help the server identify Postman as the HTTP requesting application or client.\n\nIt is recommended that this header be sent, but you can remove the header or enter a new one with a different value.",
-                "allowedToToggle": true,
-                "disableEdit": true,
-                "key": "User-Agent",
-                "value": "PostmanRuntime/7.39.1",
-                "system": true,
-                "type": "text",
-                "id": 4
-              },
-              {
-                "name": "accept",
-                "sortOrder": 8,
-                "infoTitle": "We recommend using this header",
-                "info": "The \"Accept: */*\" header is added to tell the server that Postman can understand and process all forms of response content types.\n\nIt is recommended that this header be sent, but you can remove the header or enter a new one with a different value.",
-                "allowedToToggle": true,
-                "disableEdit": true,
-                "key": "Accept",
-                "value": "*/*",
-                "system": true,
-                "type": "text",
-                "id": 5
-              },
-              {
-                "name": "accept-encoding",
-                "sortOrder": 9,
-                "infoTitle": "We recommend using this header",
-                "info": "The Accept-Encoding header is added to indicate to the server that Postman HTTP client supports a defined list of content-encoding or compression algorithms as response.\n\nYou can remove the header or enter a new one with a different value. Doing that may not accurately render the response within the app.",
-                "allowedToToggle": true,
-                "disableEdit": true,
-                "key": "Accept-Encoding",
-                "value": "gzip, deflate, br",
-                "system": true,
-                "type": "text",
-                "id": 6
-              },
-              {
-                "name": "connection",
-                "sortOrder": 10,
-                "infoTitle": "We recommend using this header",
-                "info": "Postman added the Connection header to indicate the server to keep the underlying network connection open once the current response is received. This allows Postman to reuse the same connection for faster response times in subsequent requests to the same server.\n\nYou can remove this header or enter a new one with a different value, such as `Connection: Close` to control this behaviour.",
-                "allowedToToggle": true,
-                "disableEdit": true,
-                "key": "Connection",
-                "value": "keep-alive",
-                "system": true,
-                "type": "text",
-                "id": 7
+                "key": "Content-Type",
+                "value": "application/json"
               }
             ],
-            "url": {
-              "raw": "http://localhost:3000/enrollment/start",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "3000",
-              "path": ["enrollment", "start"]
-            }
-          },
-          "response": []
-        }
-      ],
-      "auth": {
-        "type": "bearer",
-        "bearer": [
-          {
-            "key": "token",
-            "value": "{{accessToken}}",
-            "type": "string"
-          }
-        ]
-      }
-    },
-    {
-      "name": "consent",
-      "item": [
-        {
-          "name": "active",
-          "request": {
-            "auth": {
-              "type": "noauth"
-            },
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:3000/consent/active",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "3000",
-              "path": ["consent", "active"]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "accept",
-          "request": {
-            "method": "POST",
-            "header": [],
+            "url": "{{baseUrl}}/auth/register",
+            "description": "Creates a user and returns JWT access token.\n\nValidation rules:\n- name: required string, min 2, max 50\n- email: required valid email\n- password: required string, min 3, max 100",
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"acceptRequired\" : true\n}",
+              "raw": "{\n  \"name\": \"Test User\",\n  \"email\": \"testuser@email.com\",\n  \"password\": \"testuser123\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
                 }
               }
             },
-            "url": {
-              "raw": "http://localhost:3000/consent/accept",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "3000",
-              "path": ["consent", "accept"]
+            "auth": {
+              "type": "noauth"
             }
           },
-          "response": []
+          "response": [
+            {
+              "name": "201 - Registered",
+              "originalRequest": {},
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\"\n}"
+            },
+            {
+              "name": "409 - Email Exists",
+              "originalRequest": {},
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"statusCode\": 409,\n  \"message\": \"Email already registered\",\n  \"error\": \"Conflict\"\n}"
+            },
+            {
+              "name": "400 - Validation Error",
+              "originalRequest": {},
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"statusCode\": 400,\n  \"message\": [\n    \"Name must be at least 2 characters\"\n  ],\n  \"error\": \"Bad Request\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/auth/login",
+            "description": "Authenticates user and returns JWT access token.\n\nValidation rules:\n- email: required valid email\n- password: required string, min 3, max 100\n\nPostman test script automatically saves token to collection/environment variable accessToken.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"testuser@email.com\",\n  \"password\": \"testuser123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [
+            {
+              "name": "200 - Logged In",
+              "originalRequest": {},
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\"\n}"
+            },
+            {
+              "name": "409 - Invalid Credentials",
+              "originalRequest": {},
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"statusCode\": 409,\n  \"message\": \"Invalid credentials\",\n  \"error\": \"Conflict\"\n}"
+            },
+            {
+              "name": "401 - Invalid Credentials",
+              "originalRequest": {},
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"statusCode\": 401,\n  \"message\": \"Invalid credentials\",\n  \"error\": \"Unauthorized\"\n}"
+            }
+          ],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
+                  "let data = null;",
+                  "try { data = pm.response.json(); } catch (e) { data = null; }",
+                  "pm.test(\"Response contains accessToken\", function () {",
+                  "  pm.expect(data).to.be.an(\"object\");",
+                  "  pm.expect(data.accessToken).to.be.a(\"string\").and.not.empty;",
+                  "});",
+                  "if (data && data.accessToken) {",
+                  "  pm.collectionVariables.set(\"accessToken\", data.accessToken);",
+                  "  pm.environment.set(\"accessToken\", data.accessToken);",
+                  "  console.log(\"accessToken saved to collection/environment variables\");",
+                  "}"
+                ]
+              }
+            }
+          ]
         }
-      ],
+      ]
+    },
+    {
+      "name": "Consent",
+      "description": "Consent catalog and acceptance endpoints.",
+      "item": [
+        {
+          "name": "Get Active Consents",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/consent/active",
+            "description": "Public endpoint. Returns active consent documents (sorted by createdAt ascending).",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [
+            {
+              "name": "200 - Active Consents",
+              "originalRequest": {},
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n  {\n    \"id\": \"3a14f092-8c30-4f4b-baa2-45e8de980f11\",\n    \"key\": \"privacy_policy\",\n    \"title\": \"Privacy Policy\",\n    \"content\": \"Long consent text ...\",\n    \"required\": true,\n    \"version\": 1\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Accept Consents",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/consent/accept",
+            "description": "Requires Bearer token.\n\nAt least one strategy should be provided:\n- acceptAll: true\n- acceptRequired: true\n- consentItemIds: [UUID, ...]\n\nImportant: required consent items must all be accepted, otherwise API returns error.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"acceptRequired\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "201 - Accepted",
+              "originalRequest": {},
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Consents accepted successfully\"\n}"
+            },
+            {
+              "name": "400 - Missing Required Consent",
+              "originalRequest": {},
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"statusCode\": 400,\n  \"message\": \"User must accept all required consents\",\n  \"error\": \"Bad Request\"\n}"
+            },
+            {
+              "name": "401 - Unauthorized",
+              "originalRequest": {},
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"statusCode\": 401,\n  \"message\": \"Unauthorized\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Enrollment",
+      "description": "Enrollment lifecycle APIs: start, step upserts, and final submission.",
+      "item": [
+        {
+          "name": "Start Enrollment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/enrollment/start",
+            "description": "Requires Bearer token. Creates enrollment in DRAFT state with 4 steps, or returns existing DRAFT enrollment.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "201 - Started/Existing Draft",
+              "originalRequest": {},
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"enrollment\": {\n    \"id\": \"enrollment-uuid\",\n    \"userId\": \"user-uuid\",\n    \"status\": \"DRAFT\",\n    \"createdAt\": \"2026-04-14T00:00:00.000Z\",\n    \"updatedAt\": \"2026-04-14T00:00:00.000Z\"\n  },\n  \"steps\": [\n    {\n      \"stepNumber\": 1,\n      \"completed\": false\n    },\n    {\n      \"stepNumber\": 2,\n      \"completed\": false\n    },\n    {\n      \"stepNumber\": 3,\n      \"completed\": false\n    },\n    {\n      \"stepNumber\": 4,\n      \"completed\": false\n    }\n  ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Step 1",
+          "auth": {
+            "type": "bearer",
+            "bearer": [
+              {
+                "key": "token",
+                "value": "{{accessToken}}",
+                "type": "string"
+              }
+            ]
+          },
+          "item": [
+            {
+              "name": "Upsert Step 1",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{baseUrl}}/enrollment/step1/upsert",
+                "description": "Requires Bearer token and accepted consent.\nUpdates personal/contact/address info and marks step 1 completed.\n\nEnums used:\n- gender: MALE | FEMALE | NON_BINARY | TWO_SPIRIT | SELF_DESCRIBE | PREFER_NOT_TO_SAY | OTHER\n- phoneType: MOBILE | HOME | WORK\n- maritalStatus: SINGLE | MARRIED | DIVORCED | WIDOWED",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"legalName\": {\n    \"firstName\": \"Ava\",\n    \"middleName\": \"M\",\n    \"lastName\": \"Stone\",\n    \"maternalLastName\": \"Rivera\",\n    \"preferredName\": \"Ava\"\n  },\n  \"birthInfo\": {\n    \"dateOfBirth\": \"1994-07-12T00:00:00.000Z\",\n    \"cityOfBirth\": \"Kolkata\",\n    \"municipalityOfBirth\": \"Kolkata\",\n    \"countryOfBirth\": \"India\"\n  },\n  \"gender\": {\n    \"gender\": \"FEMALE\",\n    \"pronouns\": \"she/her\"\n  },\n  \"contact\": {\n    \"email\": \"testuser@email.com\",\n    \"phoneNumber\": \"+919999999999\",\n    \"phoneType\": \"MOBILE\",\n    \"allowSMS\": true\n  },\n  \"currentAddress\": {\n    \"street\": \"12 Main Street\",\n    \"apartment\": \"2B\",\n    \"city\": \"Kolkata\",\n    \"state\": \"West Bengal\",\n    \"zipCode\": \"700001\",\n    \"country\": \"India\",\n    \"yearsLived\": \"5\"\n  },\n  \"mailingAddress\": {\n    \"street\": \"12 Main Street\",\n    \"apartment\": \"2B\",\n    \"city\": \"Kolkata\",\n    \"state\": \"West Bengal\",\n    \"zipCode\": \"700001\",\n    \"country\": \"India\",\n    \"yearsLived\": \"5\"\n  },\n  \"emergencyContact\": {\n    \"fullName\": \"John Stone\",\n    \"relationship\": \"Brother\",\n    \"phoneNumber\": \"+919888888888\"\n  },\n  \"additionalInfo\": {\n    \"maritalStatus\": \"SINGLE\",\n    \"occupation\": \"Engineer\",\n    \"educationLevel\": \"Bachelor\",\n    \"languagesSpoken\": [\n      \"English\",\n      \"Bengali\"\n    ],\n    \"specialSkills\": \"Community organizing\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{accessToken}}",
+                      "type": "string"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "201 - Step 1 Saved",
+                  "originalRequest": {},
+                  "status": "Created",
+                  "code": 201,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"success\": true\n}"
+                },
+                {
+                  "name": "400 - Enrollment Not Started",
+                  "originalRequest": {},
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"statusCode\": 400,\n  \"message\": \"Enrollment not started\",\n  \"error\": \"Bad Request\"\n}"
+                },
+                {
+                  "name": "403 - Consent Not Accepted",
+                  "originalRequest": {},
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"statusCode\": 403,\n  \"message\": \"Consent not accepted\",\n  \"error\": \"Forbidden\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "Get Step 1",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "{{baseUrl}}/enrollment/step1",
+                "description": "Requires Bearer token. Returns saved step 1 data. Fails if step 1 is not marked completed.",
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{accessToken}}",
+                      "type": "string"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "200 - Step 1 Data",
+                  "originalRequest": {},
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"legalName\": {\n    \"firstName\": \"Ava\",\n    \"middleName\": \"M\",\n    \"lastName\": \"Stone\",\n    \"maternalLastName\": \"Rivera\",\n    \"preferredName\": \"Ava\"\n  },\n  \"birthInfo\": {\n    \"dateOfBirth\": \"1994-07-12T00:00:00.000Z\",\n    \"cityOfBirth\": \"Kolkata\",\n    \"municipalityOfBirth\": \"Kolkata\",\n    \"countryOfBirth\": \"India\"\n  },\n  \"gender\": {\n    \"gender\": \"FEMALE\",\n    \"pronouns\": \"she/her\"\n  },\n  \"contact\": {\n    \"email\": \"testuser@email.com\",\n    \"phoneNumber\": \"+919999999999\",\n    \"phoneType\": \"MOBILE\",\n    \"allowSMS\": true\n  },\n  \"currentAddress\": {\n    \"street\": \"12 Main Street\",\n    \"city\": \"Kolkata\",\n    \"state\": \"West Bengal\",\n    \"zipCode\": \"700001\",\n    \"country\": \"India\"\n  },\n  \"mailingAddress\": {\n    \"street\": \"12 Main Street\",\n    \"city\": \"Kolkata\",\n    \"state\": \"West Bengal\",\n    \"zipCode\": \"700001\",\n    \"country\": \"India\"\n  },\n  \"emergencyContact\": {\n    \"fullName\": \"John Stone\",\n    \"relationship\": \"Brother\",\n    \"phoneNumber\": \"+919888888888\"\n  },\n  \"additionalInfo\": {\n    \"maritalStatus\": \"SINGLE\",\n    \"occupation\": \"Engineer\",\n    \"educationLevel\": \"Bachelor\",\n    \"languagesSpoken\": [\n      \"English\",\n      \"Bengali\"\n    ],\n    \"specialSkills\": \"Community organizing\"\n  }\n}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Step 2",
+          "auth": {
+            "type": "bearer",
+            "bearer": [
+              {
+                "key": "token",
+                "value": "{{accessToken}}",
+                "type": "string"
+              }
+            ]
+          },
+          "item": [
+            {
+              "name": "Upsert Step 2",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{baseUrl}}/enrollment/step2/upsert",
+                "description": "Requires Bearer token and accepted consent.\nSynchronizes maternalLineages list: creates new, updates with id, deletes missing ids.\n\nEnums used:\n- relation: MOTHER | GRANDMOTHER | GREAT_GRANDMOTHER | GREAT_GREAT_GRANDMOTHER | GREAT_GREAT_GREAT_GRANDMOTHER\n- livingStatus: LIVING | DECEASED",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"maternalLineages\": [\n    {\n      \"relation\": \"MOTHER\",\n      \"fullName\": \"Maria Stone\",\n      \"maidenName\": \"Fernandez\",\n      \"dateOfBirth\": \"1972-03-12T00:00:00.000Z\",\n      \"placeOfBirth\": \"Bogota\",\n      \"livingStatus\": \"LIVING\",\n      \"approximateBirthYear\": 1972,\n      \"regionOfOrigin\": \"Andes\",\n      \"familyOccupation\": \"Teacher\",\n      \"additionalNotes\": \"Primary maternal ancestor record\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{accessToken}}",
+                      "type": "string"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "201 - Step 2 Saved",
+                  "originalRequest": {},
+                  "status": "Created",
+                  "code": 201,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"success\": true\n}"
+                },
+                {
+                  "name": "400 - Validation Error",
+                  "originalRequest": {},
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"statusCode\": 400,\n  \"message\": [\n    \"maternalLineages.0.relation must be a valid enum value\"\n  ],\n  \"error\": \"Bad Request\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "Delete Maternal Lineage",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{baseUrl}}/enrollment/step2/delete/{{maternalLineageId}}",
+                "description": "Requires Bearer token and accepted consent. Deletes a single maternal lineage by id for current user enrollment.",
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{accessToken}}",
+                      "type": "string"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "201 - Deleted",
+                  "originalRequest": {},
+                  "status": "Created",
+                  "code": 201,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"success\": true\n}"
+                }
+              ]
+            },
+            {
+              "name": "Get Step 2",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "{{baseUrl}}/enrollment/step2",
+                "description": "Requires Bearer token. Returns saved maternal lineage array once step 2 is completed.",
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{accessToken}}",
+                      "type": "string"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "200 - Maternal Lineages",
+                  "originalRequest": {},
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "[\n  {\n    \"id\": \"f1552de6-13d0-4c39-b17f-8586db27b92a\",\n    \"relation\": \"MOTHER\",\n    \"fullName\": \"Maria Stone\",\n    \"maidenName\": \"Fernandez\",\n    \"dateOfBirth\": \"1972-03-12T00:00:00.000Z\",\n    \"placeOfBirth\": \"Bogota\",\n    \"livingStatus\": \"LIVING\",\n    \"approximateBirthYear\": 1972,\n    \"regionOfOrigin\": \"Andes\",\n    \"familyOccupation\": \"Teacher\",\n    \"additionalNotes\": \"Primary maternal ancestor record\"\n  }\n]"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Step 3",
+          "auth": {
+            "type": "bearer",
+            "bearer": [
+              {
+                "key": "token",
+                "value": "{{accessToken}}",
+                "type": "string"
+              }
+            ]
+          },
+          "item": [
+            {
+              "name": "Get Cultural Connection List",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "{{baseUrl}}/enrollment/step3/cultural-connection-list",
+                "description": "Requires Bearer token. Returns active selectable cultural connections (keys + descriptions).",
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{accessToken}}",
+                      "type": "string"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "200 - List",
+                  "originalRequest": {},
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "[\n  {\n    \"key\": \"language\",\n    \"description\": \"Speaks indigenous language\"\n  },\n  {\n    \"key\": \"ceremony\",\n    \"description\": \"Participates in community ceremonies\"\n  }\n]"
+                }
+              ]
+            },
+            {
+              "name": "Upsert Step 3",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{baseUrl}}/enrollment/step3/upsert",
+                "description": "Requires Bearer token and accepted consent. Accepts selected culturalConnectionKeys and marks step 3 completed.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"culturalConnectionKeys\": [\n    \"language\",\n    \"ceremony\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{accessToken}}",
+                      "type": "string"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "201 - Step 3 Saved",
+                  "originalRequest": {},
+                  "status": "Created",
+                  "code": 201,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"success\": true\n}"
+                },
+                {
+                  "name": "400 - Invalid Keys",
+                  "originalRequest": {},
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"statusCode\": 400,\n  \"message\": \"Invalid cultural connection keys: invalid_key\",\n  \"error\": \"Bad Request\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "Get Step 3 Selection",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "{{baseUrl}}/enrollment/step3",
+                "description": "Requires Bearer token. Returns selected cultural connection keys once step 3 is completed.",
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{accessToken}}",
+                      "type": "string"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "200 - Selected Keys",
+                  "originalRequest": {},
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"culturalConnectionKeys\": [\n    \"language\",\n    \"ceremony\"\n  ]\n}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Step 4",
+          "auth": {
+            "type": "bearer",
+            "bearer": [
+              {
+                "key": "token",
+                "value": "{{accessToken}}",
+                "type": "string"
+              }
+            ]
+          },
+          "item": [
+            {
+              "name": "Complete Step 4 (Documents Validation)",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{baseUrl}}/enrollment/step4/next",
+                "description": "Requires Bearer token and accepted consent.\nValidates required docs and marks step 4 completed.\nRequired document types: USER_PHOTO and BIRTH_CERTIFICATE.",
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{accessToken}}",
+                      "type": "string"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "201 - Step 4 Completed",
+                  "originalRequest": {},
+                  "status": "Created",
+                  "code": 201,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"success\": true\n}"
+                },
+                {
+                  "name": "201 - Missing Required Documents",
+                  "originalRequest": {},
+                  "status": "Created",
+                  "code": 201,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"success\": false,\n  \"error\": \"missing_required_documents\"\n}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Complete Enrollment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/enrollment/complete",
+            "description": "Requires Bearer token and accepted consent guard.\nCompletes enrollment only when all 4 steps are completed and all required consents are accepted.\nSets status to SUBMITTED.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "201 - Enrollment Completed",
+              "originalRequest": {},
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Enrollment completed successfully\"\n}"
+            },
+            {
+              "name": "400 - Incomplete Steps",
+              "originalRequest": {},
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"statusCode\": 400,\n  \"message\": \"All enrollment steps must be completed to complete enrollment\",\n  \"error\": \"Bad Request\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Document",
+      "description": "Document upload/list/delete APIs. These routes require JWT + consent accepted + editable DRAFT enrollment.",
       "auth": {
         "type": "bearer",
         "bearer": [
@@ -514,19 +1021,38 @@
             "type": "string"
           }
         ]
-      }
-    },
-    {
-      "name": "document",
+      },
       "item": [
         {
-          "name": "uploads",
+          "name": "Uploads",
+          "auth": {
+            "type": "bearer",
+            "bearer": [
+              {
+                "key": "token",
+                "value": "{{accessToken}}",
+                "type": "string"
+              }
+            ]
+          },
           "item": [
             {
-              "name": "user-photo",
+              "name": "Upload USER_PHOTO",
               "request": {
                 "method": "POST",
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{accessToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
                 "header": [],
+                "url": "{{baseUrl}}/document/upload",
+                "description": "Single-file type. Uploading again replaces existing USER_PHOTO for enrollment.",
                 "body": {
                   "mode": "formdata",
                   "formdata": [
@@ -534,54 +1060,21 @@
                       "key": "documentType",
                       "value": "USER_PHOTO",
                       "type": "text",
-                      "id": 0
+                      "description": "Enum value from DocumentType"
                     },
                     {
                       "key": "file",
                       "type": "file",
-                      "id": 1,
-                      "fileUploadError": "",
-                      "src": ["/home/pravat/Downloads/866-300x300.jpg"]
+                      "src": "",
+                      "description": "Attach file (jpeg/png/webp/pdf, max 10 MB)"
                     }
                   ]
-                },
-                "url": {
-                  "raw": "http://localhost:3000/document/upload",
-                  "protocol": "http",
-                  "host": ["localhost"],
-                  "port": "3000",
-                  "path": ["document", "upload"]
-                },
-                "description": "Uploads one document file for the authenticated user's enrollment.\n\nPreconditions\n- Requires Bearer {{accessToken}}.\n- Enrollment must exist (POST /enrollment/start), consent must be accepted, and enrollment must remain DRAFT.\n\nRequest format\n- Content-Type: multipart/form-data\n- Field documentType (text, required):\n  - Single-file types (new upload replaces previous file of same type): USER_PHOTO, BIRTH_CERTIFICATE\n  - Multi-file types (every upload creates a new row): FAMILY_RECORD, FAMILY_PHOTO, ADDITIONAL_EVIDENCE\n- Field file (file, required)\n\nFile validation\n- Allowed MIME types: image/jpeg, image/png, image/webp, application/pdf\n- Max size: 10 MB\n- Empty file is rejected\n\nSuccess response (200)\n- message: \"Document uploaded successfully\" OR \"Document updated successfully\" (for single-file replacement)\n- document: { id, type, fileName, fileKey, fileSize, mimeType, url }\n\nCommon errors\n- 400: DocumentType are required\n- 400: Unsupported document type: <value>\n- 400: No file provided for upload\n- 400: Invalid file type: <mimetype>\n- 400: File size exceeds the 10 MB limit\n- 401/403: auth/consent/enrollment guard failures"
+                }
               },
               "response": [
                 {
-                  "name": "Upload Success - single type",
-                  "originalRequest": {
-                    "method": "POST",
-                    "header": [],
-                    "body": {
-                      "mode": "formdata",
-                      "formdata": [
-                        {
-                          "key": "documentType",
-                          "value": "USER_PHOTO",
-                          "type": "text"
-                        },
-                        {
-                          "key": "file",
-                          "type": "file"
-                        }
-                      ]
-                    },
-                    "url": {
-                      "raw": "http://localhost:3000/document/upload",
-                      "protocol": "http",
-                      "host": ["localhost"],
-                      "port": "3000",
-                      "path": ["document", "upload"]
-                    }
-                  },
+                  "name": "200 - Uploaded",
+                  "originalRequest": {},
                   "status": "OK",
                   "code": 200,
                   "_postman_previewlanguage": "json",
@@ -592,15 +1085,57 @@
                     }
                   ],
                   "cookie": [],
-                  "body": "{\n  \"message\": \"Document uploaded successfully\",\n  \"document\": {\n    \"id\": \"2f7d8f56-5e62-4c08-8f19-6930e9d80340\",\n    \"type\": \"USER_PHOTO\",\n    \"fileName\": \"user_photo/14c1f0c6-5f16-46fa-a691-2b09ab5d6777\",\n    \"fileKey\": \"documents/user_photo/14c1f0c6-5f16-46fa-a691-2b09ab5d6777\",\n    \"fileSize\": 245231,\n    \"mimeType\": \"image/jpeg\",\n    \"url\": \"https://signed-url.example.com/...\"\n  }\n}"
+                  "body": "{\n  \"message\": \"Document uploaded successfully\",\n  \"document\": {\n    \"id\": \"8f9f7a33-4f73-4e2d-aef2-c7fa91234abc\",\n    \"type\": \"USER_PHOTO\",\n    \"fileName\": \"user_photo/enrollment-id\",\n    \"fileKey\": \"documents/user_photo/enrollment-id\",\n    \"fileSize\": 245601,\n    \"mimeType\": \"image/jpeg\",\n    \"url\": \"https://signed-url.example\"\n  }\n}"
+                },
+                {
+                  "name": "400 - Invalid File/Type",
+                  "originalRequest": {},
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"statusCode\": 400,\n  \"message\": \"Invalid file type: text/plain. Allowed: image/jpeg, image/png, image/webp, application/pdf\",\n  \"error\": \"Bad Request\"\n}"
+                },
+                {
+                  "name": "403 - Enrollment Not Editable / Consent Not Accepted",
+                  "originalRequest": {},
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"statusCode\": 403,\n  \"message\": \"Enrollment is not editable.\",\n  \"error\": \"Forbidden\"\n}"
                 }
               ]
             },
             {
-              "name": "birth-certicicate",
+              "name": "Upload BIRTH_CERTIFICATE",
               "request": {
                 "method": "POST",
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{accessToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
                 "header": [],
+                "url": "{{baseUrl}}/document/upload",
+                "description": "Single-file type. Uploading again replaces existing BIRTH_CERTIFICATE for enrollment.",
                 "body": {
                   "mode": "formdata",
                   "formdata": [
@@ -608,54 +1143,21 @@
                       "key": "documentType",
                       "value": "BIRTH_CERTIFICATE",
                       "type": "text",
-                      "id": 0
+                      "description": "Enum value from DocumentType"
                     },
                     {
                       "key": "file",
                       "type": "file",
-                      "id": 1,
-                      "fileUploadError": "",
-                      "src": ["/home/pravat/Downloads/866-300x300.jpg"]
+                      "src": "",
+                      "description": "Attach file (jpeg/png/webp/pdf, max 10 MB)"
                     }
                   ]
-                },
-                "url": {
-                  "raw": "http://localhost:3000/document/upload",
-                  "protocol": "http",
-                  "host": ["localhost"],
-                  "port": "3000",
-                  "path": ["document", "upload"]
-                },
-                "description": "Uploads one document file for the authenticated user's enrollment.\n\nPreconditions\n- Requires Bearer {{accessToken}}.\n- Enrollment must exist (POST /enrollment/start), consent must be accepted, and enrollment must remain DRAFT.\n\nRequest format\n- Content-Type: multipart/form-data\n- Field documentType (text, required):\n  - Single-file types (new upload replaces previous file of same type): USER_PHOTO, BIRTH_CERTIFICATE\n  - Multi-file types (every upload creates a new row): FAMILY_RECORD, FAMILY_PHOTO, ADDITIONAL_EVIDENCE\n- Field file (file, required)\n\nFile validation\n- Allowed MIME types: image/jpeg, image/png, image/webp, application/pdf\n- Max size: 10 MB\n- Empty file is rejected\n\nSuccess response (200)\n- message: \"Document uploaded successfully\" OR \"Document updated successfully\" (for single-file replacement)\n- document: { id, type, fileName, fileKey, fileSize, mimeType, url }\n\nCommon errors\n- 400: DocumentType are required\n- 400: Unsupported document type: <value>\n- 400: No file provided for upload\n- 400: Invalid file type: <mimetype>\n- 400: File size exceeds the 10 MB limit\n- 401/403: auth/consent/enrollment guard failures"
+                }
               },
               "response": [
                 {
-                  "name": "Upload Success - single type",
-                  "originalRequest": {
-                    "method": "POST",
-                    "header": [],
-                    "body": {
-                      "mode": "formdata",
-                      "formdata": [
-                        {
-                          "key": "documentType",
-                          "value": "USER_PHOTO",
-                          "type": "text"
-                        },
-                        {
-                          "key": "file",
-                          "type": "file"
-                        }
-                      ]
-                    },
-                    "url": {
-                      "raw": "http://localhost:3000/document/upload",
-                      "protocol": "http",
-                      "host": ["localhost"],
-                      "port": "3000",
-                      "path": ["document", "upload"]
-                    }
-                  },
+                  "name": "200 - Uploaded",
+                  "originalRequest": {},
                   "status": "OK",
                   "code": 200,
                   "_postman_previewlanguage": "json",
@@ -666,15 +1168,57 @@
                     }
                   ],
                   "cookie": [],
-                  "body": "{\n  \"message\": \"Document uploaded successfully\",\n  \"document\": {\n    \"id\": \"2f7d8f56-5e62-4c08-8f19-6930e9d80340\",\n    \"type\": \"USER_PHOTO\",\n    \"fileName\": \"user_photo/14c1f0c6-5f16-46fa-a691-2b09ab5d6777\",\n    \"fileKey\": \"documents/user_photo/14c1f0c6-5f16-46fa-a691-2b09ab5d6777\",\n    \"fileSize\": 245231,\n    \"mimeType\": \"image/jpeg\",\n    \"url\": \"https://signed-url.example.com/...\"\n  }\n}"
+                  "body": "{\n  \"message\": \"Document uploaded successfully\",\n  \"document\": {\n    \"id\": \"8f9f7a33-4f73-4e2d-aef2-c7fa91234abc\",\n    \"type\": \"BIRTH_CERTIFICATE\",\n    \"fileName\": \"birth_certificate/enrollment-id\",\n    \"fileKey\": \"documents/birth_certificate/enrollment-id\",\n    \"fileSize\": 245601,\n    \"mimeType\": \"image/jpeg\",\n    \"url\": \"https://signed-url.example\"\n  }\n}"
+                },
+                {
+                  "name": "400 - Invalid File/Type",
+                  "originalRequest": {},
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"statusCode\": 400,\n  \"message\": \"Invalid file type: text/plain. Allowed: image/jpeg, image/png, image/webp, application/pdf\",\n  \"error\": \"Bad Request\"\n}"
+                },
+                {
+                  "name": "403 - Enrollment Not Editable / Consent Not Accepted",
+                  "originalRequest": {},
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"statusCode\": 403,\n  \"message\": \"Enrollment is not editable.\",\n  \"error\": \"Forbidden\"\n}"
                 }
               ]
             },
             {
-              "name": "family-record-1",
+              "name": "Upload FAMILY_RECORD",
               "request": {
                 "method": "POST",
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{accessToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
                 "header": [],
+                "url": "{{baseUrl}}/document/upload",
+                "description": "Multi-file type. Each upload creates a new record.",
                 "body": {
                   "mode": "formdata",
                   "formdata": [
@@ -682,54 +1226,21 @@
                       "key": "documentType",
                       "value": "FAMILY_RECORD",
                       "type": "text",
-                      "id": 0
+                      "description": "Enum value from DocumentType"
                     },
                     {
                       "key": "file",
                       "type": "file",
-                      "id": 1,
-                      "fileUploadError": "",
-                      "src": ["/home/pravat/Downloads/866-300x300.jpg"]
+                      "src": "",
+                      "description": "Attach file (jpeg/png/webp/pdf, max 10 MB)"
                     }
                   ]
-                },
-                "url": {
-                  "raw": "http://localhost:3000/document/upload",
-                  "protocol": "http",
-                  "host": ["localhost"],
-                  "port": "3000",
-                  "path": ["document", "upload"]
-                },
-                "description": "Uploads one document file for the authenticated user's enrollment.\n\nPreconditions\n- Requires Bearer {{accessToken}}.\n- Enrollment must exist (POST /enrollment/start), consent must be accepted, and enrollment must remain DRAFT.\n\nRequest format\n- Content-Type: multipart/form-data\n- Field documentType (text, required):\n  - Single-file types (new upload replaces previous file of same type): USER_PHOTO, BIRTH_CERTIFICATE\n  - Multi-file types (every upload creates a new row): FAMILY_RECORD, FAMILY_PHOTO, ADDITIONAL_EVIDENCE\n- Field file (file, required)\n\nFile validation\n- Allowed MIME types: image/jpeg, image/png, image/webp, application/pdf\n- Max size: 10 MB\n- Empty file is rejected\n\nSuccess response (200)\n- message: \"Document uploaded successfully\" OR \"Document updated successfully\" (for single-file replacement)\n- document: { id, type, fileName, fileKey, fileSize, mimeType, url }\n\nCommon errors\n- 400: DocumentType are required\n- 400: Unsupported document type: <value>\n- 400: No file provided for upload\n- 400: Invalid file type: <mimetype>\n- 400: File size exceeds the 10 MB limit\n- 401/403: auth/consent/enrollment guard failures"
+                }
               },
               "response": [
                 {
-                  "name": "Upload Success - single type",
-                  "originalRequest": {
-                    "method": "POST",
-                    "header": [],
-                    "body": {
-                      "mode": "formdata",
-                      "formdata": [
-                        {
-                          "key": "documentType",
-                          "value": "USER_PHOTO",
-                          "type": "text"
-                        },
-                        {
-                          "key": "file",
-                          "type": "file"
-                        }
-                      ]
-                    },
-                    "url": {
-                      "raw": "http://localhost:3000/document/upload",
-                      "protocol": "http",
-                      "host": ["localhost"],
-                      "port": "3000",
-                      "path": ["document", "upload"]
-                    }
-                  },
+                  "name": "200 - Uploaded",
+                  "originalRequest": {},
                   "status": "OK",
                   "code": 200,
                   "_postman_previewlanguage": "json",
@@ -740,72 +1251,13 @@
                     }
                   ],
                   "cookie": [],
-                  "body": "{\n  \"message\": \"Document uploaded successfully\",\n  \"document\": {\n    \"id\": \"2f7d8f56-5e62-4c08-8f19-6930e9d80340\",\n    \"type\": \"USER_PHOTO\",\n    \"fileName\": \"user_photo/14c1f0c6-5f16-46fa-a691-2b09ab5d6777\",\n    \"fileKey\": \"documents/user_photo/14c1f0c6-5f16-46fa-a691-2b09ab5d6777\",\n    \"fileSize\": 245231,\n    \"mimeType\": \"image/jpeg\",\n    \"url\": \"https://signed-url.example.com/...\"\n  }\n}"
-                }
-              ]
-            },
-            {
-              "name": "family-record-2",
-              "request": {
-                "method": "POST",
-                "header": [],
-                "body": {
-                  "mode": "formdata",
-                  "formdata": [
-                    {
-                      "key": "documentType",
-                      "value": "FAMILY_RECORD",
-                      "type": "text",
-                      "id": 0
-                    },
-                    {
-                      "key": "file",
-                      "type": "file",
-                      "id": 1,
-                      "fileUploadError": "",
-                      "src": ["/home/pravat/Downloads/866-300x300.jpg"]
-                    }
-                  ]
+                  "body": "{\n  \"message\": \"Document uploaded successfully\",\n  \"document\": {\n    \"id\": \"8f9f7a33-4f73-4e2d-aef2-c7fa91234abc\",\n    \"type\": \"FAMILY_RECORD\",\n    \"fileName\": \"family_record/enrollment-id\",\n    \"fileKey\": \"documents/family_record/enrollment-id\",\n    \"fileSize\": 245601,\n    \"mimeType\": \"image/jpeg\",\n    \"url\": \"https://signed-url.example\"\n  }\n}"
                 },
-                "url": {
-                  "raw": "http://localhost:3000/document/upload",
-                  "protocol": "http",
-                  "host": ["localhost"],
-                  "port": "3000",
-                  "path": ["document", "upload"]
-                },
-                "description": "Uploads one document file for the authenticated user's enrollment.\n\nPreconditions\n- Requires Bearer {{accessToken}}.\n- Enrollment must exist (POST /enrollment/start), consent must be accepted, and enrollment must remain DRAFT.\n\nRequest format\n- Content-Type: multipart/form-data\n- Field documentType (text, required):\n  - Single-file types (new upload replaces previous file of same type): USER_PHOTO, BIRTH_CERTIFICATE\n  - Multi-file types (every upload creates a new row): FAMILY_RECORD, FAMILY_PHOTO, ADDITIONAL_EVIDENCE\n- Field file (file, required)\n\nFile validation\n- Allowed MIME types: image/jpeg, image/png, image/webp, application/pdf\n- Max size: 10 MB\n- Empty file is rejected\n\nSuccess response (200)\n- message: \"Document uploaded successfully\" OR \"Document updated successfully\" (for single-file replacement)\n- document: { id, type, fileName, fileKey, fileSize, mimeType, url }\n\nCommon errors\n- 400: DocumentType are required\n- 400: Unsupported document type: <value>\n- 400: No file provided for upload\n- 400: Invalid file type: <mimetype>\n- 400: File size exceeds the 10 MB limit\n- 401/403: auth/consent/enrollment guard failures"
-              },
-              "response": [
                 {
-                  "name": "Upload Success - single type",
-                  "originalRequest": {
-                    "method": "POST",
-                    "header": [],
-                    "body": {
-                      "mode": "formdata",
-                      "formdata": [
-                        {
-                          "key": "documentType",
-                          "value": "USER_PHOTO",
-                          "type": "text"
-                        },
-                        {
-                          "key": "file",
-                          "type": "file"
-                        }
-                      ]
-                    },
-                    "url": {
-                      "raw": "http://localhost:3000/document/upload",
-                      "protocol": "http",
-                      "host": ["localhost"],
-                      "port": "3000",
-                      "path": ["document", "upload"]
-                    }
-                  },
-                  "status": "OK",
-                  "code": 200,
+                  "name": "400 - Invalid File/Type",
+                  "originalRequest": {},
+                  "status": "Bad Request",
+                  "code": 400,
                   "_postman_previewlanguage": "json",
                   "header": [
                     {
@@ -814,15 +1266,42 @@
                     }
                   ],
                   "cookie": [],
-                  "body": "{\n  \"message\": \"Document uploaded successfully\",\n  \"document\": {\n    \"id\": \"2f7d8f56-5e62-4c08-8f19-6930e9d80340\",\n    \"type\": \"USER_PHOTO\",\n    \"fileName\": \"user_photo/14c1f0c6-5f16-46fa-a691-2b09ab5d6777\",\n    \"fileKey\": \"documents/user_photo/14c1f0c6-5f16-46fa-a691-2b09ab5d6777\",\n    \"fileSize\": 245231,\n    \"mimeType\": \"image/jpeg\",\n    \"url\": \"https://signed-url.example.com/...\"\n  }\n}"
+                  "body": "{\n  \"statusCode\": 400,\n  \"message\": \"Invalid file type: text/plain. Allowed: image/jpeg, image/png, image/webp, application/pdf\",\n  \"error\": \"Bad Request\"\n}"
+                },
+                {
+                  "name": "403 - Enrollment Not Editable / Consent Not Accepted",
+                  "originalRequest": {},
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"statusCode\": 403,\n  \"message\": \"Enrollment is not editable.\",\n  \"error\": \"Forbidden\"\n}"
                 }
               ]
             },
             {
-              "name": "family-photo-1",
+              "name": "Upload FAMILY_PHOTO",
               "request": {
                 "method": "POST",
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{accessToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
                 "header": [],
+                "url": "{{baseUrl}}/document/upload",
+                "description": "Multi-file type. Each upload creates a new record.",
                 "body": {
                   "mode": "formdata",
                   "formdata": [
@@ -830,54 +1309,21 @@
                       "key": "documentType",
                       "value": "FAMILY_PHOTO",
                       "type": "text",
-                      "id": 0
+                      "description": "Enum value from DocumentType"
                     },
                     {
                       "key": "file",
                       "type": "file",
-                      "id": 1,
-                      "fileUploadError": "",
-                      "src": ["/home/pravat/Downloads/866-300x300.jpg"]
+                      "src": "",
+                      "description": "Attach file (jpeg/png/webp/pdf, max 10 MB)"
                     }
                   ]
-                },
-                "url": {
-                  "raw": "http://localhost:3000/document/upload",
-                  "protocol": "http",
-                  "host": ["localhost"],
-                  "port": "3000",
-                  "path": ["document", "upload"]
-                },
-                "description": "Uploads one document file for the authenticated user's enrollment.\n\nPreconditions\n- Requires Bearer {{accessToken}}.\n- Enrollment must exist (POST /enrollment/start), consent must be accepted, and enrollment must remain DRAFT.\n\nRequest format\n- Content-Type: multipart/form-data\n- Field documentType (text, required):\n  - Single-file types (new upload replaces previous file of same type): USER_PHOTO, BIRTH_CERTIFICATE\n  - Multi-file types (every upload creates a new row): FAMILY_RECORD, FAMILY_PHOTO, ADDITIONAL_EVIDENCE\n- Field file (file, required)\n\nFile validation\n- Allowed MIME types: image/jpeg, image/png, image/webp, application/pdf\n- Max size: 10 MB\n- Empty file is rejected\n\nSuccess response (200)\n- message: \"Document uploaded successfully\" OR \"Document updated successfully\" (for single-file replacement)\n- document: { id, type, fileName, fileKey, fileSize, mimeType, url }\n\nCommon errors\n- 400: DocumentType are required\n- 400: Unsupported document type: <value>\n- 400: No file provided for upload\n- 400: Invalid file type: <mimetype>\n- 400: File size exceeds the 10 MB limit\n- 401/403: auth/consent/enrollment guard failures"
+                }
               },
               "response": [
                 {
-                  "name": "Upload Success - single type",
-                  "originalRequest": {
-                    "method": "POST",
-                    "header": [],
-                    "body": {
-                      "mode": "formdata",
-                      "formdata": [
-                        {
-                          "key": "documentType",
-                          "value": "USER_PHOTO",
-                          "type": "text"
-                        },
-                        {
-                          "key": "file",
-                          "type": "file"
-                        }
-                      ]
-                    },
-                    "url": {
-                      "raw": "http://localhost:3000/document/upload",
-                      "protocol": "http",
-                      "host": ["localhost"],
-                      "port": "3000",
-                      "path": ["document", "upload"]
-                    }
-                  },
+                  "name": "200 - Uploaded",
+                  "originalRequest": {},
                   "status": "OK",
                   "code": 200,
                   "_postman_previewlanguage": "json",
@@ -888,72 +1334,13 @@
                     }
                   ],
                   "cookie": [],
-                  "body": "{\n  \"message\": \"Document uploaded successfully\",\n  \"document\": {\n    \"id\": \"2f7d8f56-5e62-4c08-8f19-6930e9d80340\",\n    \"type\": \"USER_PHOTO\",\n    \"fileName\": \"user_photo/14c1f0c6-5f16-46fa-a691-2b09ab5d6777\",\n    \"fileKey\": \"documents/user_photo/14c1f0c6-5f16-46fa-a691-2b09ab5d6777\",\n    \"fileSize\": 245231,\n    \"mimeType\": \"image/jpeg\",\n    \"url\": \"https://signed-url.example.com/...\"\n  }\n}"
-                }
-              ]
-            },
-            {
-              "name": "family-photo-2",
-              "request": {
-                "method": "POST",
-                "header": [],
-                "body": {
-                  "mode": "formdata",
-                  "formdata": [
-                    {
-                      "key": "documentType",
-                      "value": "FAMILY_PHOTO",
-                      "type": "text",
-                      "id": 0
-                    },
-                    {
-                      "key": "file",
-                      "type": "file",
-                      "id": 1,
-                      "fileUploadError": "",
-                      "src": ["/home/pravat/Downloads/866-300x300.jpg"]
-                    }
-                  ]
+                  "body": "{\n  \"message\": \"Document uploaded successfully\",\n  \"document\": {\n    \"id\": \"8f9f7a33-4f73-4e2d-aef2-c7fa91234abc\",\n    \"type\": \"FAMILY_PHOTO\",\n    \"fileName\": \"family_photo/enrollment-id\",\n    \"fileKey\": \"documents/family_photo/enrollment-id\",\n    \"fileSize\": 245601,\n    \"mimeType\": \"image/jpeg\",\n    \"url\": \"https://signed-url.example\"\n  }\n}"
                 },
-                "url": {
-                  "raw": "http://localhost:3000/document/upload",
-                  "protocol": "http",
-                  "host": ["localhost"],
-                  "port": "3000",
-                  "path": ["document", "upload"]
-                },
-                "description": "Uploads one document file for the authenticated user's enrollment.\n\nPreconditions\n- Requires Bearer {{accessToken}}.\n- Enrollment must exist (POST /enrollment/start), consent must be accepted, and enrollment must remain DRAFT.\n\nRequest format\n- Content-Type: multipart/form-data\n- Field documentType (text, required):\n  - Single-file types (new upload replaces previous file of same type): USER_PHOTO, BIRTH_CERTIFICATE\n  - Multi-file types (every upload creates a new row): FAMILY_RECORD, FAMILY_PHOTO, ADDITIONAL_EVIDENCE\n- Field file (file, required)\n\nFile validation\n- Allowed MIME types: image/jpeg, image/png, image/webp, application/pdf\n- Max size: 10 MB\n- Empty file is rejected\n\nSuccess response (200)\n- message: \"Document uploaded successfully\" OR \"Document updated successfully\" (for single-file replacement)\n- document: { id, type, fileName, fileKey, fileSize, mimeType, url }\n\nCommon errors\n- 400: DocumentType are required\n- 400: Unsupported document type: <value>\n- 400: No file provided for upload\n- 400: Invalid file type: <mimetype>\n- 400: File size exceeds the 10 MB limit\n- 401/403: auth/consent/enrollment guard failures"
-              },
-              "response": [
                 {
-                  "name": "Upload Success - single type",
-                  "originalRequest": {
-                    "method": "POST",
-                    "header": [],
-                    "body": {
-                      "mode": "formdata",
-                      "formdata": [
-                        {
-                          "key": "documentType",
-                          "value": "USER_PHOTO",
-                          "type": "text"
-                        },
-                        {
-                          "key": "file",
-                          "type": "file"
-                        }
-                      ]
-                    },
-                    "url": {
-                      "raw": "http://localhost:3000/document/upload",
-                      "protocol": "http",
-                      "host": ["localhost"],
-                      "port": "3000",
-                      "path": ["document", "upload"]
-                    }
-                  },
-                  "status": "OK",
-                  "code": 200,
+                  "name": "400 - Invalid File/Type",
+                  "originalRequest": {},
+                  "status": "Bad Request",
+                  "code": 400,
                   "_postman_previewlanguage": "json",
                   "header": [
                     {
@@ -962,15 +1349,42 @@
                     }
                   ],
                   "cookie": [],
-                  "body": "{\n  \"message\": \"Document uploaded successfully\",\n  \"document\": {\n    \"id\": \"2f7d8f56-5e62-4c08-8f19-6930e9d80340\",\n    \"type\": \"USER_PHOTO\",\n    \"fileName\": \"user_photo/14c1f0c6-5f16-46fa-a691-2b09ab5d6777\",\n    \"fileKey\": \"documents/user_photo/14c1f0c6-5f16-46fa-a691-2b09ab5d6777\",\n    \"fileSize\": 245231,\n    \"mimeType\": \"image/jpeg\",\n    \"url\": \"https://signed-url.example.com/...\"\n  }\n}"
+                  "body": "{\n  \"statusCode\": 400,\n  \"message\": \"Invalid file type: text/plain. Allowed: image/jpeg, image/png, image/webp, application/pdf\",\n  \"error\": \"Bad Request\"\n}"
+                },
+                {
+                  "name": "403 - Enrollment Not Editable / Consent Not Accepted",
+                  "originalRequest": {},
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"statusCode\": 403,\n  \"message\": \"Enrollment is not editable.\",\n  \"error\": \"Forbidden\"\n}"
                 }
               ]
             },
             {
-              "name": "additional-evidence",
+              "name": "Upload ADDITIONAL_EVIDENCE",
               "request": {
                 "method": "POST",
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{accessToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
                 "header": [],
+                "url": "{{baseUrl}}/document/upload",
+                "description": "Multi-file type. Each upload creates a new record.",
                 "body": {
                   "mode": "formdata",
                   "formdata": [
@@ -978,54 +1392,21 @@
                       "key": "documentType",
                       "value": "ADDITIONAL_EVIDENCE",
                       "type": "text",
-                      "id": 0
+                      "description": "Enum value from DocumentType"
                     },
                     {
                       "key": "file",
                       "type": "file",
-                      "id": 1,
-                      "fileUploadError": "",
-                      "src": ["/home/pravat/Downloads/866-300x300.jpg"]
+                      "src": "",
+                      "description": "Attach file (jpeg/png/webp/pdf, max 10 MB)"
                     }
                   ]
-                },
-                "url": {
-                  "raw": "http://localhost:3000/document/upload",
-                  "protocol": "http",
-                  "host": ["localhost"],
-                  "port": "3000",
-                  "path": ["document", "upload"]
-                },
-                "description": "Uploads one document file for the authenticated user's enrollment.\n\nPreconditions\n- Requires Bearer {{accessToken}}.\n- Enrollment must exist (POST /enrollment/start), consent must be accepted, and enrollment must remain DRAFT.\n\nRequest format\n- Content-Type: multipart/form-data\n- Field documentType (text, required):\n  - Single-file types (new upload replaces previous file of same type): USER_PHOTO, BIRTH_CERTIFICATE\n  - Multi-file types (every upload creates a new row): FAMILY_RECORD, FAMILY_PHOTO, ADDITIONAL_EVIDENCE\n- Field file (file, required)\n\nFile validation\n- Allowed MIME types: image/jpeg, image/png, image/webp, application/pdf\n- Max size: 10 MB\n- Empty file is rejected\n\nSuccess response (200)\n- message: \"Document uploaded successfully\" OR \"Document updated successfully\" (for single-file replacement)\n- document: { id, type, fileName, fileKey, fileSize, mimeType, url }\n\nCommon errors\n- 400: DocumentType are required\n- 400: Unsupported document type: <value>\n- 400: No file provided for upload\n- 400: Invalid file type: <mimetype>\n- 400: File size exceeds the 10 MB limit\n- 401/403: auth/consent/enrollment guard failures"
+                }
               },
               "response": [
                 {
-                  "name": "Upload Success - single type",
-                  "originalRequest": {
-                    "method": "POST",
-                    "header": [],
-                    "body": {
-                      "mode": "formdata",
-                      "formdata": [
-                        {
-                          "key": "documentType",
-                          "value": "USER_PHOTO",
-                          "type": "text"
-                        },
-                        {
-                          "key": "file",
-                          "type": "file"
-                        }
-                      ]
-                    },
-                    "url": {
-                      "raw": "http://localhost:3000/document/upload",
-                      "protocol": "http",
-                      "host": ["localhost"],
-                      "port": "3000",
-                      "path": ["document", "upload"]
-                    }
-                  },
+                  "name": "200 - Uploaded",
+                  "originalRequest": {},
                   "status": "OK",
                   "code": 200,
                   "_postman_previewlanguage": "json",
@@ -1036,40 +1417,64 @@
                     }
                   ],
                   "cookie": [],
-                  "body": "{\n  \"message\": \"Document uploaded successfully\",\n  \"document\": {\n    \"id\": \"2f7d8f56-5e62-4c08-8f19-6930e9d80340\",\n    \"type\": \"USER_PHOTO\",\n    \"fileName\": \"user_photo/14c1f0c6-5f16-46fa-a691-2b09ab5d6777\",\n    \"fileKey\": \"documents/user_photo/14c1f0c6-5f16-46fa-a691-2b09ab5d6777\",\n    \"fileSize\": 245231,\n    \"mimeType\": \"image/jpeg\",\n    \"url\": \"https://signed-url.example.com/...\"\n  }\n}"
+                  "body": "{\n  \"message\": \"Document uploaded successfully\",\n  \"document\": {\n    \"id\": \"8f9f7a33-4f73-4e2d-aef2-c7fa91234abc\",\n    \"type\": \"ADDITIONAL_EVIDENCE\",\n    \"fileName\": \"additional_evidence/enrollment-id\",\n    \"fileKey\": \"documents/additional_evidence/enrollment-id\",\n    \"fileSize\": 245601,\n    \"mimeType\": \"image/jpeg\",\n    \"url\": \"https://signed-url.example\"\n  }\n}"
+                },
+                {
+                  "name": "400 - Invalid File/Type",
+                  "originalRequest": {},
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"statusCode\": 400,\n  \"message\": \"Invalid file type: text/plain. Allowed: image/jpeg, image/png, image/webp, application/pdf\",\n  \"error\": \"Bad Request\"\n}"
+                },
+                {
+                  "name": "403 - Enrollment Not Editable / Consent Not Accepted",
+                  "originalRequest": {},
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"statusCode\": 403,\n  \"message\": \"Enrollment is not editable.\",\n  \"error\": \"Forbidden\"\n}"
                 }
               ]
             }
           ]
         },
         {
-          "name": "document-list",
+          "name": "Get Document List",
           "request": {
             "method": "GET",
             "header": [],
-            "url": {
-              "raw": "http://localhost:3000/document/list",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "3000",
-              "path": ["document", "list"]
-            },
-            "description": "Returns grouped document data for the authenticated user's enrollment.\n\nPreconditions\n- Requires Bearer {{accessToken}}.\n- Enrollment must exist and pass auth/consent/enrollment guards.\n\nResponse format (200)\n- Always returns an array with all document types:\n  - USER_PHOTO, BIRTH_CERTIFICATE, ADDITIONAL_EVIDENCE, FAMILY_PHOTO, FAMILY_RECORD\n- Each entry: { type, isSingle, documents }\n  - For single types (USER_PHOTO, BIRTH_CERTIFICATE): documents is either null or one object\n  - For multi types (others): documents is an array (possibly empty)\n- Document object fields: id, type, status, fileName, fileKey, fileSize, url, verifiedByAdmin, rejectedReason, uploadedAt\n- Multi-file arrays are ordered by uploadedAt DESC (latest first)\n\nCommon errors\n- 401/403: auth/consent/enrollment guard failures"
+            "url": "{{baseUrl}}/document/list",
+            "description": "Returns normalized document groups for all document types. For single-file types, documents is null or object. For multi-file types, documents is array.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
           },
           "response": [
             {
-              "name": "List Success",
-              "originalRequest": {
-                "method": "GET",
-                "header": [],
-                "url": {
-                  "raw": "http://localhost:3000/document/list",
-                  "protocol": "http",
-                  "host": ["localhost"],
-                  "port": "3000",
-                  "path": ["document", "list"]
-                }
-              },
+              "name": "200 - Document List",
+              "originalRequest": {},
               "status": "OK",
               "code": 200,
               "_postman_previewlanguage": "json",
@@ -1080,93 +1485,70 @@
                 }
               ],
               "cookie": [],
-              "body": "[\n  {\n    \"type\": \"USER_PHOTO\",\n    \"isSingle\": true,\n    \"documents\": {\n      \"id\": \"2f7d8f56-5e62-4c08-8f19-6930e9d80340\",\n      \"type\": \"USER_PHOTO\",\n      \"status\": \"PENDING\",\n      \"fileName\": \"user_photo/14c1f0c6-5f16-46fa-a691-2b09ab5d6777\",\n      \"fileKey\": \"documents/user_photo/14c1f0c6-5f16-46fa-a691-2b09ab5d6777\",\n      \"fileSize\": 245231,\n      \"url\": \"https://signed-url.example.com/...\",\n      \"verifiedByAdmin\": false,\n      \"rejectedReason\": null,\n      \"uploadedAt\": \"2026-04-09T08:22:17.389Z\"\n    }\n  },\n  {\n    \"type\": \"FAMILY_RECORD\",\n    \"isSingle\": false,\n    \"documents\": [\n      {\n        \"id\": \"8c706bf5-3095-48d9-bec3-b126d0321e8e\",\n        \"type\": \"FAMILY_RECORD\",\n        \"status\": \"PENDING\",\n        \"fileName\": \"family_record/14c1f0c6-5f16-46fa-a691-2b09ab5d6777/1712640200000-cd5b....\",\n        \"fileKey\": \"documents/family_record/14c1f0c6-5f16-46fa-a691-2b09ab5d6777/1712640200000-cd5b....\",\n        \"fileSize\": 132001,\n        \"url\": \"https://signed-url.example.com/...\",\n        \"verifiedByAdmin\": false,\n        \"rejectedReason\": null,\n        \"uploadedAt\": \"2026-04-09T08:21:40.102Z\"\n      }\n    ]\n  }\n]"
+              "body": "[\n  {\n    \"type\": \"USER_PHOTO\",\n    \"isSingle\": true,\n    \"documents\": {\n      \"id\": \"doc-uuid-1\",\n      \"type\": \"USER_PHOTO\",\n      \"status\": \"PENDING\",\n      \"fileName\": \"user_photo/enrollment-id\",\n      \"fileKey\": \"documents/user_photo/enrollment-id\",\n      \"fileSize\": 245601,\n      \"url\": \"https://signed-url.example\",\n      \"verifiedByAdmin\": false,\n      \"rejectedReason\": null,\n      \"uploadedAt\": \"2026-04-14T12:00:00.000Z\"\n    }\n  },\n  {\n    \"type\": \"FAMILY_RECORD\",\n    \"isSingle\": false,\n    \"documents\": [\n      {\n        \"id\": \"doc-uuid-2\",\n        \"type\": \"FAMILY_RECORD\",\n        \"status\": \"PENDING\",\n        \"fileName\": \"family_record/enrollment-id/1713097540000-uuid\",\n        \"fileKey\": \"documents/family_record/enrollment-id/1713097540000-uuid\",\n        \"fileSize\": 400001,\n        \"url\": \"https://signed-url.example\",\n        \"verifiedByAdmin\": false,\n        \"rejectedReason\": null,\n        \"uploadedAt\": \"2026-04-14T12:05:00.000Z\"\n      }\n    ]\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Delete Document",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/document/{{documentId}}",
+            "description": "Deletes a document record by document id and triggers safe S3 deletion in background.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "201 - Deleted",
+              "originalRequest": {},
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"message\": \"Document deleted successfully\"\n}"
+            },
+            {
+              "name": "404 - Not Found",
+              "originalRequest": {},
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"statusCode\": 404,\n  \"message\": \"Document with ID abc not found\",\n  \"error\": \"Not Found\"\n}"
             }
           ]
         }
-      ],
-      "auth": {
-        "type": "bearer",
-        "bearer": [
-          {
-            "key": "token",
-            "value": "{{accessToken}}",
-            "type": "string"
-          }
-        ]
-      }
+      ]
     },
     {
-      "name": "account",
-      "item": [
-        {
-          "name": "info",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:3000/account/info",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "3000",
-              "path": ["account", "info"]
-            },
-            "description": "Returns account and enrollment data for the authenticated user profile.\n\nAuth\n- Requires Bearer {{accessToken}} (JwtAuthGuard).\n\nTop-level response shape (200)\n- user: minimal user object from UserService.findById\n  - id: string (UUID)\n  - name: string | null\n  - email: string\n  - role: USER | ADMIN | MODERATOR\n- enrollment: object | null\n  - null when user has not started enrollment\n  - otherwise returns the extended enrollment summary shape described below\n- enrollmentStep: object | undefined\n  - mirrors enrollment.steps when enrollment exists\n  - map of step number to completion flag, example: { \"1\": true, \"2\": false, \"3\": false, \"4\": false }\n- enrollmentStatus: DRAFT | SUBMITTED | APPROVED | REJECTED | undefined\n  - mirrors enrollment.status when enrollment exists\n- hasEnrollment: boolean\n\nEnrollment object (when present)\n- id: string\n- status: DRAFT | SUBMITTED | APPROVED | REJECTED\n- consentAccepted: boolean\n- user: duplicated user summary inside enrollment\n  - id, email, name, role\n- personalInfo:\n  - firstName, middleName, lastName, preferredName, maternalLastName: string | null\n  - dateOfBirth: ISO date string | null\n  - cityOfBirth, municipalityOfBirth, countryOfBirth: string | null\n  - gender: MALE | FEMALE | NON_BINARY | TWO_SPIRIT | SELF_DESCRIBE | PREFER_NOT_TO_SAY | OTHER | null\n  - pronouns: string | null\n  - maritalStatus: SINGLE | MARRIED | DIVORCED | WIDOWED | null\n  - occupation, educationLevel, specialSkills: string | null\n  - languagesSpoken: string[]\n- contact: { id, enrollmentId, email, phoneNumber, phoneType, allowSMS, createdAt, updatedAt } | null\n- addresses: array of { id, enrollmentId, type, street, apartment, city, state, zipCode, country, yearsLived, createdAt, updatedAt }\n- emergencyContact: { id, enrollmentId, fullName, relationship, phoneNumber } | null\n- maternalLineages: array of summaries\n  - id, fullName, maidenName, dateOfBirth, placeOfBirth, LivingStatus, approximateBirthYear, regionOfOrigin, familyOccupation, additionalNotes, relation\n  - Note: key name is currently \"LivingStatus\" (capital L) in backend response.\n- culturalConnections: array of { id, key, description }\n- consent: array of { id, key, version, title, accepted, acceptedAt, required }\n- documents: grouped document list (same structure as GET /document/list)\n- steps: map of step number to completion boolean\n\nImportant integration notes\n- When hasEnrollment is false: enrollment is null, enrollmentStep is undefined, enrollmentStatus is undefined.\n- JSON object keys for numeric step map appear as strings on the wire (\"1\", \"2\", ...).\n- Current backend throws generic Error(\"User not found\") if user lookup fails, which may surface as 500."
-          },
-          "response": [
-            {
-              "name": "Info Success - with enrollment",
-              "originalRequest": {
-                "method": "GET",
-                "header": [],
-                "url": {
-                  "raw": "http://localhost:3000/account/info",
-                  "protocol": "http",
-                  "host": ["localhost"],
-                  "port": "3000",
-                  "path": ["account", "info"]
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "_postman_previewlanguage": "json",
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "cookie": [],
-              "body": "{\n  \"user\": {\n    \"id\": \"3f81b7aa-10b6-4f89-9abc-e7a43b51e92f\",\n    \"name\": \"Test User\",\n    \"email\": \"testuser@email.com\",\n    \"role\": \"USER\"\n  },\n  \"enrollment\": {\n    \"id\": \"14c1f0c6-5f16-46fa-a691-2b09ab5d6777\",\n    \"status\": \"DRAFT\",\n    \"consentAccepted\": true,\n    \"user\": {\n      \"id\": \"3f81b7aa-10b6-4f89-9abc-e7a43b51e92f\",\n      \"email\": \"testuser@email.com\",\n      \"name\": \"Test User\",\n      \"role\": \"USER\"\n    },\n    \"personalInfo\": {\n      \"firstName\": \"Pravat\",\n      \"middleName\": \"Kumar\",\n      \"lastName\": \"Sahoo\",\n      \"preferredName\": \"Prav\",\n      \"maternalLastName\": \"Das\",\n      \"dateOfBirth\": \"2002-05-14T00:00:00.000Z\",\n      \"cityOfBirth\": \"Durgapur\",\n      \"municipalityOfBirth\": \"Durgapur Municipal Corporation\",\n      \"countryOfBirth\": \"India\",\n      \"gender\": \"MALE\",\n      \"pronouns\": \"he/him\",\n      \"maritalStatus\": \"SINGLE\",\n      \"occupation\": \"Student\",\n      \"educationLevel\": \"Bachelor's\",\n      \"languagesSpoken\": [\n        \"English\",\n        \"Hindi\",\n        \"Bengali\"\n      ],\n      \"specialSkills\": \"Programming, Problem Solving\"\n    },\n    \"contact\": {\n      \"id\": \"1f923af8-b4f2-4f9c-a682-2a4724ec54f8\",\n      \"enrollmentId\": \"14c1f0c6-5f16-46fa-a691-2b09ab5d6777\",\n      \"email\": \"pravat.sahoo@example.com\",\n      \"phoneNumber\": \"9876543210\",\n      \"phoneType\": \"MOBILE\",\n      \"allowSMS\": true,\n      \"createdAt\": \"2026-04-09T07:25:13.256Z\",\n      \"updatedAt\": \"2026-04-09T07:25:13.256Z\"\n    },\n    \"addresses\": [\n      {\n        \"id\": \"2e6f655b-befd-4d8d-a17f-fecf979d8ff4\",\n        \"enrollmentId\": \"14c1f0c6-5f16-46fa-a691-2b09ab5d6777\",\n        \"type\": \"CURRENT\",\n        \"street\": \"Street 12, Sector 2\",\n        \"apartment\": null,\n        \"city\": \"Durgapur\",\n        \"state\": \"West Bengal\",\n        \"zipCode\": \"713201\",\n        \"country\": \"India\",\n        \"yearsLived\": null,\n        \"createdAt\": \"2026-04-09T07:25:13.256Z\",\n        \"updatedAt\": \"2026-04-09T07:25:13.256Z\"\n      },\n      {\n        \"id\": \"5cf8cd8e-08e4-49b8-b243-6dc3ce35916d\",\n        \"enrollmentId\": \"14c1f0c6-5f16-46fa-a691-2b09ab5d6777\",\n        \"type\": \"MAILING\",\n        \"street\": \"Street 45, Bidhannagar\",\n        \"apartment\": null,\n        \"city\": \"Kolkata\",\n        \"state\": \"West Bengal\",\n        \"zipCode\": \"700064\",\n        \"country\": \"India\",\n        \"yearsLived\": null,\n        \"createdAt\": \"2026-04-09T07:25:13.256Z\",\n        \"updatedAt\": \"2026-04-09T07:25:13.256Z\"\n      }\n    ],\n    \"emergencyContact\": {\n      \"id\": \"f11f2f6b-9f64-4daa-9f8c-0f18b02ef8b3\",\n      \"enrollmentId\": \"14c1f0c6-5f16-46fa-a691-2b09ab5d6777\",\n      \"fullName\": \"Ramesh Sahoo\",\n      \"relationship\": \"Father\",\n      \"phoneNumber\": \"9123456789\"\n    },\n    \"maternalLineages\": [\n      {\n        \"id\": \"59d4f5db-bce0-4bb0-a5be-18d94b355f8e\",\n        \"fullName\": \"Anita Sahoo\",\n        \"maidenName\": \"Das\",\n        \"dateOfBirth\": \"1975-06-15T00:00:00.000Z\",\n        \"placeOfBirth\": \"Kolkata\",\n        \"LivingStatus\": \"LIVING\",\n        \"approximateBirthYear\": 1975,\n        \"regionOfOrigin\": \"West Bengal\",\n        \"familyOccupation\": \"Teacher\",\n        \"additionalNotes\": \"Loves gardening\",\n        \"relation\": \"MOTHER\"\n      }\n    ],\n    \"culturalConnections\": [\n      {\n        \"id\": \"a34e4b34-dcff-4aa0-a464-5535e4dd9f69\",\n        \"key\": \"medicinal_plant_knowledge\",\n        \"description\": \"Knowledge and use of traditional medicinal plants\"\n      }\n    ],\n    \"consent\": [\n      {\n        \"id\": \"4dd4bcc8-307b-4af4-aa17-df1f5fc57dc0\",\n        \"key\": \"privacy_policy\",\n        \"version\": 1,\n        \"title\": \"Privacy Policy\",\n        \"accepted\": true,\n        \"acceptedAt\": \"2026-04-09T07:23:57.151Z\",\n        \"required\": true\n      }\n    ],\n    \"documents\": [\n      {\n        \"type\": \"USER_PHOTO\",\n        \"isSingle\": true,\n        \"documents\": null\n      },\n      {\n        \"type\": \"BIRTH_CERTIFICATE\",\n        \"isSingle\": true,\n        \"documents\": null\n      },\n      {\n        \"type\": \"ADDITIONAL_EVIDENCE\",\n        \"isSingle\": false,\n        \"documents\": []\n      },\n      {\n        \"type\": \"FAMILY_PHOTO\",\n        \"isSingle\": false,\n        \"documents\": []\n      },\n      {\n        \"type\": \"FAMILY_RECORD\",\n        \"isSingle\": false,\n        \"documents\": []\n      }\n    ],\n    \"steps\": {\n      \"1\": true,\n      \"2\": true,\n      \"3\": false,\n      \"4\": false\n    }\n  },\n  \"enrollmentStep\": {\n    \"1\": true,\n    \"2\": true,\n    \"3\": false,\n    \"4\": false\n  },\n  \"enrollmentStatus\": \"DRAFT\",\n  \"hasEnrollment\": true\n}"
-            },
-            {
-              "name": "Info Success - no enrollment",
-              "originalRequest": {
-                "method": "GET",
-                "header": [],
-                "url": {
-                  "raw": "http://localhost:3000/account/info",
-                  "protocol": "http",
-                  "host": ["localhost"],
-                  "port": "3000",
-                  "path": ["account", "info"]
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "_postman_previewlanguage": "json",
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "cookie": [],
-              "body": "{\n  \"user\": {\n    \"id\": \"3f81b7aa-10b6-4f89-9abc-e7a43b51e92f\",\n    \"name\": \"Test User\",\n    \"email\": \"testuser@email.com\",\n    \"role\": \"USER\"\n  },\n  \"enrollment\": null,\n  \"hasEnrollment\": false\n}"
-            }
-          ]
-        }
-      ],
+      "name": "Account",
       "auth": {
         "type": "bearer",
         "bearer": [
@@ -1176,7 +1558,98 @@
             "type": "string"
           }
         ]
-      }
+      },
+      "description": "Account summary endpoint for dashboard/header-level data.",
+      "item": [
+        {
+          "name": "Get Account Info",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/account/info",
+            "description": "Returns user summary + enrollment summary + derived flags.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 - Account Info",
+              "originalRequest": {},
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"user\": {\n    \"id\": \"user-uuid\",\n    \"publicId\": \"100001\",\n    \"name\": \"Test User\",\n    \"email\": \"testuser@email.com\",\n    \"role\": \"USER\"\n  },\n  \"enrollment\": {\n    \"id\": \"enrollment-uuid\",\n    \"steps\": {\n      \"1\": true,\n      \"2\": true,\n      \"3\": true,\n      \"4\": false\n    },\n    \"status\": \"DRAFT\",\n    \"personalInfo\": {\n      \"firstName\": \"Ava\",\n      \"lastName\": \"Stone\",\n      \"countryOfBirth\": \"India\"\n    },\n    \"profilePicture\": \"https://signed-url.example\"\n  },\n  \"enrollmentStep\": {\n    \"1\": true,\n    \"2\": true,\n    \"3\": true,\n    \"4\": false\n  },\n  \"enrollmentStatus\": \"DRAFT\",\n  \"hasEnrollment\": true\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Profile",
+      "auth": {
+        "type": "bearer",
+        "bearer": [
+          {
+            "key": "token",
+            "value": "{{accessToken}}",
+            "type": "string"
+          }
+        ]
+      },
+      "description": "Profile endpoint with extended enrollment and regional members.",
+      "item": [
+        {
+          "name": "Get Profile",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/profile",
+            "description": "Returns detailed profile payload including enrollment, steps, and regionalMembers list based on current zip code.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 - Profile Data",
+              "originalRequest": {},
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"user\": {\n    \"id\": \"user-uuid\",\n    \"publicId\": \"100001\",\n    \"name\": \"Test User\",\n    \"email\": \"testuser@email.com\",\n    \"role\": \"USER\"\n  },\n  \"enrollment\": {\n    \"id\": \"enrollment-uuid\",\n    \"status\": \"DRAFT\",\n    \"consentAccepted\": true,\n    \"approvalDate\": null,\n    \"personalInfo\": {\n      \"firstName\": \"Ava\",\n      \"lastName\": \"Stone\"\n    },\n    \"addresses\": [],\n    \"maternalLineages\": [],\n    \"culturalConnections\": [],\n    \"consent\": [],\n    \"documents\": [],\n    \"steps\": {\n      \"1\": true,\n      \"2\": false,\n      \"3\": false,\n      \"4\": false\n    }\n  },\n  \"enrollmentStep\": {\n    \"1\": true,\n    \"2\": false,\n    \"3\": false,\n    \"4\": false\n  },\n  \"enrollmentStatus\": \"DRAFT\",\n  \"hasEnrollment\": true,\n  \"regionalMembers\": [\n    {\n      \"id\": \"other-enrollment-uuid\",\n      \"name\": \"Community Member\",\n      \"location\": {\n        \"city\": \"Kolkata\",\n        \"state\": \"West Bengal\",\n        \"zipCode\": \"700001\"\n      }\n    }\n  ]\n}"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

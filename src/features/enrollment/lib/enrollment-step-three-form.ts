@@ -1,8 +1,8 @@
 import { z } from "zod";
 
 import type {
-  AccountInfoResponse,
   EnrollmentStepThreeCulturalConnection,
+  EnrollmentStepThreePrefillResponse,
   EnrollmentStepThreeUpsertRequest,
 } from "@/types/enrollment";
 
@@ -19,18 +19,6 @@ export type EnrollmentStepThreeFormValues = z.infer<
   typeof enrollmentStepThreeSchema
 >;
 
-function readString(value: unknown) {
-  return typeof value === "string" ? value : "";
-}
-
-function readObject(value: unknown) {
-  if (!value || typeof value !== "object" || Array.isArray(value)) {
-    return null;
-  }
-
-  return value as Record<string, unknown>;
-}
-
 function trimValue(value: string) {
   return value.trim();
 }
@@ -39,34 +27,12 @@ function uniqueValues(values: readonly string[]) {
   return Array.from(new Set(values));
 }
 
-function readCulturalConnectionKey(value: unknown) {
-  if (typeof value === "string") {
-    return trimValue(value);
-  }
-
-  const record = readObject(value);
-
-  if (!record) {
-    return "";
-  }
-
-  const directKey = trimValue(readString(record.key));
-
-  if (directKey) {
-    return directKey;
-  }
-
-  const nestedConnection = readObject(record.culturalConnection);
-
-  return trimValue(readString(nestedConnection?.key));
-}
-
 export function getEnrollmentStepThreeDefaultValues(
-  accountInfo?: AccountInfoResponse | null,
+  stepThreeData?: EnrollmentStepThreePrefillResponse | null,
 ): EnrollmentStepThreeFormValues {
   const keys = uniqueValues(
-    (accountInfo?.enrollment?.culturalConnections ?? [])
-      .map((connection) => readCulturalConnectionKey(connection))
+    (stepThreeData?.culturalConnectionKeys ?? [])
+      .map((key) => trimValue(key))
       .filter(Boolean),
   );
 
