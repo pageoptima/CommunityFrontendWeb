@@ -5,6 +5,9 @@ export const endpoints = {
   ACCOUNT: {
     INFO: normalizePath("/account/info"),
   },
+  EVENTS: {
+    LIST: normalizePath("/events"),
+  },
   PROFILE: {
     INFO: normalizePath("/profile"),
   },
