@@ -4,6 +4,7 @@ import {
   CommunityFeaturedAnnouncementCard,
   type CommunityFeaturedAnnouncementCardProps,
 } from "@/features/community/components/community-featured-announcement-card";
+import { getCommunityEventTone } from "@/features/community/constants/community-event-card-tones";
 import type { CommunityEventApiItem } from "@/features/community/types/community-event";
 import { cn } from "@/lib/utils";
 
@@ -38,6 +39,7 @@ function buildFeaturedAnnouncementCardProps(
     metaLabel: `${badgeLabel} • ${publishedAgo}`,
     timeLabel: formatEventTimeRange(event.startDateTime, event.endDateTime),
     title: event.title,
+    tone: getCommunityEventTone(event.category?.key),
   };
 }
 

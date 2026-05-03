@@ -27,3 +27,12 @@ export type CommunityEventApiItem = Readonly<{
   }>;
   registrationCount?: number;
 }>;
+
+export type CommunityEventRegisterRequest = Readonly<{
+  eventId: string;
+}>;
+
+export type CommunityEventRegisterResponse = Readonly<{
+  success: boolean;
+  message: string;
+}>;

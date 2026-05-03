@@ -2,6 +2,13 @@ import Image from "next/image";
 
 import { CalendarDays } from "lucide-react";
 
+import {
+  communityEventBadgeClasses,
+  communityEventCardClasses,
+  communityUpcomingEventIconWrapClass,
+  type CommunityEventCardTone,
+} from "@/features/community/constants/community-event-card-tones";
+
 export type CommunityFeaturedAnnouncementCardProps = Readonly<{
   badgeLabel: string;
   dateLabel: string;
@@ -11,6 +18,7 @@ export type CommunityFeaturedAnnouncementCardProps = Readonly<{
   timeLabel: string;
   title: string;
   attendeeCount: number;
+  tone: CommunityEventCardTone;
 }>;
 
 export function CommunityFeaturedAnnouncementCard({
@@ -22,13 +30,18 @@ export function CommunityFeaturedAnnouncementCard({
   metaLabel,
   timeLabel,
   title,
+  tone,
 }: CommunityFeaturedAnnouncementCardProps) {
   return (
-    <article className="flex h-full flex-col rounded-[1.2rem] border border-black/15 bg-white px-3.5 py-3.5 shadow-[0_22px_46px_-38px_rgba(16,47,52,0.26)] sm:px-4 sm:py-4 lg:px-4.5 lg:py-4.5">
+    <article
+      className={`flex h-full flex-col rounded-[1.2rem] border bg-white px-3.5 py-3.5 sm:px-4 sm:py-4 lg:px-4.5 lg:py-4.5 ${communityEventCardClasses[tone]}`}
+    >
       <div className="flex flex-col gap-3.5">
         <div className="flex items-start justify-between gap-3">
           <div className="flex min-w-0 flex-1 items-start gap-2.5">
-            <div className="flex size-[3.1rem] shrink-0 items-center justify-center rounded-full border-[3px] border-[#095f58] bg-[#bff7ef] shadow-[0_16px_24px_-18px_rgba(9,95,88,0.45)] sm:size-[3.25rem]">
+            <div
+              className={`flex size-[3.1rem] shrink-0 items-center justify-center rounded-full border-[3px] sm:size-[3.25rem] ${communityUpcomingEventIconWrapClass}`}
+            >
               <Image
                 alt=""
                 aria-hidden="true"
@@ -61,7 +74,9 @@ export function CommunityFeaturedAnnouncementCard({
             </div>
           </div>
 
-          <span className="inline-flex min-w-[5.75rem] shrink-0 justify-center rounded-full bg-[#d8e5e1] px-3.5 py-1 text-[0.96rem] leading-none font-semibold tracking-[-0.04em] text-[#095f58]">
+          <span
+            className={`inline-flex min-w-[5.75rem] shrink-0 justify-center rounded-full px-3.5 py-1 text-[0.96rem] leading-none font-semibold tracking-[-0.04em] ${communityEventBadgeClasses[tone]}`}
+          >
             {badgeLabel}
           </span>
         </div>

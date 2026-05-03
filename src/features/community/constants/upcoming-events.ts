@@ -2,38 +2,14 @@ import type {
   CommunityEventApiItem,
   CommunityEventCategory,
 } from "@/features/community/types/community-event";
+import { fallbackEventCategories } from "@/features/community/constants/event-categories";
 
-const culturalEventsCategory: CommunityEventCategory = {
-  id: "fallback-category-cultural-events",
-  key: "cultural_events",
-  name: "Cultural Events",
-  description: "Ceremonies, festivals, and traditional celebrations",
-  icon: "cultural_events",
-};
-
-const workshopsCategory: CommunityEventCategory = {
-  id: "fallback-category-workshops",
-  key: "workshops",
-  name: "Workshops",
-  description: "Hands-on learning and skill development sessions",
-  icon: "workshops",
-};
-
-const ceremoniesCategory: CommunityEventCategory = {
-  id: "fallback-category-ceremonies",
-  key: "ceremonies",
-  name: "Ceremonies",
-  description: "Sacred rituals and spiritual gatherings",
-  icon: "ceremonies",
-};
-
-const socialEventsCategory: CommunityEventCategory = {
-  id: "fallback-category-social-events",
-  key: "social_events",
-  name: "Social Events",
-  description: "Community gatherings and networking",
-  icon: "social_events",
-};
+const culturalEventsCategory =
+  fallbackEventCategories[0] as CommunityEventCategory;
+const workshopsCategory = fallbackEventCategories[1] as CommunityEventCategory;
+const ceremoniesCategory = fallbackEventCategories[2] as CommunityEventCategory;
+const socialEventsCategory =
+  fallbackEventCategories[3] as CommunityEventCategory;
 
 function createFallbackEvent(
   event: Omit<CommunityEventApiItem, "category" | "_count"> & {
@@ -234,7 +210,7 @@ export const fallbackUpcomingEvents: CommunityEventApiItem[] = [
     createdAt: "2026-05-01T10:05:00.000Z",
     updatedAt: "2026-05-01T10:05:00.000Z",
     category: ceremoniesCategory,
-    registrations: 112,
+    registrations: 238,
   }),
   createFallbackEvent({
     id: "fallback-new-moon-water-blessing",
@@ -370,3 +346,15 @@ export const fallbackUpcomingEvents: CommunityEventApiItem[] = [
     registrations: 121,
   }),
 ];
+
+export function getFallbackUpcomingEventsByCategory(
+  categoryKey?: string | null,
+) {
+  if (!categoryKey) {
+    return fallbackUpcomingEvents;
+  }
+
+  return fallbackUpcomingEvents.filter(
+    (event) => event.category?.key === categoryKey,
+  );
+}
