@@ -18,7 +18,7 @@ export const communityEventCardClasses: Record<CommunityEventCardTone, string> =
     workshop:
       "border-[#b6d6ea] shadow-[0_18px_42px_-34px_rgba(34,94,140,0.22)]",
     ceremony: "border-[#d8c0b8] shadow-[0_18px_42px_-34px_rgba(111,54,40,0.2)]",
-    social: "border-[#c8d6cc] shadow-[0_18px_42px_-34px_rgba(47,90,72,0.18)]",
+    social: "border-[#f2b36a] shadow-[0_18px_42px_-34px_rgba(214,117,32,0.24)]",
   };
 
 export const communityEventBadgeClasses: Record<
@@ -28,7 +28,7 @@ export const communityEventBadgeClasses: Record<
   cultural: "bg-[#dbe9e6] text-[#0b5f58]",
   workshop: "bg-[#dceaf5] text-[#275c8b]",
   ceremony: "bg-[#f0dfdb] text-[#7f251a]",
-  social: "bg-[#e3ece7] text-[#295c49]",
+  social: "bg-[#ffe3c2] text-[#b35a00]",
 };
 
 export const communityUpcomingEventIconWrapClass =
