@@ -1,3 +1,10 @@
+"use client";
+
+import { motion } from "framer-motion";
+
+import { PageHeroSection } from "@/components/shared/page-hero-section";
+import { fadeInUpItem } from "@/lib/motion";
+
 type DashboardHeroSectionProps = Readonly<{
   title: {
     prefix: string;
@@ -12,18 +19,21 @@ export function DashboardHeroSection({
   description,
 }: DashboardHeroSectionProps) {
   return (
-    <header className="mx-auto max-w-4xl px-2 text-center sm:px-4">
-      <h1 className="mx-auto max-w-[8.5ch] text-[clamp(2rem,14vw,5rem)] leading-[0.88] font-semibold tracking-[-0.06em] text-[#13181c] sm:max-w-none sm:leading-[0.95] sm:tracking-[-0.07em]">
-        <span className="block sm:inline">{title.prefix}</span>{" "}
-        <span className="block text-[#2bb5cb] sm:inline">
-          {title.highlight}
-        </span>
-        <span className="block">{title.suffix}</span>
-      </h1>
+    <PageHeroSection containerClassName="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+      <motion.h1
+        className="text-foreground mt-4 max-w-4xl text-4xl font-semibold tracking-tight sm:mt-5 sm:text-5xl lg:mt-6 lg:text-6xl"
+        variants={fadeInUpItem}
+      >
+        {title.prefix} <span className="text-[#2bb5cb]">{title.highlight}</span>{" "}
+        {title.suffix}
+      </motion.h1>
 
-      <p className="mx-auto mt-4 max-w-[22rem] text-[0.95rem] leading-6 font-medium text-[#30383c] sm:mt-6 sm:max-w-3xl sm:text-base sm:leading-7 lg:text-lg">
+      <motion.p
+        className="text-muted-foreground mt-6 max-w-3xl text-base leading-7 sm:text-lg"
+        variants={fadeInUpItem}
+      >
         {description}
-      </p>
-    </header>
+      </motion.p>
+    </PageHeroSection>
   );
 }

@@ -3,6 +3,7 @@ const normalizePath = (path: string) =>
 
 export const endpoints = {
   ACCOUNT: {
+    COMMUNITY_META: normalizePath("/account/community-meta"),
     INFO: normalizePath("/account/info"),
   },
   EVENTS: {
