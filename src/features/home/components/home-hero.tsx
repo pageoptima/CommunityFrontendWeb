@@ -35,7 +35,7 @@ export function HomeHero() {
       >
         <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
           <motion.h1
-            className="text-foreground max-w-4xl text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl"
+            className="text-foreground mt-4 max-w-4xl text-4xl font-semibold tracking-tight sm:mt-5 sm:text-5xl lg:mt-6 lg:text-6xl"
             variants={fadeInUpItem}
           >
             Welcome to the{" "}

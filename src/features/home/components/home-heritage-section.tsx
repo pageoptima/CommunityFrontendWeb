@@ -49,7 +49,10 @@ export function HomeHeritageSection() {
       variants={fadeInUpContainer}
     >
       <div
-        className={cn(sharedStyles.sectionContainer, "relative py-20 lg:py-24")}
+        className={cn(
+          sharedStyles.sectionContainer,
+          "relative pt-4 pb-20 lg:pt-6 lg:pb-24",
+        )}
       >
         <div className="mx-auto max-w-4xl text-center">
           <motion.span
