@@ -15,7 +15,7 @@ export function YucayekeWelcomeSection() {
       >
         <div className="grid gap-6 lg:grid-cols-[minmax(0,0.96fr)_minmax(17rem,0.78fr)] lg:items-center lg:gap-8 xl:gap-10">
           <div className="max-w-xl">
-            <h2 className="text-foreground text-[1.75rem] font-semibold tracking-tight sm:text-[2rem] lg:text-[2.25rem] lg:leading-[1.08]">
+            <h2 className="text-foreground text-center text-[1.75rem] font-semibold tracking-tight sm:text-[2rem] lg:text-left lg:text-[2.25rem] lg:leading-[1.08]">
               {title}
             </h2>
 
