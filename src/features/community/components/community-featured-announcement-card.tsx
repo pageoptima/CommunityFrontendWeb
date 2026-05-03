@@ -61,7 +61,7 @@ export function CommunityFeaturedAnnouncementCard({
                 {metaLabel}
               </p>
 
-              <div className="mt-2.5 inline-flex items-center gap-1.5 text-[0.86rem] font-medium text-[#171717]">
+              <div className="mt-2.5 inline-flex items-center gap-1.5 text-[0.86rem] font-medium whitespace-nowrap text-[#171717]">
                 <Image
                   alt=""
                   aria-hidden="true"

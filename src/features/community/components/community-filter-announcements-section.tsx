@@ -154,7 +154,7 @@ export function CommunityFilterAnnouncementsSection({
           </p>
         </div>
 
-        <div className="mt-5 overflow-x-auto pb-2">
+        <div className="mt-5 max-w-full overflow-x-auto overscroll-x-contain pb-2">
           <div className="flex min-w-max gap-3">
             <button
               className={cn(
