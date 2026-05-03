@@ -1,5 +1,7 @@
 import { getYucayekeHeroStats } from "@/features/yucayeke/api/get-community-meta";
 import { YucayekeHero } from "@/features/yucayeke/components/yucayeke-hero";
+import { YucayekeHighlightsSection } from "@/features/yucayeke/components/yucayeke-highlights-section";
+import { YucayekeWelcomeSection } from "@/features/yucayeke/components/yucayeke-welcome-section";
 
 export async function YucayekePageContent() {
   const heroStats = await getYucayekeHeroStats();
@@ -7,6 +9,8 @@ export async function YucayekePageContent() {
   return (
     <main className="bg-background">
       <YucayekeHero stats={heroStats} />
+      <YucayekeWelcomeSection />
+      <YucayekeHighlightsSection />
     </main>
   );
 }
