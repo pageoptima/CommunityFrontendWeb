@@ -2,6 +2,7 @@ import { getEventCategories } from "@/features/community/api/get-event-categorie
 import { getUpcomingCommunityEvents } from "@/features/community/api/get-upcoming-events";
 import { CommunityFilterAnnouncementsSection } from "@/features/community/components/community-filter-announcements-section";
 import { CommunityFeaturedAnnouncementsSection } from "@/features/community/components/community-featured-announcements-section";
+import { CommunityQuickLinksSection } from "@/features/community/components/community-quick-links-section";
 import type { CommunityEventApiItem } from "@/features/community/types/community-event";
 import { CommunityHero } from "@/features/community/components/community-hero";
 import { getSessionUser } from "@/lib/auth-session";
@@ -31,6 +32,7 @@ export async function CommunityPageContent() {
         initialEvents={upcomingEvents}
         isAuthenticated={Boolean(sessionUser)}
       />
+      <CommunityQuickLinksSection />
     </main>
   );
 }
