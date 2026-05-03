@@ -143,22 +143,22 @@ export function CommunityFilterAnnouncementsSection({
   }
 
   return (
-    <section className="bg-[#fffef7] py-8 sm:py-10 lg:py-12">
+    <section className="bg-[#fffef7] py-7 sm:py-8 lg:py-9">
       <div className={cn(sharedStyles.sectionContainer, "relative")}>
         <div className="max-w-xl">
-          <h2 className="text-[1.8rem] font-semibold tracking-tight text-[#0d4d49] sm:text-[2rem]">
+          <h2 className="text-[1.55rem] font-semibold tracking-tight text-[#0d4d49] sm:text-[1.72rem]">
             Filter Announcements
           </h2>
-          <p className="mt-1.5 text-[0.96rem] leading-6 text-[#171717]/66">
+          <p className="mt-1.5 text-[0.9rem] leading-6 text-[#171717]/66 sm:text-[0.94rem]">
             Filter updates and explore announcements
           </p>
         </div>
 
-        <div className="mt-5 max-w-full overflow-x-auto overscroll-x-contain pb-2">
-          <div className="flex min-w-max gap-3">
+        <div className="mt-4 max-w-full overflow-x-auto overscroll-x-contain pb-2">
+          <div className="flex min-w-max gap-2.5">
             <button
               className={cn(
-                "cursor-pointer rounded-full border px-5 py-2.5 text-[0.95rem] font-semibold whitespace-nowrap transition-colors",
+                "cursor-pointer rounded-full border px-4 py-2 text-[0.9rem] font-semibold whitespace-nowrap transition-colors sm:px-4.5 sm:py-2.25 sm:text-[0.92rem]",
                 selectedCategoryKey === ALL_UPDATES_KEY
                   ? "border-[#004d43] bg-[#004d43] text-[#ffffff]"
                   : "border-[#004d43] bg-[rgba(0,77,67,0.08)] text-[#174e47] hover:bg-[rgba(0,77,67,0.12)]",
@@ -173,7 +173,7 @@ export function CommunityFilterAnnouncementsSection({
               <button
                 key={category.id}
                 className={cn(
-                  "inline-flex cursor-pointer items-center gap-2.5 rounded-full border px-5 py-2.5 text-[0.95rem] font-semibold whitespace-nowrap transition-colors",
+                  "inline-flex cursor-pointer items-center gap-2 rounded-full border px-4 py-2 text-[0.9rem] font-semibold whitespace-nowrap transition-colors sm:px-4.5 sm:py-2.25 sm:text-[0.92rem]",
                   selectedCategoryKey === category.key
                     ? "border-[#004d43] bg-[#004d43] text-[#ffffff]"
                     : "border-[#004d43] bg-[rgba(0,77,67,0.08)] text-[#174e47] hover:bg-[rgba(0,77,67,0.12)]",
@@ -184,7 +184,7 @@ export function CommunityFilterAnnouncementsSection({
                 {categoryIconByKey[category.key] ? (
                   <span
                     aria-hidden="true"
-                    className="size-[1.1rem] shrink-0"
+                    className="size-[1rem] shrink-0"
                     style={getCategoryIconStyle(
                       categoryIconByKey[category.key],
                     )}
@@ -203,7 +203,7 @@ export function CommunityFilterAnnouncementsSection({
         ) : null}
 
         {events.length > 0 ? (
-          <div className="mt-5 grid gap-4">
+          <div className="mt-4 grid gap-3.5">
             {events.map((event) => (
               <CommunityFilterAnnouncementCard
                 key={event.id}
@@ -215,7 +215,7 @@ export function CommunityFilterAnnouncementsSection({
             ))}
           </div>
         ) : (
-          <div className="mt-5 rounded-[1.2rem] border border-[#c7dcd7] bg-white px-5 py-5 text-[0.95rem] text-[#171717]/70">
+          <div className="mt-4 rounded-[1.1rem] border border-[#c7dcd7] bg-white px-4 py-4 text-[0.9rem] text-[#171717]/70">
             No announcements are available for this category right now.
           </div>
         )}

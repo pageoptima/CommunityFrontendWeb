@@ -20,20 +20,20 @@ export function CommunityQuickLinkCard({
 }: CommunityQuickLinkCardProps) {
   return (
     <Link
-      className="group flex h-full min-h-[14rem] flex-col rounded-[1.5rem] border border-black/12 bg-white px-5 py-5 shadow-[0_20px_44px_-36px_rgba(31,41,55,0.24)] transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-[0_28px_50px_-34px_rgba(31,41,55,0.26)] sm:min-h-[14.5rem] sm:px-6 sm:py-6"
+      className="group flex h-full min-h-[11.5rem] flex-col rounded-[1.2rem] border border-black/12 bg-white px-4 py-4 shadow-[0_18px_38px_-34px_rgba(31,41,55,0.22)] transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-[0_24px_44px_-32px_rgba(31,41,55,0.24)] sm:min-h-[12rem] sm:px-4.5 sm:py-4.5"
       href={href}
     >
       <div
-        className={`flex size-[3.05rem] items-center justify-center rounded-[0.85rem] text-white shadow-[0_16px_28px_-20px_rgba(17,24,39,0.34)] ${iconBackgroundClassName}`}
+        className={`flex size-[2.7rem] items-center justify-center rounded-[0.8rem] text-white shadow-[0_14px_24px_-18px_rgba(17,24,39,0.3)] ${iconBackgroundClassName}`}
       >
-        <Image alt="" aria-hidden="true" height={26} src={iconSrc} width={26} />
+        <Image alt="" aria-hidden="true" height={22} src={iconSrc} width={22} />
       </div>
 
-      <h3 className="mt-5 text-[1.7rem] leading-[1.14] font-semibold tracking-[-0.04em] text-[#2d2d2d] sm:text-[1.88rem]">
+      <h3 className="mt-4 text-[1.28rem] leading-[1.15] font-semibold tracking-[-0.04em] text-[#2d2d2d] sm:text-[1.38rem]">
         {title}
       </h3>
 
-      <p className="mt-4 max-w-[24rem] text-[1rem] leading-7 text-[#4a4a4a]/88 sm:text-[1.04rem]">
+      <p className="mt-3 max-w-[22rem] text-[0.9rem] leading-6 text-[#4a4a4a]/88 sm:text-[0.94rem]">
         {description}
       </p>
     </Link>
