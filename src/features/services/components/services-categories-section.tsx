@@ -1,4 +1,4 @@
-import type { ServiceCategoryApiItem } from "@/features/services/types/service-category";
+import type { ServiceCategoryApiItem } from "@/features/services/types/service";
 import { ServiceCategoryCard } from "@/features/services/components/service-category-card";
 import {
   getServiceCategoryPresentation,

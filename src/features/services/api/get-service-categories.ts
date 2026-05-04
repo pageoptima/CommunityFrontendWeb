@@ -1,4 +1,4 @@
-import type { ServiceCategoryApiItem } from "@/features/services/types/service-category";
+import type { ServiceCategoryApiItem } from "@/features/services/types/service";
 import { endpoints } from "@/services/http/apis";
 import { apiConnector } from "@/services/http/client";
 

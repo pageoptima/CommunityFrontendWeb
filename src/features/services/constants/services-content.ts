@@ -27,6 +27,12 @@ export const servicesCategoriesContent = {
     "Browse our comprehensive directory of services organized by category. Select a service area to explore available support, contact details, and access options.",
 } as const;
 
+export const popularServicesContent = {
+  title: "Popular Services",
+  description:
+    "Browse our comprehensive directory of services organized by category. Click on any service to view detailed information, contact details, and access options.",
+} as const;
+
 const serviceCategoryPresentationByKey: Record<string, ServiceCategory> = {
   health: {
     description: "Medical, mental health, and holistic care.",
@@ -100,4 +106,40 @@ export function getServiceCategoryPresentation(category: {
     iconSrc: "/icons/services/community-support.svg",
     tone: "forest",
   };
+}
+
+const serviceIconSrcByIconKey: Record<string, string> = {
+  community_support: "/icons/services/community-support.svg",
+  education: "/icons/services/education-training.svg",
+  education_training: "/icons/services/education-training.svg",
+  elder: "/icons/services/elder-care.svg",
+  elder_care: "/icons/services/elder-care.svg",
+  emergency: "/icons/services/community-support.svg",
+  food: "/icons/services/community-support.svg",
+  health: "/icons/services/health-wellness.svg",
+  health_clinic: "/icons/services/health-wellness.svg",
+  housing: "/icons/services/housing-support.svg",
+  housing_support: "/icons/services/housing-support.svg",
+  legal: "/icons/services/legal-assistance.svg",
+  mental_health: "/icons/services/health-wellness.svg",
+  primary_care: "/icons/services/health-wellness.svg",
+  property_rights: "/icons/services/legal-assistance.svg",
+  support: "/icons/services/community-support.svg",
+  youth: "/icons/services/youth-service.svg",
+} as const;
+
+export function getServiceIconSrc(service: {
+  category?: { icon: string; key: string } | null;
+  icon: string;
+}) {
+  const serviceIcon = service.icon.trim().toLowerCase();
+  const categoryIcon = service.category?.icon?.trim().toLowerCase() ?? "";
+  const categoryKey = service.category?.key?.trim().toLowerCase() ?? "";
+
+  return (
+    serviceIconSrcByIconKey[serviceIcon] ??
+    serviceIconSrcByIconKey[categoryIcon] ??
+    serviceIconSrcByIconKey[categoryKey] ??
+    "/icons/services/community-support.svg"
+  );
 }

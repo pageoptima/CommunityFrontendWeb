@@ -13,6 +13,9 @@ export const endpoints = {
   },
   SERVICES: {
     CATEGORIES: normalizePath("/services/categories"),
+    LIST: normalizePath("/services"),
+    REGISTER: normalizePath("/services/register"),
+    REGISTER_LIST: normalizePath("/services/register-list"),
   },
   PROFILE: {
     INFO: normalizePath("/profile"),
