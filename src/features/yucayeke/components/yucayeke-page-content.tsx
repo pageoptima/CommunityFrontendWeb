@@ -1,3 +1,4 @@
+import { YucayekeConnectSection } from "@/features/yucayeke/components/yucayeke-connect-section";
 import { getYucayekeHeroStats } from "@/features/yucayeke/api/get-community-meta";
 import { YucayekeHero } from "@/features/yucayeke/components/yucayeke-hero";
 import { YucayekeHighlightsSection } from "@/features/yucayeke/components/yucayeke-highlights-section";
@@ -13,6 +14,7 @@ export async function YucayekePageContent() {
       <YucayekeWelcomeSection />
       <YucayekeHighlightsSection />
       <YucayekeLegacySection />
+      <YucayekeConnectSection />
     </main>
   );
 }

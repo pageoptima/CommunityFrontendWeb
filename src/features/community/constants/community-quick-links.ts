@@ -9,14 +9,6 @@ export type CommunityQuickLinkItem = Readonly<{
 export const communityQuickLinks: readonly CommunityQuickLinkItem[] = [
   {
     description:
-      "Browse upcoming ceremonies, gatherings, and community events happening across the Taíno Nation.",
-    href: "/community",
-    iconBackgroundClassName: "bg-[#1f7ae0]",
-    iconSrc: "/icons/events/events-calendar.svg",
-    title: "Events Calendar",
-  },
-  {
-    description:
       "Explore available member services, practical resources, and support options for everyday community needs.",
     href: "/services",
     iconBackgroundClassName: "bg-[#9f2f2f]",

@@ -13,6 +13,14 @@ export type YucayekeLegacyPeriod = Readonly<{
   yearLabel: string;
 }>;
 
+export type YucayekeConnectionLink = Readonly<{
+  ctaLabel: string;
+  description: string;
+  href: string;
+  iconSrc: string;
+  title: string;
+}>;
+
 export const yucayekeWelcomeContent = {
   title: "Welcome to Guainía",
   paragraphs: [
@@ -75,4 +83,37 @@ export const yucayekeLegacyContent = {
         "The 20th and 21st centuries have seen a powerful resurgence of Taíno identity in the Guainía region. Descendants have reconnected through genealogical research, cultural education programs, and community organizing. Today, Guainía members actively participate in language revitalization efforts, traditional craft workshops, ceremonial gatherings, and advocacy for Indigenous rights. The digital platform has enabled unprecedented connection among regional members.",
     },
   ] as const satisfies readonly YucayekeLegacyPeriod[],
+} as const;
+
+export const yucayekeConnectionContent = {
+  badge: "Get Involved",
+  title: "Connect with Your Yucayeke Community",
+  description:
+    "Whether you want to attend events, volunteer, or simply connect with other members, we're here to help you engage with your ancestral community.",
+  links: [
+    {
+      title: "Community Events",
+      description:
+        "Browse upcoming community events, ceremonies, and announcements.",
+      ctaLabel: "Explore Events",
+      href: "/community",
+      iconSrc: "/icons/events/events-calendar.svg",
+    },
+    {
+      title: "Service Directory",
+      description:
+        "Find available support services, resources, and member assistance.",
+      ctaLabel: "Services",
+      href: "/services",
+      iconSrc: "/icons/events/service-directory.svg",
+    },
+    {
+      title: "Help Center",
+      description:
+        "Get guidance, answers, and support for community-related questions.",
+      ctaLabel: "Contact",
+      href: "/services",
+      iconSrc: "/icons/events/help-center.svg",
+    },
+  ] as const satisfies readonly YucayekeConnectionLink[],
 } as const;

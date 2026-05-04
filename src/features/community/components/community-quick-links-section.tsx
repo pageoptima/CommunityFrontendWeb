@@ -18,7 +18,7 @@ export function CommunityQuickLinksSection() {
           </p>
         </div>
 
-        <div className="mt-6 grid gap-3 sm:mt-7 sm:grid-cols-2 lg:gap-4 xl:grid-cols-4">
+        <div className="mt-6 grid gap-3 sm:mt-7 sm:grid-cols-2 lg:grid-cols-3 lg:gap-4">
           {communityQuickLinks.map((linkItem) => (
             <CommunityQuickLinkCard key={linkItem.title} {...linkItem} />
           ))}
