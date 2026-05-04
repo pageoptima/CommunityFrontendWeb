@@ -1,6 +1,7 @@
 import { getYucayekeHeroStats } from "@/features/yucayeke/api/get-community-meta";
 import { YucayekeHero } from "@/features/yucayeke/components/yucayeke-hero";
 import { YucayekeHighlightsSection } from "@/features/yucayeke/components/yucayeke-highlights-section";
+import { YucayekeLegacySection } from "@/features/yucayeke/components/yucayeke-legacy-section";
 import { YucayekeWelcomeSection } from "@/features/yucayeke/components/yucayeke-welcome-section";
 
 export async function YucayekePageContent() {
@@ -11,6 +12,7 @@ export async function YucayekePageContent() {
       <YucayekeHero stats={heroStats} />
       <YucayekeWelcomeSection />
       <YucayekeHighlightsSection />
+      <YucayekeLegacySection />
     </main>
   );
 }

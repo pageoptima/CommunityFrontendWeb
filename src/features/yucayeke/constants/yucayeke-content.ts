@@ -7,6 +7,12 @@ export type YucayekeHighlight = Readonly<{
   tone: YucayekeHighlightTone;
 }>;
 
+export type YucayekeLegacyPeriod = Readonly<{
+  description: string;
+  title: string;
+  yearLabel: string;
+}>;
+
 export const yucayekeWelcomeContent = {
   title: "Welcome to Guainía",
   paragraphs: [
@@ -42,3 +48,31 @@ export const yucayekeHighlights: readonly YucayekeHighlight[] = [
     tone: "green",
   },
 ] as const;
+
+export const yucayekeLegacyContent = {
+  badge: "Historical Background",
+  titlePrefix: "The Legacy of",
+  titleHighlight: "Guainía",
+  description:
+    "Understanding the rich history and cultural significance of your ancestral territory.",
+  periods: [
+    {
+      yearLabel: "1493",
+      title: "Pre-Colonial Era (Before 1493)",
+      description:
+        "Guainía was established as one of the principal Yucayeke regions under the leadership of respected caciques. The community thrived through sustainable fishing practices, advanced agricultural techniques in coastal valleys, and extensive trade networks with neighboring islands. Archaeological evidence shows sophisticated settlement patterns, ceremonial plazas, and evidence of complex social organization.",
+    },
+    {
+      yearLabel: "1898",
+      title: "Colonial Period (1493-1898)",
+      description:
+        "During Spanish colonization, the Guainía region experienced significant upheaval. Many Taíno people were forced into encomienda labor systems, yet communities maintained cultural practices through resistance and adaptation. Coastal settlements became strategic locations for maritime activities, and Indigenous knowledge of local waters proved invaluable. Despite attempts at cultural erasure, maternal lineages preserved traditions, language fragments, and spiritual practices in secret.",
+    },
+    {
+      yearLabel: "1900",
+      title: "Modern Revival (1900s-Present)",
+      description:
+        "The 20th and 21st centuries have seen a powerful resurgence of Taíno identity in the Guainía region. Descendants have reconnected through genealogical research, cultural education programs, and community organizing. Today, Guainía members actively participate in language revitalization efforts, traditional craft workshops, ceremonial gatherings, and advocacy for Indigenous rights. The digital platform has enabled unprecedented connection among regional members.",
+    },
+  ] as const satisfies readonly YucayekeLegacyPeriod[],
+} as const;

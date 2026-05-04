@@ -19,7 +19,7 @@ export function YucayekeWelcomeSection() {
               {title}
             </h2>
 
-            <div className="mt-3 space-y-3 text-[0.9rem] leading-6 font-semibold text-[#171717] sm:mt-4 sm:text-[0.94rem] sm:leading-7 lg:text-[0.96rem] lg:leading-7">
+            <div className="mt-3 space-y-3 text-justify text-[0.9rem] leading-6 font-semibold text-[#171717] sm:mt-4 sm:text-[0.94rem] sm:leading-7 lg:text-[0.96rem] lg:leading-7">
               {paragraphs.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}
