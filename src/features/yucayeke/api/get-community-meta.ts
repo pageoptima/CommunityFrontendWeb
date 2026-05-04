@@ -4,38 +4,21 @@ import type {
 } from "@/features/yucayeke/types/community-meta";
 import { endpoints } from "@/services/http/apis";
 import { apiConnector } from "@/services/http/client";
+import type { CommunityEventApiItem } from "@/features/community/types/community-event";
 
-const UPCOMING_EVENTS_PLACEHOLDER_COUNT = 15;
-
-const fallbackHeroStats: YucayekeHeroStats = {
-  totalMembers: 247,
-  activeMembers: 189,
-  upcomingEvents: UPCOMING_EVENTS_PLACEHOLDER_COUNT,
-};
-
-function coerceCount(value: unknown, fallback: number) {
-  return typeof value === "number" && Number.isFinite(value) ? value : fallback;
+function coerceCount(value: unknown) {
+  return typeof value === "number" && Number.isFinite(value) ? value : 0;
 }
 
 export async function getYucayekeHeroStats(): Promise<YucayekeHeroStats> {
-  try {
-    const meta = await apiConnector<CommunityMeta>(
-      "get",
-      endpoints.ACCOUNT.COMMUNITY_META,
-    );
+  const [meta, events] = await Promise.all([
+    apiConnector<CommunityMeta>("get", endpoints.ACCOUNT.COMMUNITY_META),
+    apiConnector<CommunityEventApiItem[]>("get", endpoints.EVENTS.LIST),
+  ]);
 
-    return {
-      totalMembers: coerceCount(
-        meta.totalUsersCount,
-        fallbackHeroStats.totalMembers,
-      ),
-      activeMembers: coerceCount(
-        meta.activeUserCounts,
-        fallbackHeroStats.activeMembers,
-      ),
-      upcomingEvents: UPCOMING_EVENTS_PLACEHOLDER_COUNT,
-    };
-  } catch {
-    return fallbackHeroStats;
-  }
+  return {
+    totalMembers: coerceCount(meta.totalUsersCount),
+    activeMembers: coerceCount(meta.activeUserCounts),
+    upcomingEvents: events.length,
+  };
 }
