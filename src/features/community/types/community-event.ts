@@ -36,3 +36,11 @@ export type CommunityEventRegisterResponse = Readonly<{
   success: boolean;
   message: string;
 }>;
+
+export type CommunityEventRegistrationApiItem = Readonly<{
+  createdAt: string;
+  event: CommunityEventApiItem;
+  eventId: string;
+  id: string;
+  userId: string;
+}>;

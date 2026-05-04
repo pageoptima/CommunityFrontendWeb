@@ -1,4 +1,5 @@
 import { getEventCategories } from "@/features/community/api/get-event-categories";
+import { getRegisteredCommunityEvents } from "@/features/community/api/get-registered-events";
 import { getUpcomingCommunityEvents } from "@/features/community/api/get-upcoming-events";
 import { CommunityFilterAnnouncementsSection } from "@/features/community/components/community-filter-announcements-section";
 import { CommunityFeaturedAnnouncementsSection } from "@/features/community/components/community-featured-announcements-section";
@@ -17,6 +18,12 @@ export async function CommunityPageContent() {
     getUpcomingCommunityEvents(),
     getSessionUser(),
   ]);
+  const registeredEvents = sessionUser
+    ? await getRegisteredCommunityEvents()
+    : [];
+  const initialRegisteredEventIds = registeredEvents.map(
+    (eventRegistration) => eventRegistration.eventId,
+  );
   const featuredEvents = [...upcomingEvents]
     .sort(
       (left, right) => getRegistrationCount(right) - getRegistrationCount(left),
@@ -30,6 +37,7 @@ export async function CommunityPageContent() {
       <CommunityFilterAnnouncementsSection
         initialCategories={eventCategories}
         initialEvents={upcomingEvents}
+        initialRegisteredEventIds={initialRegisteredEventIds}
         isAuthenticated={Boolean(sessionUser)}
       />
       <CommunityQuickLinksSection />

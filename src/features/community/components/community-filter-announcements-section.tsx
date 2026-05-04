@@ -26,6 +26,7 @@ import sharedStyles from "../styles/community-shared.module.scss";
 type CommunityFilterAnnouncementsSectionProps = Readonly<{
   initialCategories: CommunityEventCategory[];
   initialEvents: CommunityEventApiItem[];
+  initialRegisteredEventIds: string[];
   isAuthenticated: boolean;
 }>;
 
@@ -86,6 +87,7 @@ function getCategoryIconStyle(iconPath: string): CSSProperties {
 export function CommunityFilterAnnouncementsSection({
   initialCategories,
   initialEvents,
+  initialRegisteredEventIds,
   isAuthenticated,
 }: CommunityFilterAnnouncementsSectionProps) {
   const pathname = usePathname();
@@ -93,7 +95,9 @@ export function CommunityFilterAnnouncementsSection({
   const [selectedCategoryKey, setSelectedCategoryKey] =
     useState(ALL_UPDATES_KEY);
   const [pendingEventId, setPendingEventId] = useState<string | null>(null);
-  const [registeredEventIds, setRegisteredEventIds] = useState<string[]>([]);
+  const [registeredEventIds, setRegisteredEventIds] = useState<string[]>(
+    initialRegisteredEventIds,
+  );
   const categoryQuery = useCommunityEventCategoriesQuery(initialCategories);
   const filteredEventsQuery = useCommunityEventsByCategoryQuery(
     selectedCategoryKey === ALL_UPDATES_KEY ? null : selectedCategoryKey,
