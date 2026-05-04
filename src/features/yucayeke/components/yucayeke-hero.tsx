@@ -40,12 +40,12 @@ export function YucayekeHero({ stats }: YucayekeHeroProps) {
       </motion.p>
 
       <motion.div
-        className="divide-border/90 mt-5 flex w-full max-w-[38rem] flex-col divide-y sm:mt-6 sm:flex-row sm:divide-x sm:divide-y-0"
+        className="divide-border/90 mt-5 grid w-full max-w-[38rem] grid-cols-3 divide-x sm:mt-6"
         variants={fadeInUpItem}
       >
         {statsLabels.map((item) => (
           <div
-            className="flex-1 px-2.5 py-2.5 sm:px-3 sm:py-2.5"
+            className="px-2 py-2 text-center sm:px-3 sm:py-2.5"
             key={item.key}
           >
             <p className="text-primary text-[1.05rem] leading-tight font-semibold tracking-tight sm:text-[1.35rem]">
