@@ -11,6 +11,9 @@ export const endpoints = {
     LIST: normalizePath("/events"),
     REGISTER: normalizePath("/events/register"),
   },
+  SERVICES: {
+    CATEGORIES: normalizePath("/services/categories"),
+  },
   PROFILE: {
     INFO: normalizePath("/profile"),
   },

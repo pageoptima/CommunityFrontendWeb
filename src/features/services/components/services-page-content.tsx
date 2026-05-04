@@ -1,11 +1,14 @@
+import { getServiceCategories } from "@/features/services/api/get-service-categories";
 import { ServicesCategoriesSection } from "@/features/services/components/services-categories-section";
 import { ServicesHero } from "@/features/services/components/services-hero";
 
-export function ServicesPageContent() {
+export async function ServicesPageContent() {
+  const categories = await getServiceCategories();
+
   return (
     <main className="bg-background">
       <ServicesHero />
-      <ServicesCategoriesSection />
+      <ServicesCategoriesSection categories={categories} />
     </main>
   );
 }

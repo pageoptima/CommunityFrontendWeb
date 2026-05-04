@@ -1,8 +1,18 @@
+import type { ServiceCategoryApiItem } from "@/features/services/types/service-category";
 import { ServiceCategoryCard } from "@/features/services/components/service-category-card";
-import { servicesCategoriesContent } from "@/features/services/constants/services-content";
+import {
+  getServiceCategoryPresentation,
+  servicesCategoriesContent,
+} from "@/features/services/constants/services-content";
 
-export function ServicesCategoriesSection() {
-  const { categories, description, title } = servicesCategoriesContent;
+type ServicesCategoriesSectionProps = Readonly<{
+  categories: ServiceCategoryApiItem[];
+}>;
+
+export function ServicesCategoriesSection({
+  categories,
+}: ServicesCategoriesSectionProps) {
+  const { description, title } = servicesCategoriesContent;
 
   return (
     <section className="bg-[linear-gradient(180deg,#fff7ef_0%,#fffaf4_100%)] py-9 sm:py-10 lg:py-12">
@@ -19,7 +29,10 @@ export function ServicesCategoriesSection() {
 
         <div className="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
           {categories.map((category) => (
-            <ServiceCategoryCard key={category.title} category={category} />
+            <ServiceCategoryCard
+              key={category.id}
+              category={getServiceCategoryPresentation(category)}
+            />
           ))}
         </div>
       </div>
