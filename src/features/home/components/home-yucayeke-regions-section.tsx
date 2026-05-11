@@ -6,6 +6,7 @@ import { fadeInUpContainer, fadeInUpItem } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { montserrat, poppins } from "@/styles/fonts";
 
+import { HomeGuainiaMapSection } from "@/features/home/components/home-guainia-map-section";
 import { HomeYucayekeOverviewSection } from "@/features/home/components/home-yucayeke-overview-section";
 
 import sharedStyles from "../styles/home-shared.module.scss";
@@ -59,6 +60,7 @@ export function HomeYucayekeRegionsSection() {
         </div>
         <HomeYucayekeOverviewSection />
       </div>
+      <HomeGuainiaMapSection />
     </motion.section>
   );
 }
