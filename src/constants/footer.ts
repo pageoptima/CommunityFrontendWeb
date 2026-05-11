@@ -19,11 +19,11 @@ export const footerQuickLinks = [
 ] as const satisfies ReadonlyArray<FooterLink>;
 
 export const footerSupportLinks = [
-  { label: "Help Center", href: "/services" },
-  { label: "Enrollment FAQ", href: "/enrollment" },
-  { label: "Contact Support", href: "/services" },
-  { label: "Document Assistance", href: "/services" },
-  { label: "Technical Support", href: "/services" },
+  { label: "Help Center", href: "/contact" },
+  { label: "Enrollment FAQ", href: "/enrollment#enrollment-faq" },
+  { label: "Contact Support", href: "/contact" },
+  { label: "Document Assistance", href: "/contact" },
+  { label: "Technical Support", href: "/contact" },
   { label: "Privacy Policy", href: "/privacy-policy" },
 ] as const satisfies ReadonlyArray<FooterLink>;
 

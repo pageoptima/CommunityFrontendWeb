@@ -36,7 +36,7 @@ export function HomeEnrollmentCta() {
         className="mx-auto h-11 w-full max-w-sm rounded-full bg-[linear-gradient(135deg,#2FCFC3_0%,#2B74D8_100%)]! px-5! text-[0.9rem]! font-semibold! shadow-[0_18px_38px_-20px_rgba(35,120,186,0.52)]! hover:brightness-105!"
         size="lg"
       >
-        <Link href="/enrollment">
+        <Link href="/dashboard">
           <Image
             src="/icons/home/enrollment/application.svg"
             alt=""
@@ -67,7 +67,7 @@ export function HomeEnrollmentCta() {
         <Link
           className="font-semibold text-[#24ACC3] underline underline-offset-4 hover:decoration-[#24ACC3]"
           style={supportLinkStyle}
-          href="/services"
+          href="/contact"
         >
           contact us
         </Link>

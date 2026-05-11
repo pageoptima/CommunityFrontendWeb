@@ -49,17 +49,17 @@ const supportCards: readonly SupportCard[] = [
 
 function SupportCardItem({ card }: Readonly<{ card: SupportCard }>) {
   return (
-    <article className="flex h-full flex-col rounded-[24px] border border-[#E8E5DE] bg-[#FAF9F9] px-5 py-6 text-center shadow-[0_16px_34px_-28px_rgba(28,45,38,0.18)] sm:px-6 sm:py-7 lg:px-7">
+    <article className="flex h-full flex-col rounded-[18px] border border-[#E8E5DE] bg-[#FAF9F9] px-3.5 py-4.5 text-center shadow-[0_16px_34px_-28px_rgba(28,45,38,0.18)] sm:px-4 sm:py-5 lg:px-5">
       <div
         className={cn(
-          "mx-auto flex size-14 items-center justify-center rounded-2xl shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] sm:size-15 lg:size-16",
+          "mx-auto flex size-10 items-center justify-center rounded-[0.95rem] shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] sm:size-11 lg:size-12",
           card.iconBgClassName,
         )}
       >
         <Image
           alt=""
           aria-hidden="true"
-          className="h-5 w-5 object-contain sm:h-6 sm:w-6"
+          className="h-4 w-4 object-contain sm:h-4.5 sm:w-4.5"
           height={46}
           src={card.iconSrc}
           width={46}
@@ -69,7 +69,7 @@ function SupportCardItem({ card }: Readonly<{ card: SupportCard }>) {
       <h3
         className={cn(
           montserrat.className,
-          "mt-5 text-[1.3rem] font-semibold tracking-[-0.04em] text-[#173F4C] sm:text-[1.45rem] lg:text-[1.6rem]",
+          "mt-3.5 text-[1rem] font-semibold tracking-[-0.04em] text-[#173F4C] sm:text-[1.08rem] lg:text-[1.16rem]",
         )}
       >
         {card.title}
@@ -77,7 +77,7 @@ function SupportCardItem({ card }: Readonly<{ card: SupportCard }>) {
       <p
         className={cn(
           poppins.className,
-          "mt-3 text-[0.95rem] leading-6 text-[#57534E] sm:text-[1rem]",
+          "mt-2 text-[0.8rem] leading-[1.45] text-[#57534E] sm:text-[0.86rem]",
         )}
       >
         {card.description}
@@ -85,18 +85,18 @@ function SupportCardItem({ card }: Readonly<{ card: SupportCard }>) {
 
       {card.kind === "chat" ? (
         <Button
-          className="mx-auto mt-7 min-w-36 rounded-full bg-[linear-gradient(135deg,#2F7E94_0%,#1F667C_100%)]! text-white! shadow-[0_16px_34px_-18px_rgba(25,96,118,0.52)]! hover:brightness-105!"
+          className="mx-auto mt-4 min-w-28 rounded-full bg-[linear-gradient(135deg,#2F7E94_0%,#1F667C_100%)]! text-[0.88rem]! text-white! shadow-[0_16px_34px_-18px_rgba(25,96,118,0.52)]! hover:brightness-105!"
           size="lg"
           type="button"
         >
           Start Chat
         </Button>
       ) : (
-        <div className="mt-auto pt-7">
+        <div className="mt-auto pt-4">
           <a
             className={cn(
               montserrat.className,
-              "block text-[1.1rem] font-semibold tracking-[-0.03em] sm:text-[1.2rem] lg:text-[1.3rem]",
+              "block text-[0.9rem] font-semibold tracking-[-0.03em] sm:text-[0.96rem] lg:text-[1rem]",
             )}
             href={card.contactHref}
             style={{ color: card.contactTextColor }}
@@ -106,7 +106,7 @@ function SupportCardItem({ card }: Readonly<{ card: SupportCard }>) {
           <p
             className={cn(
               poppins.className,
-              "mt-2 text-[0.875rem] leading-6 text-[#8A8A86] sm:text-[0.95rem]",
+              "mt-1 text-[0.74rem] leading-[1.45] text-[#8A8A86] sm:text-[0.8rem]",
             )}
           >
             Mon-Fri: 9am - 6pm AST
@@ -119,19 +119,19 @@ function SupportCardItem({ card }: Readonly<{ card: SupportCard }>) {
 
 export function SupportSection() {
   return (
-    <section className="relative isolate overflow-x-clip py-12 sm:py-16 lg:py-20">
+    <section className="relative isolate overflow-x-clip py-6 sm:py-8 lg:py-10">
       <div
         aria-hidden="true"
         className="absolute inset-y-0 left-1/2 -z-10 w-screen -translate-x-1/2 bg-[#FFFDEC]"
       />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl text-center">
-          <div className="inline-flex rounded-full border border-[#DCEBD6] bg-[#D7EFD3] px-6 py-2.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.45)] sm:px-8 sm:py-3">
+        <div className="mx-auto max-w-4xl text-center">
+          <div className="inline-flex rounded-full border border-[#DCEBD6] bg-[#D7EFD3] px-4.5 py-1.75 shadow-[inset_0_1px_0_rgba(255,255,255,0.45)] sm:px-5 sm:py-2">
             <p
               className={cn(
                 poppins.className,
-                "text-sm font-semibold tracking-[-0.02em] text-[#2C6C5B] sm:text-[0.95rem]",
+                "text-[0.76rem] font-semibold tracking-[-0.02em] text-[#2C6C5B] sm:text-[0.8rem]",
               )}
             >
               We&apos;re Here to Help
@@ -141,18 +141,18 @@ export function SupportSection() {
           <h2
             className={cn(
               montserrat.className,
-              "mt-7 text-[clamp(2rem,6vw,3.2rem)] font-semibold tracking-[-0.05em] text-[#063025] sm:mt-8",
+              "mt-4 text-[clamp(1.4rem,2.8vw,2.1rem)] font-semibold tracking-[-0.05em] text-[#063025] sm:mt-5",
             )}
           >
             Need Assistance?
           </h2>
-          <p className="mx-auto mt-4 max-w-3xl text-sm leading-6 tracking-[-0.01em] text-[#555048] sm:mt-5 sm:text-base lg:text-[1.05rem]">
+          <p className="mx-auto mt-2.5 max-w-3xl text-[0.82rem] leading-[1.45] tracking-[-0.01em] text-[#555048] sm:mt-3 sm:text-[0.88rem]">
             Our support team is available to help you with account access,
             enrollment questions, or technical issues.
           </p>
         </div>
 
-        <div className="mt-10 grid gap-4 sm:mt-12 sm:gap-5 md:grid-cols-2 xl:grid-cols-3">
+        <div className="mt-6 grid gap-2.5 sm:mt-7 sm:gap-3 md:grid-cols-2 xl:grid-cols-3">
           {supportCards.map((card) => (
             <SupportCardItem key={card.kind} card={card} />
           ))}

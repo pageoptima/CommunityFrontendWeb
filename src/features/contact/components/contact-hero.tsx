@@ -7,22 +7,23 @@ import { fadeInUpItem } from "@/lib/motion";
 
 import homeSharedStyles from "@/features/home/styles/home-shared.module.scss";
 
-export function EnrollmentHero() {
+export function ContactHero() {
   return (
     <PageHeroSection containerClassName={homeSharedStyles.sectionContainer}>
       <motion.h1
-        className="max-w-4xl text-[clamp(1.7rem,4.1vw,3.5rem)] leading-[0.98] font-semibold tracking-[-0.055em] text-[#0E3E36]"
+        className="text-foreground max-w-4xl text-[clamp(1.7rem,4.1vw,3.5rem)] leading-[0.98] font-semibold tracking-[-0.055em]"
         variants={fadeInUpItem}
       >
-        Begin Your Journey to Official Taíno Nation Membership
+        Help Center & Support
       </motion.h1>
 
       <motion.p
-        className="mt-4 max-w-3xl text-[0.95rem] leading-[1.6] text-[#2A2927] sm:mt-5 sm:text-[1rem]"
+        className="text-muted-foreground mt-5 max-w-3xl text-[0.95rem] leading-[1.6] sm:text-[1rem]"
         variants={fadeInUpItem}
       >
-        Learn how enrollment works, what documents you will need, and the key
-        questions members ask before starting their application.
+        Get help with enrollment questions, account access, document uploads,
+        and technical issues. Our team is here to guide you to the right support
+        channel.
       </motion.p>
     </PageHeroSection>
   );

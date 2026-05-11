@@ -62,7 +62,7 @@ export function HomeEnrollmentTipsCard({ tips }: HomeEnrollmentTipsCardProps) {
           size="lg"
           variant="outline"
         >
-          <Link href="/services">
+          <Link href="/contact">
             <Image
               src="/icons/home/enrollment/support-call.svg"
               alt=""
