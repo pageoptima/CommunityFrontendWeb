@@ -1,6 +1,7 @@
 import { HomeHero } from "@/features/home/components/home-hero";
 import { HomeHeritageSection } from "@/features/home/components/home-heritage-section";
 import { HomeMemberServicesSection } from "@/features/home/components/home-member-services-section";
+import { HomeMemberStoriesSection } from "@/features/home/components/home-member-stories-section";
 import { HomePlatformFeaturesSection } from "@/features/home/components/home-platform-features-section";
 import { HomeYucayekeRegionsSection } from "@/features/home/components/home-yucayeke-regions-section";
 import { HomeEnrollmentProcessSection } from "./home-enrollment-process-section";
@@ -12,8 +13,9 @@ export function HomePageContent() {
       <HomeHeritageSection />
       <HomeEnrollmentProcessSection />
       <HomeYucayekeRegionsSection />
-      <HomeMemberServicesSection />
       <HomePlatformFeaturesSection />
+      <HomeMemberServicesSection />
+      <HomeMemberStoriesSection />
     </main>
   );
 }
