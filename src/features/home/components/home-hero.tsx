@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
@@ -42,11 +43,14 @@ export function HomeHero() {
         className="mt-7 flex flex-wrap items-center justify-center gap-3"
         variants={fadeInUpItem}
       >
-        <Button size="xl" rightIcon={<ArrowRight />}>
-          Start Your Enrollment
+        <Button asChild size="xl">
+          <Link href="/dashboard">
+            <span>Start Your Enrollment</span>
+            <ArrowRight />
+          </Link>
         </Button>
-        <Button variant="outline" size="xl">
-          Explore Community
+        <Button asChild variant="outline" size="xl">
+          <Link href="/community">Explore Community</Link>
         </Button>
       </motion.div>
 

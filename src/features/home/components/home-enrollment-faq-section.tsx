@@ -51,6 +51,7 @@ export function HomeEnrollmentFaqSection() {
 
   return (
     <motion.section
+      id="enrollment-faq"
       className="overflow-hidden bg-[#FFFDEC]"
       initial="hidden"
       whileInView="visible"

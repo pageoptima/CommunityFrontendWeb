@@ -59,7 +59,7 @@ export function HomeEnrollmentCta() {
         <Link
           className="font-semibold text-[#24ACC3] underline underline-offset-4 hover:decoration-[#24ACC3]"
           style={supportLinkStyle}
-          href="/enrollment"
+          href="#enrollment-faq"
         >
           Read our enrollment FAQ
         </Link>{" "}
