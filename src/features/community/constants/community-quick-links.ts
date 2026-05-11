@@ -26,7 +26,7 @@ export const communityQuickLinks: readonly CommunityQuickLinkItem[] = [
   {
     description:
       "Get guidance, support answers, and trusted help resources for platform and membership questions.",
-    href: "/services",
+    href: "/contact",
     iconBackgroundClassName: "bg-[#2ea9c8]",
     iconSrc: "/icons/events/help-center.svg",
     title: "Help Center",
