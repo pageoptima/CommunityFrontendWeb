@@ -1,3 +1,4 @@
+import { HomeDashboardCtaSection } from "@/features/home/components/home-dashboard-cta-section";
 import { HomeHero } from "@/features/home/components/home-hero";
 import { HomeHeritageSection } from "@/features/home/components/home-heritage-section";
 import { HomeMemberServicesSection } from "@/features/home/components/home-member-services-section";
@@ -16,6 +17,7 @@ export function HomePageContent() {
       <HomePlatformFeaturesSection />
       <HomeMemberServicesSection />
       <HomeMemberStoriesSection />
+      <HomeDashboardCtaSection />
     </main>
   );
 }
