@@ -26,13 +26,13 @@ export function HomeEnrollmentNeedsSection({
       <h3
         className={cn(
           poppins.className,
-          "text-[clamp(2.2rem,3vw,3.1rem)] font-semibold tracking-[-0.05em] text-[#174F4A]",
+          "text-[clamp(1.8rem,2.5vw,2.6rem)] font-semibold tracking-[-0.05em] text-[#174F4A]",
         )}
       >
         What You&apos;ll Need?
       </h3>
 
-      <ul className="mt-8 space-y-6 sm:mt-9 sm:space-y-7">
+      <ul className="mt-6 space-y-5 sm:mt-7 sm:space-y-6">
         {items.map((item) => (
           <HomeEnrollmentNeedItem key={item.title} {...item} />
         ))}

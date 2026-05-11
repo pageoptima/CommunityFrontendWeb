@@ -18,35 +18,35 @@ type HomeEnrollmentTipsCardProps = Readonly<{
 export function HomeEnrollmentTipsCard({ tips }: HomeEnrollmentTipsCardProps) {
   return (
     <motion.article
-      className="rounded-[28px] bg-[linear-gradient(135deg,#2FCFC3_0%,#2B74D8_100%)] px-6 py-8 text-white shadow-[0_22px_54px_-38px_rgba(18,93,109,0.38)] sm:px-8 sm:py-10"
+      className="rounded-[28px] bg-[linear-gradient(135deg,#2FCFC3_0%,#2B74D8_100%)] px-5 py-7 text-white shadow-[0_22px_54px_-38px_rgba(18,93,109,0.38)] sm:px-7 sm:py-8"
       variants={fadeInUpItem}
     >
       <Image
         src="/icons/home/enrollment/helpful-tips.svg"
         alt=""
         aria-hidden="true"
-        className="size-16 sm:size-[4.6rem]"
-        width={64}
-        height={64}
+        className="size-14 sm:size-16"
+        width={56}
+        height={56}
       />
 
       <h3
         className={cn(
           montserrat.className,
-          "mt-6 text-[clamp(2.1rem,2.8vw,3rem)] font-semibold tracking-[-0.05em]",
+          "mt-5 text-[clamp(1.8rem,2.4vw,2.5rem)] font-semibold tracking-[-0.05em]",
         )}
       >
         Helpful Tips
       </h3>
 
-      <ul className="mt-8 space-y-6">
+      <ul className="mt-6 space-y-5">
         {tips.map((tip) => (
           <li key={tip} className="flex items-start gap-4">
-            <CircleCheckBig className="mt-0.5 size-7 shrink-0 text-white" />
+            <CircleCheckBig className="mt-0.5 size-6 shrink-0 text-white" />
             <p
               className={cn(
                 poppins.className,
-                "text-[1.02rem] leading-7 text-white/92 sm:text-[1.08rem]",
+                "text-[0.96rem] leading-6 text-white/92 sm:text-[1rem]",
               )}
             >
               {tip}
@@ -55,10 +55,10 @@ export function HomeEnrollmentTipsCard({ tips }: HomeEnrollmentTipsCardProps) {
         ))}
       </ul>
 
-      <div className="mt-8">
+      <div className="mt-7">
         <Button
           asChild
-          className="h-14 w-full rounded-full bg-white px-8 text-[#0f4d4a] shadow-[0_16px_34px_-18px_rgba(18,93,109,0.42)] hover:bg-white/95"
+          className="h-12 w-full rounded-full bg-white px-6 text-[#0f4d4a] shadow-[0_16px_34px_-18px_rgba(18,93,109,0.42)] hover:bg-white/95"
           size="lg"
           variant="outline"
         >

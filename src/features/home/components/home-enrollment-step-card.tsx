@@ -26,12 +26,12 @@ export function HomeEnrollmentStepCard({
 }: HomeEnrollmentStepCardProps) {
   return (
     <motion.article
-      className="relative rounded-[28px] border border-black/10 bg-white px-6 pt-16 pb-8 text-center shadow-[0_18px_42px_-34px_rgba(16,24,40,0.24)] sm:px-7 sm:pb-9"
+      className="relative rounded-[28px] border border-black/10 bg-white px-5 pt-[3.25rem] pb-7 text-center shadow-[0_18px_42px_-34px_rgba(16,24,40,0.24)] sm:px-6 sm:pt-14 sm:pb-8"
       variants={fadeInUpItem}
     >
       <div
         className={cn(
-          "absolute top-0 left-1/2 flex size-28 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full shadow-[0_18px_32px_-20px_rgba(0,0,0,0.28)]",
+          "absolute top-0 left-1/2 flex size-24 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full shadow-[0_18px_32px_-20px_rgba(0,0,0,0.28)] sm:size-[6.5rem]",
           tone.bubbleClassName,
         )}
       >
@@ -48,7 +48,7 @@ export function HomeEnrollmentStepCard({
           <div
             className={cn(
               poppins.className,
-              "mt-1 text-[1rem] leading-none font-semibold sm:text-[1.05rem]",
+              "mt-1 text-[0.92rem] leading-none font-semibold sm:text-[1rem]",
               tone.numberClassName,
             )}
           >
@@ -57,11 +57,11 @@ export function HomeEnrollmentStepCard({
         </div>
       </div>
 
-      <div className="min-h-18 sm:min-h-20">
+      <div className="min-h-16 sm:min-h-[4.5rem]">
         <h3
           className={cn(
             montserrat.className,
-            "text-[1.45rem] leading-tight font-semibold tracking-[-0.04em] text-[#2D5F9F] sm:text-[1.6rem]",
+            "text-[1.25rem] leading-tight font-semibold tracking-[-0.04em] text-[#2D5F9F] sm:text-[1.45rem]",
           )}
         >
           {title}
@@ -70,7 +70,7 @@ export function HomeEnrollmentStepCard({
       <p
         className={cn(
           poppins.className,
-          "mt-1 text-[1.03rem] leading-7 text-[#4E4B47] sm:mt-4 sm:text-[1.08rem]",
+          "mt-2 text-[0.95rem] leading-6 text-[#4E4B47] sm:mt-3 sm:text-[1rem]",
         )}
       >
         {description}

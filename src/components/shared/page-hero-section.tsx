@@ -33,7 +33,7 @@ export function PageHeroSection({
       <div
         className={cn(
           containerClassName,
-          "relative pt-24 pb-16 sm:pt-28 sm:pb-20 lg:pt-32 lg:pb-24",
+          "relative pt-20 pb-14 sm:pt-24 sm:pb-16 lg:pt-28 lg:pb-20",
         )}
       >
         <div className="mx-auto flex max-w-4xl flex-col items-center text-center">

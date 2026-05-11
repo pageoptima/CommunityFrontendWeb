@@ -21,7 +21,7 @@ export function HomeHero() {
   return (
     <PageHeroSection containerClassName={sharedStyles.sectionContainer}>
       <motion.h1
-        className="text-foreground mt-4 max-w-4xl text-4xl font-semibold tracking-tight sm:mt-5 sm:text-5xl lg:mt-6 lg:text-6xl"
+        className="text-foreground mt-3 max-w-4xl text-3xl font-semibold tracking-tight sm:mt-4 sm:text-4xl lg:mt-5 lg:text-5xl"
         variants={fadeInUpItem}
       >
         Welcome to the{" "}
@@ -30,7 +30,7 @@ export function HomeHero() {
       </motion.h1>
 
       <motion.p
-        className="text-muted-foreground mt-6 max-w-3xl text-base leading-7 sm:text-lg"
+        className="text-muted-foreground mt-5 max-w-3xl text-sm leading-6 sm:text-base"
         variants={fadeInUpItem}
       >
         Reconnect with your ancestral roots, preserve your lineage, and join a
@@ -39,7 +39,7 @@ export function HomeHero() {
       </motion.p>
 
       <motion.div
-        className="mt-8 flex flex-wrap items-center justify-center gap-4"
+        className="mt-7 flex flex-wrap items-center justify-center gap-3"
         variants={fadeInUpItem}
       >
         <Button size="xl" rightIcon={<ArrowRight />}>
@@ -51,7 +51,7 @@ export function HomeHero() {
       </motion.div>
 
       <motion.div
-        className="mt-10 flex flex-col items-center gap-4 sm:flex-row"
+        className="mt-8 flex flex-col items-center gap-3 sm:flex-row"
         variants={fadeInUpItem}
       >
         <motion.div
@@ -66,18 +66,18 @@ export function HomeHero() {
             >
               <Image
                 alt={member.alt}
-                className="h-11 w-11 object-cover"
-                height={44}
+                className="h-10 w-10 object-cover"
+                height={40}
                 priority={false}
                 src={member.src}
-                width={44}
+                width={40}
               />
             </motion.div>
           ))}
         </motion.div>
 
         <motion.div
-          className="text-muted-foreground text-sm leading-6"
+          className="text-muted-foreground text-xs leading-5 sm:text-sm"
           variants={fadeInUpItem}
         >
           <span className="text-foreground font-semibold">5M+</span> Yucayeke

@@ -19,10 +19,10 @@ export function HomeEnrollmentResourcesSection({
 }: HomeEnrollmentResourcesSectionProps) {
   return (
     <motion.div
-      className="rounded-4xl border border-black/10 bg-white p-5 shadow-[0_22px_54px_-38px_rgba(16,24,40,0.18)] sm:p-6"
+      className="rounded-4xl border border-black/10 bg-white p-4 shadow-[0_22px_54px_-38px_rgba(16,24,40,0.18)] sm:p-5"
       variants={fadeInUpContainer}
     >
-      <div className="grid items-stretch gap-6 lg:grid-cols-[minmax(0,1.02fr)_minmax(0,0.98fr)]">
+      <div className="grid items-stretch gap-5 lg:grid-cols-[minmax(0,1.02fr)_minmax(0,0.98fr)]">
         <HomeEnrollmentNeedsSection items={items} />
         <HomeEnrollmentTipsCard tips={tips} />
       </div>

@@ -51,7 +51,7 @@ export function HomeHeritageSection() {
       <div
         className={cn(
           sharedStyles.sectionContainer,
-          "relative pt-4 pb-20 lg:pt-6 lg:pb-24",
+          "relative pt-2 pb-16 lg:pt-4 lg:pb-20",
         )}
       >
         <div className="mx-auto max-w-4xl text-center">
@@ -66,7 +66,7 @@ export function HomeHeritageSection() {
           </motion.span>
 
           <motion.h2
-            className="text-foreground mt-6 text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl"
+            className="text-foreground mt-5 text-2xl font-semibold tracking-tight sm:text-3xl lg:text-4xl"
             variants={fadeInUpItem}
           >
             Preserving{" "}
@@ -75,7 +75,7 @@ export function HomeHeritageSection() {
           </motion.h2>
 
           <motion.p
-            className="text-muted-foreground mt-5 text-base leading-7 sm:text-lg"
+            className="text-muted-foreground mt-4 text-sm leading-6 sm:text-base"
             variants={fadeInUpItem}
           >
             The Taíno Nation Digital Platform is a sovereign, community-owned
@@ -85,7 +85,7 @@ export function HomeHeritageSection() {
         </div>
 
         <motion.div
-          className="mt-12 grid gap-5 lg:grid-cols-3"
+          className="mt-10 grid gap-4 lg:grid-cols-3"
           variants={fadeInUpContainer}
         >
           {heritageCards.map((card) => (
@@ -100,16 +100,16 @@ export function HomeHeritageSection() {
         </motion.div>
 
         <motion.article
-          className="mt-16 rounded-4xl bg-[linear-gradient(135deg,#3876b8_0%,#2379d2_100%)] px-6 py-10 text-white shadow-[0_24px_60px_-36px_rgba(23,91,156,0.45)] sm:px-8 lg:px-10 lg:py-12"
+          className="mt-12 rounded-4xl bg-[linear-gradient(135deg,#3876b8_0%,#2379d2_100%)] px-5 py-8 text-white shadow-[0_24px_60px_-36px_rgba(23,91,156,0.45)] sm:px-7 lg:px-9 lg:py-10"
           variants={fadeInUpItem}
         >
-          <div className="grid gap-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-center">
+          <div className="grid gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-center">
             <div className="max-w-105">
-              <h3 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+              <h3 className="text-2xl font-semibold tracking-tight sm:text-3xl">
                 Our Mission
               </h3>
 
-              <p className="mt-6 text-sm leading-7 text-white/92 sm:text-base">
+              <p className="mt-5 text-sm leading-6 text-white/92">
                 To create a secure, culturally grounded digital platform that
                 empowers Taíno descendants to reclaim their heritage, document
                 their lineage, and participate in a thriving Indigenous
@@ -119,7 +119,7 @@ export function HomeHeritageSection() {
               </p>
             </div>
 
-            <div className="grid gap-5">
+            <div className="grid gap-4">
               {missionItems.map((item) => (
                 <HomeMissionFeature key={item} label={item} />
               ))}

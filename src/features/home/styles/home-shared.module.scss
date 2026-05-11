@@ -2,15 +2,15 @@
 
 .sectionContainer {
   margin-inline: auto;
-  max-width: 80rem;
-  padding-inline: 1rem;
+  max-width: 76rem;
+  padding-inline: 0.875rem;
 
   @include up(sm) {
-    padding-inline: 1.5rem;
+    padding-inline: 1.25rem;
   }
 
   @include up(lg) {
-    padding-inline: 2rem;
+    padding-inline: 1.5rem;
   }
 }
 

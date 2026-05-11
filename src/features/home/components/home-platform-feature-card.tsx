@@ -22,20 +22,20 @@ export function HomePlatformFeatureCard({
     <motion.article
       className={cn(
         sharedStyles.glassPanel,
-        "min-h-72.5 rounded-3xl border border-white/25 px-6 py-6 text-white shadow-[0_16px_38px_-24px_rgba(0,0,0,0.36)] sm:px-7 sm:py-7",
+        "min-h-64 rounded-3xl border border-white/25 px-5 py-5 text-white shadow-[0_16px_38px_-24px_rgba(0,0,0,0.36)] sm:px-6 sm:py-6",
       )}
       variants={fadeInUpItem}
     >
       <Image
         alt=""
         aria-hidden="true"
-        className="h-14 w-14 shrink-0 object-contain"
-        height={73}
+        className="h-12 w-12 shrink-0 object-contain sm:h-14 sm:w-14"
+        height={56}
         src={iconSrc}
-        width={73}
+        width={56}
       />
 
-      <p className="mt-12 text-[17px] leading-7 text-white/95 sm:mt-14">
+      <p className="mt-8 text-[15px] leading-6 text-white/95 sm:mt-10 sm:text-base">
         {text}
       </p>
     </motion.article>

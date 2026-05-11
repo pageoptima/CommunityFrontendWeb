@@ -31,27 +31,27 @@ export function HomeHeritageCard({
   return (
     <motion.article
       className={cn(
-        "border-border/70 rounded-2xl border p-6 shadow-[0_18px_40px_-34px_rgba(16,47,52,0.28)]",
+        "border-border/70 rounded-2xl border p-5 shadow-[0_18px_40px_-34px_rgba(16,47,52,0.28)] sm:p-6",
         toneClasses[tone],
       )}
       variants={fadeInUpItem}
     >
-      <div className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-2xl">
+      <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-2xl sm:h-14 sm:w-14">
         <Image
           alt=""
           aria-hidden="true"
           className="h-full w-full object-contain"
-          height={56}
+          height={48}
           src={iconSrc}
-          width={56}
+          width={48}
         />
       </div>
 
-      <h3 className="text-foreground mt-5 max-w-116.25 text-2xl leading-[1.2] font-semibold">
+      <h3 className="text-foreground mt-4 max-w-116.25 text-xl leading-[1.2] font-semibold sm:text-2xl">
         {title}
       </h3>
 
-      <p className="text-foreground/80 mt-4 text-[15px] leading-6">
+      <p className="text-foreground/80 mt-3 text-sm leading-6 sm:text-[15px]">
         {description}
       </p>
     </motion.article>
