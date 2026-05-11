@@ -63,13 +63,13 @@ export function HomePlatformFeaturesSection() {
       variants={fadeInUpContainer}
     >
       <div
-        className={cn(sharedStyles.sectionContainer, "py-[4.5rem] lg:py-20")}
+        className={cn(sharedStyles.sectionContainer, "py-10 sm:py-12 lg:py-14")}
       >
         <div className="mx-auto max-w-5xl text-center">
           <motion.span
             className={cn(
               sharedStyles.sectionBadge,
-              "border border-white/20 bg-white/5 px-5 py-2.5 text-white/95 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]",
+              "border border-white/20 bg-white/5 px-4.5 py-2 text-[0.82rem] text-white/95 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]",
             )}
             variants={fadeInUpItem}
           >
@@ -77,14 +77,14 @@ export function HomePlatformFeaturesSection() {
           </motion.span>
 
           <motion.h2
-            className="mt-8 text-3xl font-semibold tracking-tight sm:text-4xl lg:text-[3.6rem] lg:leading-[1.08]"
+            className="mt-6 text-[clamp(1.7rem,3.2vw,3rem)] font-semibold tracking-[-0.05em] lg:leading-[1.08]"
             variants={fadeInUpItem}
           >
             Everything You Need in One Place
           </motion.h2>
 
           <motion.p
-            className="mx-auto mt-5 max-w-5xl text-base leading-7 text-white/90 sm:text-lg"
+            className="mx-auto mt-4 max-w-4xl text-[clamp(0.9rem,1.15vw,1rem)] leading-[1.5] text-white/90"
             variants={fadeInUpItem}
           >
             Our comprehensive platform provides all the tools and resources you
@@ -94,7 +94,7 @@ export function HomePlatformFeaturesSection() {
         </div>
 
         <motion.div
-          className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3"
+          className="mt-8 grid gap-3 md:grid-cols-2 lg:grid-cols-3"
           variants={fadeInUpContainer}
         >
           {platformFeatures.map((feature) => (

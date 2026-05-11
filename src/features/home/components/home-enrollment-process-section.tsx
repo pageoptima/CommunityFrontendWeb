@@ -94,17 +94,14 @@ export function HomeEnrollmentProcessSection() {
       variants={fadeInUpContainer}
     >
       <div
-        className={cn(
-          sharedStyles.sectionContainer,
-          "py-16 sm:py-[4.5rem] lg:py-20",
-        )}
+        className={cn(sharedStyles.sectionContainer, "py-10 sm:py-12 lg:py-14")}
       >
         <div className="mx-auto max-w-5xl text-center">
           <motion.span
             className={cn(
               sharedStyles.sectionBadge,
               poppins.className,
-              "bg-[#D7EFD3] px-6 py-2.5 text-[0.92rem] tracking-[-0.02em] text-[#1B5B4F] shadow-[inset_0_1px_0_rgba(255,255,255,0.45)]",
+              "bg-[#D7EFD3] px-5 py-2 text-[0.84rem] tracking-[-0.02em] text-[#1B5B4F] shadow-[inset_0_1px_0_rgba(255,255,255,0.45)]",
             )}
             variants={fadeInUpItem}
           >
@@ -114,7 +111,7 @@ export function HomeEnrollmentProcessSection() {
           <motion.h2
             className={cn(
               montserrat.className,
-              "mt-8 text-[clamp(2.2rem,4vw,4rem)] leading-[1.06] font-semibold tracking-[-0.06em] text-[#103F36]",
+              "mt-6 text-[clamp(1.7rem,3.2vw,3rem)] leading-[1.06] font-semibold tracking-[-0.05em] text-[#103F36]",
             )}
             variants={fadeInUpItem}
           >
@@ -124,7 +121,7 @@ export function HomeEnrollmentProcessSection() {
           <motion.p
             className={cn(
               poppins.className,
-              "mx-auto mt-5 max-w-4xl text-[clamp(0.98rem,1.7vw,1.28rem)] leading-[1.55] tracking-[-0.02em] text-[#2A2927]",
+              "mx-auto mt-4 max-w-4xl text-[clamp(0.9rem,1.15vw,1rem)] leading-[1.5] tracking-[-0.02em] text-[#2A2927]",
             )}
             variants={fadeInUpItem}
           >
@@ -135,7 +132,7 @@ export function HomeEnrollmentProcessSection() {
         </div>
 
         <motion.div
-          className="mt-18 grid gap-x-4 gap-y-12 md:grid-cols-2 md:gap-4 xl:grid-cols-4"
+          className="mt-11 grid gap-x-4 gap-y-9 md:grid-cols-2 md:gap-4 xl:grid-cols-4"
           variants={fadeInUpContainer}
         >
           {enrollmentSteps.map((card) => (
@@ -143,7 +140,7 @@ export function HomeEnrollmentProcessSection() {
           ))}
         </motion.div>
 
-        <motion.div className="mt-12" variants={fadeInUpContainer}>
+        <motion.div className="mt-9" variants={fadeInUpContainer}>
           <HomeEnrollmentResourcesSection items={needItems} tips={tipItems} />
         </motion.div>
 
