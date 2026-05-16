@@ -145,7 +145,7 @@ export function SignInForm() {
         <label className="flex cursor-pointer items-center gap-2 text-sm text-slate-700">
           <input
             {...register("rememberMe")}
-            className="size-4 rounded border-slate-300 text-[#24acc3] accent-[#24acc3]"
+            className="text-primary accent-primary size-4 rounded border-slate-300"
             type="checkbox"
           />
           <span>Remember me</span>

@@ -538,7 +538,7 @@ export function EnrollmentStepOneForm() {
               </div>
 
               <Button
-                className="min-w-[12rem] bg-[#004d43]! text-white! shadow-[0_18px_34px_-22px_rgba(0,77,67,0.5)] hover:bg-[#00584d]! hover:text-white!"
+                className="bg-primary! min-w-[12rem] text-white! shadow-[0_18px_34px_-22px_rgba(197,49,51,0.42)] hover:bg-[#aa2a2d]! hover:text-white!"
                 loading={upsertMutation.isPending}
                 loadingText="Saving Step 1..."
                 rightIcon={<ArrowRight />}

@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { BrandMark } from "@/components/shared/brand-mark";
+import { cinzel } from "@/styles/fonts";
 import {
   footerBottomLinks,
   footerQuickLinks,
@@ -19,9 +20,13 @@ type FooterLinkListProps = Readonly<{
 function FooterLinkList({ title, links }: FooterLinkListProps) {
   return (
     <section>
-      <h3 className="text-lg font-medium text-white sm:text-xl">{title}</h3>
+      <h3
+        className={`${cinzel.className} text-brand-sky text-lg font-semibold tracking-[0.12em] uppercase sm:text-xl`}
+      >
+        {title}
+      </h3>
 
-      <ul className="mt-3.5 space-y-2.5 text-[0.95rem] leading-6 text-white/80 sm:mt-4 sm:text-base">
+      <ul className="mt-3.5 space-y-2.5 text-[0.95rem] leading-6 text-white/78 sm:mt-4 sm:text-base">
         {links.map((link) => (
           <li key={link.label}>
             <Link
@@ -53,23 +58,20 @@ function SocialIconButton({ href, label, iconSrc }: FooterSocialLink) {
 
 export function PublicFooter() {
   return (
-    <footer className="bg-[linear-gradient(180deg,#005862_0%,#053f48_100%)] text-white">
+    <footer className="bg-[#120e0c] text-white">
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8 lg:py-14">
         <div className="grid gap-8 sm:gap-10 lg:grid-cols-[1.35fr_0.78fr_0.78fr_0.88fr] lg:gap-12">
           <div>
-            <Link
-              className="inline-flex rounded-[1.15rem] bg-white px-4 py-3 shadow-[0_18px_40px_-28px_rgba(0,0,0,0.45)] transition-transform hover:scale-[1.01] sm:px-5 sm:py-4"
-              href="/"
-            >
-              <BrandMark compact />
+            <Link className="inline-flex" href="/">
+              <BrandMark compact showLabel={false} />
             </Link>
 
-            <p className="mt-5 max-w-lg text-[0.98rem] leading-7 text-white/95 sm:mt-6 sm:text-[1.05rem] sm:leading-8">
-              Preserving our Indigenous heritage through sovereign technology
-              and community connection.
+            <p className="mt-5 max-w-lg text-[0.98rem] leading-7 text-white/84 sm:mt-6 sm:text-[1.05rem] sm:leading-8">
+              Preserving Indigenous heritage through land, lineage, and
+              community connection.
             </p>
 
-            <div className="mt-6 h-px w-full max-w-96 bg-white/15" />
+            <div className="mt-6 h-px w-full max-w-96 bg-white/12" />
 
             <div className="mt-4 flex items-center gap-2 sm:gap-2.5">
               {footerSocialLinks.map((item) => (
@@ -83,11 +85,13 @@ export function PublicFooter() {
           <FooterLinkList title="Support" links={footerSupportLinks} />
 
           <section>
-            <h3 className="text-lg font-medium text-white sm:text-xl">
+            <h3
+              className={`${cinzel.className} text-brand-sky text-lg font-semibold tracking-[0.12em] uppercase sm:text-xl`}
+            >
               Contact
             </h3>
 
-            <div className="mt-3.5 space-y-2.5 text-[0.95rem] leading-6 text-white/80 sm:mt-4 sm:text-base">
+            <div className="mt-3.5 space-y-2.5 text-[0.95rem] leading-6 text-white/78 sm:mt-4 sm:text-base">
               <a
                 className="block transition-colors hover:text-white"
                 href="tel:+17875550100"
@@ -110,11 +114,11 @@ export function PublicFooter() {
         </div>
       </div>
 
-      <div className="border-t border-white/15">
-        <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-4 text-[0.8rem] text-white/95 sm:px-6 sm:text-[0.85rem] lg:flex-row lg:items-center lg:justify-between lg:px-8">
+      <div className="border-t border-white/12">
+        <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-4 text-[0.8rem] text-white/90 sm:px-6 sm:text-[0.85rem] lg:flex-row lg:items-center lg:justify-between lg:px-8">
           <p>
-            © 2024 Taíno Nation of Borikén. All rights reserved. Sovereign
-            Indigenous Platform.
+            © 2024 Taíno Nation of Borikén. All rights reserved. Living
+            Indigenous Sovereignty.
           </p>
 
           <div className="flex flex-wrap items-center gap-x-2 gap-y-1 lg:justify-end">

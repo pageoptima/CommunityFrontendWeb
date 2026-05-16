@@ -39,7 +39,7 @@ export function CommunityFilterAnnouncementCard({
 }: CommunityFilterAnnouncementCardProps) {
   const buttonClassName = isRegistered
     ? "!bg-[#aa2628] hover:!bg-[#aa2628]"
-    : "!bg-[#004d43] hover:!brightness-105";
+    : "!bg-primary hover:!brightness-95";
 
   return (
     <article

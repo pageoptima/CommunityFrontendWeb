@@ -43,9 +43,9 @@ export function HomeHero() {
         className="mt-7 flex flex-wrap items-center justify-center gap-3"
         variants={fadeInUpItem}
       >
-        <Button asChild size="xl">
+        <Button className="text-white!" asChild size="xl">
           <Link href="/dashboard">
-            <span>Start Your Enrollment</span>
+            <span className="text-white">Start Your Enrollment</span>
             <ArrowRight />
           </Link>
         </Button>

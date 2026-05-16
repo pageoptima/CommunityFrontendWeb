@@ -24,13 +24,10 @@
 }
 
 .gradientText {
-  background: linear-gradient(135deg, #2fcfc3 0%, #2b74d8 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--primary);
 }
 
 .glassPanel {
-  background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(2px);
+  background: rgb(255 253 249 / 0.86);
+  backdrop-filter: blur(1px);
 }

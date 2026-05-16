@@ -164,8 +164,8 @@ export function CommunityFilterAnnouncementsSection({
               className={cn(
                 "cursor-pointer rounded-full border px-4 py-2 text-[0.9rem] font-semibold whitespace-nowrap transition-colors sm:px-4.5 sm:py-2.25 sm:text-[0.92rem]",
                 selectedCategoryKey === ALL_UPDATES_KEY
-                  ? "border-[#004d43] bg-[#004d43] text-[#ffffff]"
-                  : "border-[#004d43] bg-[rgba(0,77,67,0.08)] text-[#174e47] hover:bg-[rgba(0,77,67,0.12)]",
+                  ? "border-primary bg-primary text-primary-foreground"
+                  : "border-primary/20 bg-primary/10 text-primary hover:bg-primary/14",
               )}
               type="button"
               onClick={() => setSelectedCategoryKey(ALL_UPDATES_KEY)}
@@ -179,8 +179,8 @@ export function CommunityFilterAnnouncementsSection({
                 className={cn(
                   "inline-flex cursor-pointer items-center gap-2 rounded-full border px-4 py-2 text-[0.9rem] font-semibold whitespace-nowrap transition-colors sm:px-4.5 sm:py-2.25 sm:text-[0.92rem]",
                   selectedCategoryKey === category.key
-                    ? "border-[#004d43] bg-[#004d43] text-[#ffffff]"
-                    : "border-[#004d43] bg-[rgba(0,77,67,0.08)] text-[#174e47] hover:bg-[rgba(0,77,67,0.12)]",
+                    ? "border-primary bg-primary text-primary-foreground"
+                    : "border-primary/20 bg-primary/10 text-primary hover:bg-primary/14",
                 )}
                 type="button"
                 onClick={() => setSelectedCategoryKey(category.key)}

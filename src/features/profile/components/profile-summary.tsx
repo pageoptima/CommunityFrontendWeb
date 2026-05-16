@@ -6,6 +6,7 @@ import type { ProfileDetail } from "../config/profile-config";
 
 type ProfileSummaryProps = Readonly<{
   details: readonly ProfileDetail[];
+  enrollmentStatus?: string | null;
   name: string;
   memberSince?: string;
   memberStatus: string;
@@ -13,12 +14,14 @@ type ProfileSummaryProps = Readonly<{
 
 export function ProfileSummary({
   details,
+  enrollmentStatus,
   name,
   memberSince,
   memberStatus,
 }: ProfileSummaryProps) {
   const profileActionButtonClass =
     "h-[38px] w-[38px] shrink-0 rounded-[10px] bg-[#2b6674] text-white shadow-[0_12px_24px_-20px_rgba(16,47,52,0.4)] hover:bg-[#245c68] sm:h-[40px] sm:w-[40px] lg:h-[38px] lg:w-[38px]";
+  const canEditProfile = enrollmentStatus?.trim().toUpperCase() !== "APPROVED";
 
   return (
     <div className="max-w-[33rem] min-w-0 flex-1 text-left">
@@ -60,20 +63,25 @@ export function ProfileSummary({
       </div>
 
       <div className="mt-5 flex max-w-full items-center gap-2 sm:mt-6 sm:gap-2.5">
-        <Button
-          variant="ghost"
-          className="h-[38px] shrink-0 rounded-[10px] bg-[#215A64] px-3 text-[12px] font-medium tracking-[-0.02em] whitespace-nowrap text-white shadow-[0_12px_24px_-20px_rgba(16,47,52,0.4)] hover:bg-[#1b4a52] hover:text-white sm:h-[40px] sm:px-3.5 sm:text-[13px] lg:h-[38px] lg:px-3"
-          leftIcon={
-            <SvgIcon
-              sizeClassName="size-[0.95rem] sm:size-4"
-              src="/icons/profile/edit.svg"
-            />
-          }
-          size="xl"
-          type="button"
-        >
-          Edit Profile
-        </Button>
+        {canEditProfile ? (
+          <Button
+            variant="ghost"
+            className="h-[38px] shrink-0 rounded-[10px] bg-[#215A64] px-3 text-[12px] font-medium tracking-[-0.02em] whitespace-nowrap text-white shadow-[0_12px_24px_-20px_rgba(16,47,52,0.4)] hover:bg-[#1b4a52] hover:text-white sm:h-[40px] sm:px-3.5 sm:text-[13px] lg:h-[38px] lg:px-3"
+            leftIcon={
+              <SvgIcon
+                sizeClassName="size-[0.95rem] sm:size-4"
+                src="/icons/profile/edit.svg"
+              />
+            }
+            size="xl"
+            type="button"
+            onClick={() => {
+              window.location.href = "/dashboard#enrollment-dashboard";
+            }}
+          >
+            Edit Profile
+          </Button>
+        ) : null}
 
         <ProfileActionButton
           className={profileActionButtonClass}

@@ -14,7 +14,7 @@ export default async function ProtectedLayout({
   const user = await getRequiredSessionUser();
 
   return (
-    <div className="relative flex min-h-screen flex-col bg-[linear-gradient(180deg,#f8fbfb_0%,#eef6f3_100%)]">
+    <div className="bg-background text-foreground relative flex min-h-screen flex-col">
       <ProtectedNavbar user={user} />
       <main className="flex-1 px-4 pb-4 sm:px-6 sm:pb-6 lg:px-8 lg:pb-8">
         {children}

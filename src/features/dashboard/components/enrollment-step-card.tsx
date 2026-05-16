@@ -53,7 +53,7 @@ export function EnrollmentStepCard({
         className={cn(
           "mx-auto flex size-[2.75rem] items-center justify-center rounded-full text-[1.35rem] font-semibold sm:size-[3.25rem] sm:text-2xl",
           isEnabled
-            ? "bg-[linear-gradient(180deg,#1b9a96_0%,#0b625d_100%)] text-white"
+            ? "bg-primary text-primary-foreground"
             : "bg-[#8f969d] text-white",
         )}
       >
@@ -96,7 +96,7 @@ export function EnrollmentStepCard({
             <div
               className={cn(
                 "h-full rounded-full transition-[width]",
-                isEnabled ? "bg-[#0b625d]" : "bg-[#8f98a1]",
+                isEnabled ? "bg-primary" : "bg-[#8f98a1]",
               )}
               style={{ width: progressWidth }}
             />

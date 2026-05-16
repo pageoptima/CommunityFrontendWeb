@@ -131,7 +131,7 @@ export function ProfileDocumentsPanel({
                         {upload.status}
                       </span>
                       <a
-                        className="rounded-full border border-[#cee0da] bg-white px-2.5 py-1 text-[0.68rem] font-semibold tracking-[0.04em] text-[#0b625d] uppercase transition-colors hover:bg-[#edf7f3]"
+                        className="border-primary/20 text-primary hover:bg-primary/10 rounded-full border bg-white px-2.5 py-1 text-[0.68rem] font-semibold tracking-[0.04em] uppercase transition-colors"
                         href={upload.url}
                         rel="noreferrer"
                         target="_blank"

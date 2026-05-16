@@ -257,7 +257,7 @@ export function EnrollmentStepThreeForm() {
               </div>
 
               <Button
-                className="min-w-[12rem] border-[#cfe0d9] bg-[#f6fbf9] text-[#0b625d] hover:bg-[#edf7f3]"
+                className="min-w-[12rem] border-[#dccab7] bg-[#fbf5ee] text-[#6e553b] hover:bg-[#f3e6d5]"
                 disabled={upsertMutation.isPending}
                 leftIcon={<ArrowLeft />}
                 onClick={() => router.push("/enrollment/step-2")}
@@ -269,7 +269,7 @@ export function EnrollmentStepThreeForm() {
               </Button>
 
               <Button
-                className="min-w-[12rem] bg-[#004d43]! text-white! shadow-[0_18px_34px_-22px_rgba(0,77,67,0.5)] hover:bg-[#00584d]! hover:text-white!"
+                className="bg-primary! min-w-[12rem] text-white! shadow-[0_18px_34px_-22px_rgba(197,49,51,0.42)] hover:bg-[#aa2a2d]! hover:text-white!"
                 disabled={isSubmitDisabled}
                 loading={upsertMutation.isPending}
                 loadingText="Saving Step 3..."

@@ -104,7 +104,7 @@ export function DashboardConsentDialog({
                   className={cn(
                     "grid cursor-pointer grid-cols-[auto_1fr] gap-x-3 gap-y-2 rounded-[18px] border px-3.5 py-3.5 transition-colors sm:gap-x-3.5 sm:px-3.5 sm:py-3.5",
                     isSelected
-                      ? "border-[#0b625d] bg-[#edf7f4]"
+                      ? "border-primary bg-primary/10"
                       : "border-[#d5e1da] bg-white",
                   )}
                 >
@@ -158,7 +158,7 @@ export function DashboardConsentDialog({
           </Button>
 
           <Button
-            className="h-10 rounded-xl !bg-[#0b625d] !bg-none px-4 text-sm !text-white shadow-[0_18px_38px_-22px_rgba(11,98,93,0.85)] hover:!bg-[#095450]"
+            className="!bg-primary h-10 rounded-xl !bg-none px-4 text-sm !text-white shadow-[0_18px_34px_-22px_rgba(197,49,51,0.45)] hover:!bg-[#aa2a2d]"
             disabled={!hasAcceptedAllRequired}
             loading={isSubmitting}
             loadingText="Saving consent..."

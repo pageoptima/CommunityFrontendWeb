@@ -14,7 +14,7 @@ type PageHeroSectionProps = Readonly<{
 }>;
 
 const defaultBackgroundClassName =
-  "bg-[radial-gradient(circle_at_top,rgba(47,207,195,0.18),transparent_35%),radial-gradient(circle_at_80%_20%,rgba(43,116,216,0.12),transparent_28%)]";
+  "bg-[radial-gradient(circle_at_top,rgba(111,175,196,0.16),transparent_36%),radial-gradient(circle_at_18%_14%,rgba(179,138,90,0.1),transparent_24%)]";
 
 export function PageHeroSection({
   backgroundClassName = defaultBackgroundClassName,
@@ -23,7 +23,7 @@ export function PageHeroSection({
 }: PageHeroSectionProps) {
   return (
     <motion.section
-      className="relative overflow-hidden"
+      className="bg-background relative overflow-hidden"
       initial="hidden"
       animate="visible"
       variants={fadeInUpContainer}

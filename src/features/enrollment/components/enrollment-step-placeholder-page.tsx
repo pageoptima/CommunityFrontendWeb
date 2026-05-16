@@ -34,7 +34,7 @@ export function EnrollmentStepPlaceholderPage({
                 <ShieldCheck className="size-3.5" />
                 Member ID: {user.publicId ?? user.id}
               </div>
-              <div className="inline-flex items-center gap-2 rounded-full bg-white px-3 py-1 text-xs font-semibold text-[#0b625d] shadow-[0_10px_24px_-20px_rgba(11,98,93,0.55)]">
+              <div className="text-primary inline-flex items-center gap-2 rounded-full bg-white px-3 py-1 text-xs font-semibold shadow-[0_10px_24px_-20px_rgba(197,49,51,0.28)]">
                 Form Route Ready
                 <ArrowRight className="size-3.5" />
               </div>

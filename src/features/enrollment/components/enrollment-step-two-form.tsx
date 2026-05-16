@@ -231,7 +231,7 @@ export function EnrollmentStepTwoForm() {
                 footer="Use documented records when available, and otherwise capture the most reliable family knowledge you have."
                 headerAction={
                   isRequiredLineage ? (
-                    <div className="inline-flex items-center rounded-full border border-[#d8e5df] bg-[#f5faf8] px-3 py-1.5 text-[0.74rem] font-semibold tracking-[0.08em] text-[#0b625d] uppercase">
+                    <div className="border-primary/15 bg-primary/8 text-primary inline-flex items-center rounded-full border px-3 py-1.5 text-[0.74rem] font-semibold tracking-[0.08em] uppercase">
                       Required
                     </div>
                   ) : (
@@ -248,7 +248,7 @@ export function EnrollmentStepTwoForm() {
                   )
                 }
                 icon={TreePine}
-                iconWrapperClassName="bg-[#0b625d] shadow-[0_14px_28px_-22px_rgba(11,98,93,0.48)]"
+                iconWrapperClassName="bg-primary shadow-[0_14px_28px_-22px_rgba(197,49,51,0.38)]"
                 title={lineage.title}
               >
                 <EnrollmentInputField
@@ -328,7 +328,7 @@ export function EnrollmentStepTwoForm() {
                 </div>
 
                 <Button
-                  className="min-w-[12rem] border-[#cfe0d9] bg-[#f6fbf9] text-[#0b625d] hover:bg-[#edf7f3]"
+                  className="min-w-[12rem] border-[#dccab7] bg-[#fbf5ee] text-[#6e553b] hover:bg-[#f3e6d5]"
                   leftIcon={<Plus />}
                   onClick={handleAddLineage}
                   size="md"
@@ -354,7 +354,7 @@ export function EnrollmentStepTwoForm() {
               </div>
 
               <Button
-                className="min-w-[12rem] border-[#cfe0d9] bg-[#f6fbf9] text-[#0b625d] hover:bg-[#edf7f3]"
+                className="min-w-[12rem] border-[#dccab7] bg-[#fbf5ee] text-[#6e553b] hover:bg-[#f3e6d5]"
                 disabled={upsertMutation.isPending}
                 leftIcon={<ArrowLeft />}
                 onClick={() => router.push("/enrollment/step-1")}
@@ -366,7 +366,7 @@ export function EnrollmentStepTwoForm() {
               </Button>
 
               <Button
-                className="min-w-[12rem] bg-[#004d43]! text-white! shadow-[0_18px_34px_-22px_rgba(0,77,67,0.5)] hover:bg-[#00584d]! hover:text-white!"
+                className="bg-primary! min-w-[12rem] text-white! shadow-[0_18px_34px_-22px_rgba(197,49,51,0.42)] hover:bg-[#aa2a2d]! hover:text-white!"
                 loading={upsertMutation.isPending}
                 loadingText="Saving Step 2..."
                 rightIcon={<ArrowRight />}

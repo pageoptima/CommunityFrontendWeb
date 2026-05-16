@@ -61,7 +61,7 @@ function ConsentLine({
   return (
     <div className="flex items-start gap-3">
       <input
-        className="mt-1 size-4 rounded border-slate-300 text-[#24acc3] accent-[#24acc3]"
+        className="text-primary accent-primary mt-1 size-4 rounded border-slate-300"
         id={name}
         aria-labelledby={`${name}-description`}
         type="checkbox"

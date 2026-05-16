@@ -20,35 +20,34 @@ function Calendar({
       classNames={{
         button_next: cn(
           buttonVariants({ size: "icon", variant: "ghost" }),
-          "absolute top-1 right-1 size-8 rounded-full bg-transparent text-[#5d696d] shadow-none hover:bg-[#eef4ef]",
+          "text-muted-foreground hover:bg-surface-muted absolute top-1 right-1 size-8 rounded-full bg-transparent shadow-none",
         ),
         button_previous: cn(
           buttonVariants({ size: "icon", variant: "ghost" }),
-          "absolute top-1 left-1 size-8 rounded-full bg-transparent text-[#5d696d] shadow-none hover:bg-[#eef4ef]",
+          "text-muted-foreground hover:bg-surface-muted absolute top-1 left-1 size-8 rounded-full bg-transparent shadow-none",
         ),
         caption_label:
-          "text-sm font-semibold tracking-[-0.02em] text-[#243238]",
+          "text-foreground text-sm font-semibold tracking-[-0.02em]",
         day: "text-center text-sm",
         day_button:
-          "flex size-9 items-center justify-center rounded-full font-medium text-[#243238] transition-colors hover:bg-[#eef4ef]",
+          "text-foreground hover:bg-surface-muted flex size-9 items-center justify-center rounded-full font-medium transition-colors",
         dropdown:
-          "h-9 cursor-pointer appearance-none rounded-lg border border-[#d7e3dc] bg-white px-3 pr-8 text-sm font-medium text-[#243238] shadow-[inset_0_1px_0_rgba(255,255,255,0.8)] outline-none transition-colors focus-visible:border-[#2b74d8]/35 focus-visible:ring-2 focus-visible:ring-[#2b74d8]/12",
+          "text-foreground h-9 cursor-pointer appearance-none rounded-lg border border-border bg-surface px-3 pr-8 text-sm font-medium shadow-[0_8px_16px_-16px_rgba(21,17,13,0.2)] outline-none transition-colors focus-visible:border-primary/45 focus-visible:ring-2 focus-visible:ring-primary/15",
         dropdown_root: "relative",
         dropdowns: "flex items-center justify-center gap-2",
-        disabled: "text-[#bcc4c1] opacity-60",
+        disabled: "text-muted-foreground opacity-50",
         hidden: "invisible",
         month: "space-y-4",
         month_caption:
           "relative flex min-h-9 items-center justify-center px-10 text-center",
         month_grid: "w-full border-collapse",
         months: "flex flex-col",
-        outside: "text-[#bcc4c1]",
-        selected:
-          "bg-[#0b625d]! text-white! hover:bg-[#0b625d]! hover:text-white!",
-        today: "bg-[#eef4ef] text-[#0b625d]",
+        outside: "text-muted-foreground opacity-65",
+        selected: "bg-primary! text-primary-foreground! hover:bg-primary!",
+        today: "bg-surface-muted text-primary",
         week: "mt-2 flex w-full",
         weekday:
-          "w-9 text-[0.78rem] font-medium uppercase tracking-[0.08em] text-[#8a9491]",
+          "text-muted-foreground w-9 text-[0.78rem] font-medium uppercase tracking-[0.08em]",
         weekdays: "flex",
         ...classNames,
       }}

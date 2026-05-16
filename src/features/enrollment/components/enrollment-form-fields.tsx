@@ -188,7 +188,7 @@ function EnrollmentRadioGroupControl<TFieldValues extends FieldValues>({
                 <label
                   className={cn(
                     "flex min-h-14 cursor-pointer items-center gap-3 rounded-xl border border-[#dedede] bg-[#f8f8f8] px-4 py-3.5 transition-colors",
-                    isSelected && "border-[#0b625d]/35 bg-[#f3faf8]",
+                    isSelected && "border-primary/35 bg-primary/8",
                     fieldState.error && "border-red-300",
                     optionClassName,
                   )}

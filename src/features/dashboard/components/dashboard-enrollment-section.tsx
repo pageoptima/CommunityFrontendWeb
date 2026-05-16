@@ -181,8 +181,8 @@ export function DashboardEnrollmentSection({
 
   return (
     <>
-      <section className={sharedStyles.sectionPanel}>
-        <div className="flex flex-col gap-3 bg-[#0b625d] px-4 py-5 text-white sm:gap-5 sm:px-8 sm:py-8 lg:flex-row lg:items-start lg:justify-between">
+      <section id="enrollment-dashboard" className={sharedStyles.sectionPanel}>
+        <div className="bg-primary text-primary-foreground flex flex-col gap-3 px-4 py-5 sm:gap-5 sm:px-8 sm:py-8 lg:flex-row lg:items-start lg:justify-between">
           <div>
             <p
               className={cn(

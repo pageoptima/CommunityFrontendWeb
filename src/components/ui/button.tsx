@@ -12,15 +12,15 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary:
-          "bg-[linear-gradient(135deg,#2fcfc3_0%,#2b74d8_100%)] text-white shadow-[0_18px_38px_-20px_rgba(35,120,186,0.9)] hover:brightness-[1.03]",
+          "bg-primary text-primary-foreground shadow-[0_12px_24px_-18px_rgba(197,49,51,0.45)] hover:brightness-[0.96]",
         outline:
-          "border border-border bg-surface text-foreground shadow-[0_14px_30px_-22px_rgba(16,47,52,0.45)] hover:bg-surface-muted",
+          "border border-border bg-surface text-foreground shadow-[0_10px_22px_-18px_rgba(21,17,13,0.18)] hover:bg-surface-muted",
         secondary:
-          "bg-secondary text-secondary-foreground shadow-[0_14px_30px_-22px_rgba(20,63,58,0.38)] hover:brightness-[0.98]",
+          "bg-secondary text-secondary-foreground shadow-[0_12px_24px_-18px_rgba(111,175,196,0.35)] hover:brightness-[0.98]",
         accent:
-          "bg-accent text-accent-foreground shadow-[0_16px_34px_-20px_rgba(20,63,58,0.95)] hover:brightness-110",
+          "bg-accent text-accent-foreground shadow-[0_12px_24px_-18px_rgba(179,138,90,0.38)] hover:brightness-[0.97]",
         ghost:
-          "bg-transparent text-foreground hover:bg-surface hover:shadow-none",
+          "bg-transparent text-foreground hover:bg-surface-muted hover:shadow-none",
       },
       size: {
         sm: "h-10 px-4 text-sm [&_svg]:size-4",

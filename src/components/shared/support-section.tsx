@@ -21,27 +21,27 @@ const supportCards: readonly SupportCard[] = [
   {
     kind: "phone",
     iconSrc: "/icons/auth/phone-support.svg",
-    iconBgClassName: "bg-[#2FA4C4]",
+    iconBgClassName: "bg-brand-sky",
     title: "Phone Support",
     description: "Speak with a support representative",
     contactLabel: "(787) 555-0100",
     contactHref: "tel:+17875550100",
-    contactTextColor: "#2B9DB8",
+    contactTextColor: "#6FAFC4",
   },
   {
     kind: "email",
     iconSrc: "/icons/auth/email-support..svg",
-    iconBgClassName: "bg-[#9E3E3A]",
+    iconBgClassName: "bg-primary",
     title: "Email Support",
     description: "Send us a detailed message",
     contactLabel: "support@tainonation.org",
     contactHref: "mailto:support@tainonation.org",
-    contactTextColor: "#883333",
+    contactTextColor: "#C53133",
   },
   {
     kind: "chat",
     iconSrc: "/icons/auth/chat-support..svg",
-    iconBgClassName: "bg-[#2FA4C4]",
+    iconBgClassName: "bg-accent",
     title: "Chat in Forums",
     description: "Post your concern in forums",
   },
@@ -49,7 +49,7 @@ const supportCards: readonly SupportCard[] = [
 
 function SupportCardItem({ card }: Readonly<{ card: SupportCard }>) {
   return (
-    <article className="flex h-full flex-col rounded-[18px] border border-[#E8E5DE] bg-[#FAF9F9] px-3.5 py-4.5 text-center shadow-[0_16px_34px_-28px_rgba(28,45,38,0.18)] sm:px-4 sm:py-5 lg:px-5">
+    <article className="border-border bg-surface flex h-full flex-col rounded-[18px] border px-3.5 py-4.5 text-center shadow-[0_16px_30px_-26px_rgba(21,17,13,0.14)] sm:px-4 sm:py-5 lg:px-5">
       <div
         className={cn(
           "mx-auto flex size-10 items-center justify-center rounded-[0.95rem] shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] sm:size-11 lg:size-12",
@@ -69,7 +69,7 @@ function SupportCardItem({ card }: Readonly<{ card: SupportCard }>) {
       <h3
         className={cn(
           montserrat.className,
-          "mt-3.5 text-[1rem] font-semibold tracking-[-0.04em] text-[#173F4C] sm:text-[1.08rem] lg:text-[1.16rem]",
+          "text-foreground mt-3.5 text-[1rem] font-semibold tracking-[-0.04em] sm:text-[1.08rem] lg:text-[1.16rem]",
         )}
       >
         {card.title}
@@ -77,7 +77,7 @@ function SupportCardItem({ card }: Readonly<{ card: SupportCard }>) {
       <p
         className={cn(
           poppins.className,
-          "mt-2 text-[0.8rem] leading-[1.45] text-[#57534E] sm:text-[0.86rem]",
+          "text-muted-foreground mt-2 text-[0.8rem] leading-[1.45] sm:text-[0.86rem]",
         )}
       >
         {card.description}
@@ -85,7 +85,7 @@ function SupportCardItem({ card }: Readonly<{ card: SupportCard }>) {
 
       {card.kind === "chat" ? (
         <Button
-          className="mx-auto mt-4 min-w-28 rounded-full bg-[linear-gradient(135deg,#2F7E94_0%,#1F667C_100%)]! text-[0.88rem]! text-white! shadow-[0_16px_34px_-18px_rgba(25,96,118,0.52)]! hover:brightness-105!"
+          className="mx-auto mt-4 min-w-28 text-[0.88rem]"
           size="lg"
           type="button"
         >
@@ -106,7 +106,7 @@ function SupportCardItem({ card }: Readonly<{ card: SupportCard }>) {
           <p
             className={cn(
               poppins.className,
-              "mt-1 text-[0.74rem] leading-[1.45] text-[#8A8A86] sm:text-[0.8rem]",
+              "text-muted-foreground mt-1 text-[0.74rem] leading-[1.45] sm:text-[0.8rem]",
             )}
           >
             Mon-Fri: 9am - 6pm AST
@@ -122,16 +122,16 @@ export function SupportSection() {
     <section className="relative isolate overflow-x-clip py-6 sm:py-8 lg:py-10">
       <div
         aria-hidden="true"
-        className="absolute inset-y-0 left-1/2 -z-10 w-screen -translate-x-1/2 bg-[#FFFDEC]"
+        className="bg-background absolute inset-y-0 left-1/2 -z-10 w-screen -translate-x-1/2"
       />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-4xl text-center">
-          <div className="inline-flex rounded-full border border-[#DCEBD6] bg-[#D7EFD3] px-4.5 py-1.75 shadow-[inset_0_1px_0_rgba(255,255,255,0.45)] sm:px-5 sm:py-2">
+          <div className="border-border bg-surface-muted inline-flex rounded-full border px-4.5 py-1.75 shadow-[inset_0_1px_0_rgba(255,255,255,0.45)] sm:px-5 sm:py-2">
             <p
               className={cn(
                 poppins.className,
-                "text-[0.76rem] font-semibold tracking-[-0.02em] text-[#2C6C5B] sm:text-[0.8rem]",
+                "text-primary text-[0.76rem] font-semibold tracking-[-0.02em] sm:text-[0.8rem]",
               )}
             >
               We&apos;re Here to Help
@@ -141,12 +141,12 @@ export function SupportSection() {
           <h2
             className={cn(
               montserrat.className,
-              "mt-4 text-[clamp(1.4rem,2.8vw,2.1rem)] font-semibold tracking-[-0.05em] text-[#063025] sm:mt-5",
+              "text-foreground mt-4 text-[clamp(1.4rem,2.8vw,2.1rem)] font-semibold tracking-[-0.05em] sm:mt-5",
             )}
           >
             Need Assistance?
           </h2>
-          <p className="mx-auto mt-2.5 max-w-3xl text-[0.82rem] leading-[1.45] tracking-[-0.01em] text-[#555048] sm:mt-3 sm:text-[0.88rem]">
+          <p className="text-muted-foreground mx-auto mt-2.5 max-w-3xl text-[0.82rem] leading-[1.45] tracking-[-0.01em] sm:mt-3 sm:text-[0.88rem]">
             Our support team is available to help you with account access,
             enrollment questions, or technical issues.
           </p>

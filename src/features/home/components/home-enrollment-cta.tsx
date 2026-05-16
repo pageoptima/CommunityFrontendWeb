@@ -33,7 +33,7 @@ export function HomeEnrollmentCta() {
 
       <Button
         asChild
-        className="mx-auto h-11 w-full max-w-sm rounded-full bg-[linear-gradient(135deg,#2FCFC3_0%,#2B74D8_100%)]! px-5! text-[0.9rem]! font-semibold! shadow-[0_18px_38px_-20px_rgba(35,120,186,0.52)]! hover:brightness-105!"
+        className="bg-primary! mx-auto h-11 w-full max-w-sm rounded-full px-5! text-[0.9rem]! font-semibold! text-white! shadow-[0_18px_34px_-20px_rgba(197,49,51,0.42)]! hover:brightness-95!"
         size="lg"
       >
         <Link href="/dashboard">

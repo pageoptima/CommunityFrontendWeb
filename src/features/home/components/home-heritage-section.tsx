@@ -100,16 +100,21 @@ export function HomeHeritageSection() {
         </motion.div>
 
         <motion.article
-          className="mt-12 rounded-4xl bg-[linear-gradient(135deg,#3876b8_0%,#2379d2_100%)] px-5 py-8 text-white shadow-[0_24px_60px_-36px_rgba(23,91,156,0.45)] sm:px-7 lg:px-9 lg:py-10"
+          className="relative mt-12 overflow-hidden rounded-4xl border border-[#d9c7af] bg-[#2d2018] px-5 py-8 text-[#fff9f2] shadow-[0_24px_56px_-34px_rgba(21,17,13,0.4)] sm:px-7 lg:px-9 lg:py-10"
           variants={fadeInUpItem}
         >
-          <div className="grid gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-center">
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(197,49,51,0.22),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(111,175,196,0.14),transparent_32%),linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0))]"
+          />
+
+          <div className="relative grid gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-center">
             <div className="max-w-105">
               <h3 className="text-2xl font-semibold tracking-tight sm:text-3xl">
                 Our Mission
               </h3>
 
-              <p className="mt-5 text-sm leading-6 text-white/92">
+              <p className="mt-5 text-justify text-sm leading-6 text-[#f7efe5]/92">
                 To create a secure, culturally grounded digital platform that
                 empowers Taíno descendants to reclaim their heritage, document
                 their lineage, and participate in a thriving Indigenous

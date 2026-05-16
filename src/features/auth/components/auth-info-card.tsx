@@ -18,7 +18,7 @@ export function AuthInfoCard({
   return (
     <article
       className={cn(
-        "rounded-[1.65rem] border border-[#24acc3]/55 bg-[#FAF9F9] px-4 py-4 shadow-[0_18px_40px_-32px_rgba(16,24,40,0.24)] sm:px-5 sm:py-5",
+        "border-border bg-surface rounded-[1.65rem] border px-4 py-4 shadow-[0_18px_34px_-28px_rgba(21,17,13,0.14)] sm:px-5 sm:py-5",
         className,
       )}
     >
@@ -33,10 +33,10 @@ export function AuthInfoCard({
         />
 
         <div className="min-w-0">
-          <h3 className="text-[1.02rem] font-semibold tracking-[-0.03em] text-[#335f6c] sm:text-[1.12rem]">
+          <h3 className="text-foreground text-[1.02rem] font-semibold tracking-[-0.03em] sm:text-[1.12rem]">
             {title}
           </h3>
-          <p className="mt-2 max-w-xl text-[0.92rem] leading-6 text-slate-700 sm:text-[0.96rem]">
+          <p className="text-muted-foreground mt-2 max-w-xl text-[0.92rem] leading-6 sm:text-[0.96rem]">
             {description}
           </p>
         </div>

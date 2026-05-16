@@ -35,9 +35,9 @@ export function PublicNavbar() {
       transition={{ duration: 0.84, ease: [0.22, 1, 0.36, 1] }}
     >
       <div className="mx-auto max-w-7xl px-4 pt-4 sm:px-6 lg:px-8">
-        <div className="border-border/70 bg-surface/95 supports-backdrop-filter:bg-surface/85 flex items-center justify-between rounded-full border px-4 py-3 shadow-[0_24px_60px_-38px_rgba(16,47,52,0.28)] backdrop-blur-xl">
+        <div className="border-border/90 bg-surface/95 supports-backdrop-filter:bg-surface/92 flex items-center justify-between rounded-full border px-4 py-3 shadow-[0_16px_32px_-24px_rgba(21,17,13,0.18)] backdrop-blur-md">
           <Link href="/" className="shrink-0">
-            <BrandMark />
+            <BrandMark showSubtitle={false} />
           </Link>
 
           <nav className="hidden items-center gap-1 lg:flex">
@@ -52,7 +52,7 @@ export function PublicNavbar() {
                   className={cn(
                     "rounded-full px-4 py-2 text-sm font-medium transition-colors",
                     isActive
-                      ? "text-[#3D3DA0]!"
+                      ? "bg-surface-muted text-primary"
                       : "text-muted-foreground hover:text-foreground",
                   )}
                 >
@@ -65,13 +65,13 @@ export function PublicNavbar() {
           <div className="hidden items-center gap-2 lg:flex">
             <Button variant="ghost" size="sm" asChild>
               <Link
-                className={cn(isSignInPage && "text-[#3D3DA0]!")}
+                className={cn(isSignInPage && "text-primary")}
                 href="/sign-in"
               >
                 Sign In
               </Link>
             </Button>
-            <Button size="sm" asChild>
+            <Button className="text-white!" size="sm" asChild>
               <Link href="/sign-up">Apply Now</Link>
             </Button>
           </div>
@@ -92,7 +92,7 @@ export function PublicNavbar() {
           {isMobileMenuOpen ? (
             <motion.div
               key="mobile-menu"
-              className="border-border bg-surface mt-3 rounded-3xl border p-4 shadow-[0_24px_60px_-38px_rgba(16,47,52,0.28)] lg:hidden"
+              className="border-border bg-surface mt-3 rounded-3xl border p-4 shadow-[0_18px_34px_-24px_rgba(21,17,13,0.2)] lg:hidden"
               initial="hidden"
               animate="visible"
               exit="exit"
@@ -111,7 +111,7 @@ export function PublicNavbar() {
                       className={cn(
                         "rounded-2xl px-4 py-3 text-sm font-medium transition-colors",
                         isActive
-                          ? "bg-surface-muted text-[#3D3DA0]!"
+                          ? "bg-surface-muted text-primary"
                           : "text-muted-foreground hover:bg-surface-muted hover:text-foreground",
                       )}
                     >
@@ -124,14 +124,14 @@ export function PublicNavbar() {
               <div className="mt-4 grid gap-3 sm:grid-cols-2">
                 <Button variant="outline" asChild>
                   <Link
-                    className={cn(isSignInPage && "text-[#3D3DA0]!")}
+                    className={cn(isSignInPage && "text-primary")}
                     href="/sign-in"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     Sign In
                   </Link>
                 </Button>
-                <Button asChild>
+                <Button className="text-white!" asChild>
                   <Link
                     href="/sign-up"
                     onClick={() => setIsMobileMenuOpen(false)}

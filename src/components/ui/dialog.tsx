@@ -37,7 +37,7 @@ function DialogOverlay({
   return (
     <DialogPrimitive.Overlay
       className={cn(
-        "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-[#08211f]/65 backdrop-blur-[2px]",
+        "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/55 backdrop-blur-[2px]",
         className,
       )}
       data-slot="dialog-overlay"
@@ -56,7 +56,7 @@ function DialogContent({
       <DialogOverlay />
       <DialogPrimitive.Content
         className={cn(
-          "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed top-[50%] left-[50%] z-50 flex w-[calc(100%-2rem)] max-w-4xl translate-x-[-50%] translate-y-[-50%] flex-col rounded-[28px] border border-[#d5e1da] bg-[#fffdec] shadow-[0_32px_70px_-42px_rgba(8,33,31,0.6)] duration-200 sm:w-full",
+          "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 border-border bg-surface fixed top-[50%] left-[50%] z-50 flex w-[calc(100%-2rem)] max-w-4xl translate-x-[-50%] translate-y-[-50%] flex-col rounded-[28px] border shadow-[0_28px_56px_-34px_rgba(21,17,13,0.35)] duration-200 sm:w-full",
           className,
         )}
         data-slot="dialog-content"
@@ -98,7 +98,7 @@ function DialogTitle({
   return (
     <DialogPrimitive.Title
       className={cn(
-        "text-2xl font-semibold tracking-[-0.04em] text-[#12393d] sm:text-[2rem]",
+        "text-foreground text-2xl font-semibold tracking-[-0.04em] sm:text-[2rem]",
         className,
       )}
       data-slot="dialog-title"
@@ -114,7 +114,7 @@ function DialogDescription({
   return (
     <DialogPrimitive.Description
       className={cn(
-        "max-w-2xl text-sm leading-6 text-slate-600 sm:text-[15px]",
+        "text-muted-foreground max-w-2xl text-sm leading-6 sm:text-[15px]",
         className,
       )}
       data-slot="dialog-description"

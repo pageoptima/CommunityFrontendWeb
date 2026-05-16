@@ -49,6 +49,11 @@ export function ProfilePageContent({ user }: Readonly<{ user: AuthUser }>) {
 
         <ProfileSummary
           details={profileViewData.details}
+          enrollmentStatus={
+            profileInfoQuery.data?.enrollmentStatus ??
+            profileInfoQuery.data?.enrollment?.status ??
+            null
+          }
           memberSince={profileViewData.copy.memberSince}
           memberStatus={profileViewData.copy.memberStatus}
           name={profileViewData.copy.name}

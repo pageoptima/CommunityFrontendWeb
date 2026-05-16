@@ -4,10 +4,7 @@ import Image from "next/image";
 
 import { motion } from "framer-motion";
 
-import { cn } from "@/lib/utils";
 import { fadeInUpItem } from "@/lib/motion";
-
-import sharedStyles from "../styles/home-shared.module.scss";
 
 type HomePlatformFeatureCardProps = {
   iconSrc: string;
@@ -20,10 +17,7 @@ export function HomePlatformFeatureCard({
 }: HomePlatformFeatureCardProps) {
   return (
     <motion.article
-      className={cn(
-        sharedStyles.glassPanel,
-        "min-h-52 rounded-[1.4rem] border border-white/25 px-4 py-4 text-white shadow-[0_16px_38px_-24px_rgba(0,0,0,0.36)] sm:px-5 sm:py-5",
-      )}
+      className="min-h-52 rounded-[1.4rem] border border-[#d8c1a6]/26 bg-[rgba(30,19,14,0.64)] px-4 py-4 text-white shadow-[0_16px_38px_-24px_rgba(0,0,0,0.36)] backdrop-blur-[2px] sm:px-5 sm:py-5"
       variants={fadeInUpItem}
     >
       <Image
@@ -35,7 +29,7 @@ export function HomePlatformFeatureCard({
         width={56}
       />
 
-      <p className="mt-5 text-[0.88rem] leading-[1.5] text-white/95 sm:mt-6 sm:text-[0.92rem]">
+      <p className="mt-5 text-[0.88rem] leading-[1.5] text-[#f7efe5]/95 sm:mt-6 sm:text-[0.92rem]">
         {text}
       </p>
     </motion.article>

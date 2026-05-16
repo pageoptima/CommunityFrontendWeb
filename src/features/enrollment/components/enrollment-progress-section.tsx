@@ -47,9 +47,9 @@ export function EnrollmentProgressSection({
                       className={cn(
                         "flex size-14 shrink-0 items-center justify-center rounded-full text-[1.75rem] font-semibold tracking-[-0.05em] text-white sm:size-16 sm:text-[2rem]",
                         isActive
-                          ? "bg-[linear-gradient(180deg,#11a9a2_0%,#0a7469_100%)] shadow-[0_18px_34px_-20px_rgba(10,116,105,0.48)]"
+                          ? "bg-primary shadow-[0_18px_34px_-20px_rgba(197,49,51,0.42)]"
                           : isCompleted
-                            ? "bg-[#0b625d] shadow-[0_14px_28px_-20px_rgba(11,98,93,0.4)]"
+                            ? "bg-primary shadow-[0_14px_28px_-20px_rgba(197,49,51,0.34)]"
                             : "bg-[#b7b7b7]",
                       )}
                     >

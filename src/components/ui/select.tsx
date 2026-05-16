@@ -40,7 +40,7 @@ function SelectTrigger({
     <SelectPrimitive.Trigger
       className={cn(
         inputBaseClassName,
-        "cursor-pointer items-center justify-between gap-3 pr-3 text-left data-[placeholder]:text-[#9ca3a7]",
+        "data-[placeholder]:text-muted-foreground cursor-pointer items-center justify-between gap-3 pr-3 text-left",
         className,
       )}
       data-slot="select-trigger"
@@ -48,7 +48,7 @@ function SelectTrigger({
     >
       {children}
       <SelectPrimitive.Icon asChild>
-        <ChevronDown className="size-4 shrink-0 text-[#697578]" />
+        <ChevronDown className="text-muted-foreground size-4 shrink-0" />
       </SelectPrimitive.Icon>
     </SelectPrimitive.Trigger>
   );
@@ -66,7 +66,7 @@ function SelectContent({
     <SelectPrimitive.Portal>
       <SelectPrimitive.Content
         className={cn(
-          "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 relative z-40 max-h-80 min-w-[8rem] overflow-hidden rounded-[20px] border border-[#d7e3dc] bg-white text-[#243238] shadow-[0_24px_50px_-28px_rgba(16,47,52,0.38)]",
+          "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 border-border bg-surface text-foreground relative z-40 max-h-80 min-w-[8rem] overflow-hidden rounded-[20px] border shadow-[0_18px_36px_-26px_rgba(21,17,13,0.28)]",
           position === "popper" &&
             "data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
           className,
@@ -104,7 +104,7 @@ function SelectLabel({
   return (
     <SelectPrimitive.Label
       className={cn(
-        "px-8 py-2 text-sm font-semibold text-[#3d4a4f]",
+        "text-foreground px-8 py-2 text-sm font-semibold",
         className,
       )}
       data-slot="select-label"
@@ -121,7 +121,7 @@ function SelectItem({
   return (
     <SelectPrimitive.Item
       className={cn(
-        "relative flex w-full cursor-pointer items-center rounded-[14px] py-2.5 pr-8 pl-3.5 text-sm text-[#243238] outline-none select-none focus:bg-[#eef4ef] data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+        "text-foreground focus:bg-surface-muted relative flex w-full cursor-pointer items-center rounded-[14px] py-2.5 pr-8 pl-3.5 text-sm outline-none select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
         className,
       )}
       data-slot="select-item"
@@ -129,7 +129,7 @@ function SelectItem({
     >
       <span className="absolute right-3 flex size-4 items-center justify-center">
         <SelectPrimitive.ItemIndicator>
-          <Check className="size-4 text-[#0b625d]" />
+          <Check className="text-primary size-4" />
         </SelectPrimitive.ItemIndicator>
       </span>
       <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
@@ -143,7 +143,7 @@ function SelectSeparator({
 }: React.ComponentProps<typeof SelectPrimitive.Separator>) {
   return (
     <SelectPrimitive.Separator
-      className={cn("-mx-1 my-1 h-px bg-[#e6ece8]", className)}
+      className={cn("bg-border -mx-1 my-1 h-px", className)}
       data-slot="select-separator"
       {...props}
     />

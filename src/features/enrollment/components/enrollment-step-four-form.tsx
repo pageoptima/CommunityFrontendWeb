@@ -83,7 +83,7 @@ function UploadedDocumentRow({
           {formatEnrollmentDocumentStatus(document.status)}
         </span>
         <a
-          className="rounded-full border border-[#cee0da] bg-white px-2.5 py-1 text-[0.68rem] font-semibold tracking-[0.04em] text-[#0b625d] uppercase transition-colors hover:bg-[#edf7f3]"
+          className="border-primary/20 text-primary hover:bg-primary/10 rounded-full border bg-white px-2.5 py-1 text-[0.68rem] font-semibold tracking-[0.04em] uppercase transition-colors"
           href={document.url}
           rel="noreferrer"
           target="_blank"
@@ -126,7 +126,7 @@ function UploadDropArea({
       />
 
       <button
-        className="mt-3 flex min-h-[9.5rem] w-full cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-[#24acc3] bg-[#f4f7f6] px-4 py-5 transition-colors hover:bg-[#eef6f4] disabled:cursor-not-allowed disabled:opacity-70"
+        className="border-secondary mt-3 flex min-h-[9.5rem] w-full cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed bg-[#f9f6f0] px-4 py-5 transition-colors hover:bg-[#f3ede5] disabled:cursor-not-allowed disabled:opacity-70"
         disabled={disabled}
         onClick={() => onOpen(slotId)}
         type="button"
@@ -520,7 +520,7 @@ export function EnrollmentStepFourForm() {
 
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-end">
               <Button
-                className="border-[#cfe0d9] bg-[#f6fbf9] text-[#0b625d] hover:bg-[#edf7f3]"
+                className="border-[#dccab7] bg-[#fbf5ee] text-[#6e553b] hover:bg-[#f3e6d5]"
                 disabled={uploadMutation.isPending}
                 leftIcon={<ArrowLeft />}
                 onClick={() => router.push("/enrollment/step-3")}
@@ -548,7 +548,7 @@ export function EnrollmentStepFourForm() {
               </Button>
 
               <Button
-                className="bg-[#004d43]! text-white! shadow-[0_18px_34px_-22px_rgba(0,77,67,0.5)] hover:bg-[#00584d]! hover:text-white!"
+                className="bg-primary! text-white! shadow-[0_18px_34px_-22px_rgba(197,49,51,0.42)] hover:bg-[#aa2a2d]! hover:text-white!"
                 disabled={
                   isListLoading ||
                   uploadMutation.isPending ||
