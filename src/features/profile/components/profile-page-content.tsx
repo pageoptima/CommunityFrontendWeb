@@ -6,7 +6,6 @@ import type { AuthUser } from "@/lib/auth";
 
 import { ProfileAvatar } from "./profile-avatar";
 import { ProfileLineageSection } from "./profile-lineage-section";
-import { ProfileRegionalMembersSection } from "./profile-regional-members-section";
 import { ProfileSummary } from "./profile-summary";
 import { useProfileInfoQuery } from "../lib/profile-queries";
 import { buildProfileViewData } from "../lib/profile-view-data";
@@ -69,10 +68,6 @@ export function ProfilePageContent({ user }: Readonly<{ user: AuthUser }>) {
         overviewData={profileViewData.overviewData}
         settingsData={profileViewData.settingsData}
         yucayekeData={profileViewData.yucayekeData}
-      />
-
-      <ProfileRegionalMembersSection
-        members={profileViewData.regionalMembers}
       />
     </section>
   );

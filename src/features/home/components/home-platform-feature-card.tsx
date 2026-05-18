@@ -17,7 +17,7 @@ export function HomePlatformFeatureCard({
 }: HomePlatformFeatureCardProps) {
   return (
     <motion.article
-      className="min-h-52 rounded-[1.4rem] border border-[#d8c1a6]/26 bg-[rgba(30,19,14,0.64)] px-4 py-4 text-white shadow-[0_16px_38px_-24px_rgba(0,0,0,0.36)] backdrop-blur-[2px] sm:px-5 sm:py-5"
+      className="min-h-52 rounded-[1.4rem] border border-[#dcc7af]/24 bg-[rgba(246,237,225,0.1)] px-4 py-4 text-white shadow-[0_16px_38px_-24px_rgba(0,0,0,0.3)] backdrop-blur-[2px] sm:px-5 sm:py-5"
       variants={fadeInUpItem}
     >
       <Image

@@ -26,7 +26,7 @@ export function HomeEnrollmentNeedsSection({
       <h3
         className={cn(
           poppins.className,
-          "text-[clamp(1.4rem,2vw,2rem)] font-semibold tracking-[-0.05em] text-[#174F4A]",
+          "text-[clamp(1.4rem,2vw,2rem)] font-semibold tracking-[-0.05em] text-[#fff9f2]",
         )}
       >
         What You&apos;ll Need?

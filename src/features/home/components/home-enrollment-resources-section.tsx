@@ -19,7 +19,7 @@ export function HomeEnrollmentResourcesSection({
 }: HomeEnrollmentResourcesSectionProps) {
   return (
     <motion.div
-      className="rounded-[1.7rem] border border-black/10 bg-white p-3.5 shadow-[0_22px_54px_-38px_rgba(16,24,40,0.18)] sm:p-4"
+      className="rounded-[1.7rem] border border-[#d9c7af] bg-[#2d2018] bg-[radial-gradient(circle_at_top_right,rgba(197,49,51,0.22),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(111,175,196,0.14),transparent_32%),linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0)),#2d2018] p-3.5 shadow-[0_24px_56px_-34px_rgba(21,17,13,0.4)] sm:p-4"
       variants={fadeInUpContainer}
     >
       <div className="grid items-stretch gap-4 lg:grid-cols-[minmax(0,1.02fr)_minmax(0,0.98fr)]">

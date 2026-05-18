@@ -42,8 +42,7 @@ export function HomeYucayekeRegionsSection() {
             )}
             variants={fadeInUpItem}
           >
-            Connect to Your <span className="text-[#2EB9DE]">Ancestral</span>{" "}
-            Land
+            Connect to Your <span className="text-primary">Ancestral</span> Land
           </motion.h2>
 
           <motion.p

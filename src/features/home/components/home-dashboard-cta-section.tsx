@@ -27,7 +27,7 @@ export function HomeDashboardCtaSection() {
         )}
       >
         <motion.article
-          className="rounded-[2rem] bg-[linear-gradient(180deg,#31B2D4_0%,#155A64_100%)] px-5 py-12 text-center text-white shadow-[0_28px_64px_-38px_rgba(17,76,88,0.48)] sm:px-8 sm:py-14 lg:px-12 lg:py-18"
+          className="rounded-[2rem] bg-[radial-gradient(circle_at_top_left,rgba(197,49,51,0.2),transparent_34%),radial-gradient(circle_at_bottom_right,rgba(111,175,196,0.16),transparent_38%),linear-gradient(180deg,#2d2018_0%,#1f1712_100%)] px-5 py-12 text-center text-white shadow-[0_28px_64px_-38px_rgba(27,18,13,0.42)] sm:px-8 sm:py-14 lg:px-12 lg:py-18"
           variants={fadeInUpItem}
         >
           <div className="mx-auto max-w-5xl">

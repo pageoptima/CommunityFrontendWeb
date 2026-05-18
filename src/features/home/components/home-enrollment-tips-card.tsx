@@ -18,7 +18,7 @@ type HomeEnrollmentTipsCardProps = Readonly<{
 export function HomeEnrollmentTipsCard({ tips }: HomeEnrollmentTipsCardProps) {
   return (
     <motion.article
-      className="rounded-[24px] bg-[linear-gradient(135deg,#2FCFC3_0%,#2B74D8_100%)] px-4.5 py-5.5 text-white shadow-[0_22px_54px_-38px_rgba(18,93,109,0.38)] sm:px-5.5 sm:py-6.5"
+      className="rounded-[24px] border border-[#dcc7af] bg-[#f6ede1] px-4.5 py-5.5 text-[#201712] shadow-[0_14px_28px_-22px_rgba(0,0,0,0.28)] sm:px-5.5 sm:py-6.5"
       variants={fadeInUpItem}
     >
       <Image
@@ -42,11 +42,11 @@ export function HomeEnrollmentTipsCard({ tips }: HomeEnrollmentTipsCardProps) {
       <ul className="mt-4.5 space-y-4">
         {tips.map((tip) => (
           <li key={tip} className="flex items-start gap-3">
-            <CircleCheckBig className="mt-0.5 size-5 shrink-0 text-white" />
+            <CircleCheckBig className="text-primary mt-0.5 size-5 shrink-0" />
             <p
               className={cn(
                 poppins.className,
-                "text-[0.84rem] leading-[1.5] text-white/92 sm:text-[0.9rem]",
+                "text-[0.84rem] leading-[1.5] text-[#4f3d31] sm:text-[0.9rem]",
               )}
             >
               {tip}
@@ -58,7 +58,7 @@ export function HomeEnrollmentTipsCard({ tips }: HomeEnrollmentTipsCardProps) {
       <div className="mt-5.5">
         <Button
           asChild
-          className="h-11 w-full rounded-full bg-white px-5 text-[0.9rem] text-[#0f4d4a] shadow-[0_16px_34px_-18px_rgba(18,93,109,0.42)] hover:bg-white/95"
+          className="bg-primary h-11 w-full rounded-full px-5 text-[0.9rem] text-white shadow-[0_16px_34px_-18px_rgba(197,49,51,0.42)] hover:bg-[#ae2b2d]"
           size="lg"
           variant="outline"
         >
@@ -71,7 +71,7 @@ export function HomeEnrollmentTipsCard({ tips }: HomeEnrollmentTipsCardProps) {
               width={20}
               height={20}
             />
-            <span className="text-black">Get Enrollment Support</span>
+            <span className="text-white">Get Enrollment Support</span>
           </Link>
         </Button>
       </div>

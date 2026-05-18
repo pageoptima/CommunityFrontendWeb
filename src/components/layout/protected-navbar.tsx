@@ -6,7 +6,6 @@ import { useEffect, useRef, useState } from "react";
 
 import { useQueryClient } from "@tanstack/react-query";
 import {
-  Bell,
   ChevronDown,
   Loader2,
   LogOut,
@@ -140,15 +139,6 @@ export function ProtectedNavbar({ user }: Readonly<{ user: AuthUser }>) {
           </nav>
 
           <div className="hidden items-center gap-3 lg:flex lg:gap-2.5 xl:gap-3">
-            <button
-              aria-label="Notifications"
-              className="text-foreground hover:bg-surface-muted focus-visible:ring-ring focus-visible:ring-offset-background relative inline-flex size-11 items-center justify-center rounded-full bg-transparent transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none lg:size-10 xl:size-11"
-              type="button"
-            >
-              <Bell className="size-5 lg:size-[18px] xl:size-5" />
-              <span className="bg-primary absolute top-2 right-2 size-2 rounded-full" />
-            </button>
-
             <div className="relative" ref={profileMenuRef}>
               <button
                 aria-expanded={isProfileMenuOpen}

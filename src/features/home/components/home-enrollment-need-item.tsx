@@ -31,7 +31,7 @@ export function HomeEnrollmentNeedItem({
         <h4
           className={cn(
             montserrat.className,
-            "text-[1rem] font-normal tracking-[-0.03em] text-[#111111] sm:text-[1.18rem]",
+            "text-[1rem] font-normal tracking-[-0.03em] text-[#fff4e8] sm:text-[1.18rem]",
           )}
         >
           {title}
@@ -39,7 +39,7 @@ export function HomeEnrollmentNeedItem({
         <p
           className={cn(
             montserrat.className,
-            "mt-1 text-[0.84rem] leading-[1.45] text-[#6E6B67] sm:text-[0.92rem]",
+            "mt-1 text-[0.84rem] leading-[1.45] text-[#e7dacc] sm:text-[0.92rem]",
           )}
         >
           {description}

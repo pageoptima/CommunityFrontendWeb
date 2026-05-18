@@ -88,7 +88,7 @@ const supportActions = [
 export function HomeMemberServicesSection() {
   return (
     <motion.section
-      className="overflow-hidden bg-[#FFFDEC]"
+      className="overflow-hidden bg-[#ede6dc]"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.1 }}
@@ -116,8 +116,8 @@ export function HomeMemberServicesSection() {
             )}
             variants={fadeInUpItem}
           >
-            Comprehensive <span className="text-[#2EB9DE]">Support</span> for
-            Our Community
+            Comprehensive <span className="text-primary">Support</span> for Our
+            Community
           </motion.h2>
 
           <motion.p
@@ -143,7 +143,7 @@ export function HomeMemberServicesSection() {
         </motion.div>
 
         <motion.article
-          className="mt-10 rounded-[1.45rem] bg-[linear-gradient(135deg,#0D463F_0%,#153F55_100%)] px-4 py-8 text-center text-white shadow-[0_28px_64px_-40px_rgba(7,30,34,0.42)] sm:px-6 sm:py-9 lg:px-8 lg:py-10"
+          className="mt-10 rounded-[1.45rem] bg-[radial-gradient(circle_at_top_left,rgba(197,49,51,0.2),transparent_34%),radial-gradient(circle_at_bottom_right,rgba(111,175,196,0.16),transparent_38%),linear-gradient(135deg,#2d2018_0%,#1f1712_100%)] px-4 py-8 text-center text-white shadow-[0_28px_64px_-40px_rgba(27,18,13,0.42)] sm:px-6 sm:py-9 lg:px-8 lg:py-10"
           variants={fadeInUpItem}
         >
           <div className="mx-auto max-w-3xl">

@@ -56,7 +56,7 @@ const platformFeatures = [
 export function HomePlatformFeaturesSection() {
   return (
     <motion.section
-      className="overflow-hidden bg-[linear-gradient(180deg,#004D43_0%,#0080B3_100%)] text-white"
+      className="overflow-hidden bg-[radial-gradient(circle_at_top_right,rgba(197,49,51,0.18),transparent_24%),radial-gradient(circle_at_bottom_left,rgba(111,175,196,0.12),transparent_30%),linear-gradient(180deg,#2d2018_0%,#1f1712_100%)] text-white"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.1 }}
@@ -69,7 +69,7 @@ export function HomePlatformFeaturesSection() {
           <motion.span
             className={cn(
               sharedStyles.sectionBadge,
-              "border border-white/20 bg-white/5 px-4.5 py-2 text-[0.82rem] text-white/95 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]",
+              "border border-white/16 bg-white/6 px-4.5 py-2 text-[0.82rem] text-white/95 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]",
             )}
             variants={fadeInUpItem}
           >

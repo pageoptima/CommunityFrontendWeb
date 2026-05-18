@@ -24,7 +24,7 @@ export function DashboardHeroSection({
         className="text-foreground mt-4 max-w-4xl text-4xl font-semibold tracking-tight sm:mt-5 sm:text-5xl lg:mt-6 lg:text-6xl"
         variants={fadeInUpItem}
       >
-        {title.prefix} <span className="text-[#2bb5cb]">{title.highlight}</span>{" "}
+        {title.prefix} <span className="text-primary">{title.highlight}</span>{" "}
         {title.suffix}
       </motion.h1>
 

@@ -28,10 +28,15 @@ export function AboutMissionSection() {
         className={cn(sharedStyles.sectionContainer, "py-10 sm:py-12 lg:py-14")}
       >
         <motion.article
-          className="rounded-[1.8rem] bg-[linear-gradient(135deg,#3876B8_0%,#2379D2_100%)] px-5 py-8 text-white shadow-[0_24px_60px_-36px_rgba(23,91,156,0.45)] sm:px-7 lg:px-9 lg:py-10"
+          className="relative overflow-hidden rounded-4xl border border-[#d9c7af] bg-[#2d2018] px-5 py-8 text-[#fff9f2] shadow-[0_24px_56px_-34px_rgba(21,17,13,0.4)] sm:px-7 lg:px-9 lg:py-10"
           variants={fadeInUpItem}
         >
-          <div className="grid gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-center">
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(197,49,51,0.22),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(111,175,196,0.14),transparent_32%),linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0))]"
+          />
+
+          <div className="relative grid gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-center">
             <div className="max-w-[40rem]">
               <h2
                 className={cn(
@@ -45,7 +50,7 @@ export function AboutMissionSection() {
               <p
                 className={cn(
                   poppins.className,
-                  "mt-4 text-[0.9rem] leading-[1.65] text-white/92 sm:text-[0.96rem]",
+                  "mt-4 text-[0.9rem] leading-[1.65] text-[#f7efe5]/92 sm:text-[0.96rem]",
                 )}
               >
                 We aim to create a secure, culturally grounded digital platform

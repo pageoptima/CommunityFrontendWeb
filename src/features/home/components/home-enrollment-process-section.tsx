@@ -115,7 +115,7 @@ export function HomeEnrollmentProcessSection() {
             )}
             variants={fadeInUpItem}
           >
-            How to Join the <span className="text-[#2ECFD5]">Taíno</span> Nation
+            How to Join the <span className="text-primary">Taíno</span> Nation
           </motion.h2>
 
           <motion.p
